@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "profile": "local-only",
+  "safety": {
+    "network": false,
+    "realEmail": false,
+    "realCalendar": false,
+    "realDatabase": false,
+    "printEnvironment": false
+  }
+}

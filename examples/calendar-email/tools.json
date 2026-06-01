@@ -1,0 +1,80 @@
+{
+  "name": "calendar-email",
+  "version": "0.1.0",
+  "description": "Mocked tool definitions for calendar and email tasks. These tools are examples only.",
+  "safety": {
+    "network": false,
+    "realSideEffects": false
+  },
+  "tools": [
+    {
+      "name": "create_calendar_event",
+      "description": "Create a mocked local calendar event without contacting a calendar service.",
+      "sideEffects": "mock-only",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "startsAt": {
+            "type": "string",
+            "description": "ISO date-time string."
+          },
+          "durationMinutes": {
+            "type": "number"
+          }
+        },
+        "required": ["title", "startsAt"],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string"
+          },
+          "created": {
+            "type": "boolean",
+            "const": false
+          }
+        },
+        "required": ["eventId", "created"]
+      }
+    },
+    {
+      "name": "send_email",
+      "description": "Send a mocked email without contacting an email service.",
+      "sideEffects": "mock-only",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": ["to", "subject", "body"],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "messageId": {
+            "type": "string"
+          },
+          "sent": {
+            "type": "boolean",
+            "const": false
+          }
+        },
+        "required": ["messageId", "sent"]
+      }
+    }
+  ]
+}
