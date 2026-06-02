@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.1.0 local mock eval MVP.
+Current checkpoint: v0.2.1 docs-only public distribution planning.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -24,6 +24,19 @@ v0.1.0 includes:
 - report command for saved results
 - no real model/API calls
 - no real tool side effects
+
+v0.2.0 adds:
+- lint command for static local analysis of tool definitions
+- warnings for vague names, weak descriptions, unclear parameters, overlapping tools, risky wording, and missing examples
+- examples/confusing-tools/ lint demo
+- no real model/API calls
+- no real tool side effects
+
+v0.2.1 adds:
+- public distribution planning docs only
+- public GitHub repository, GitHub Pages docs, npm CLI installation, and macOS/Windows support as long-term targets
+- no new runtime features
+- no publishing
 
 ## Important directories
 
@@ -38,12 +51,30 @@ v0.1.0 includes:
 - docs/ contains planning, safety, roadmap, prompts, and status docs.
 - test/ contains Vitest tests.
 
+## Ultimate distribution goal
+
+ToolSmith should eventually be distributed through:
+- a public GitHub repository for source code
+- a GitHub Pages site for docs and quickstart material
+- npm as the CLI installation channel
+
+Expected future install commands:
+
+```sh
+npm install -g toolsmith
+npx toolsmith@latest --help
+```
+
+Do not publish to npm, push public release tags, enable release automation, or push to GitHub unless explicitly asked.
+
 ## Commands to run
 
 Before finishing any coding change, run:
 
 npm run compile
 npm test
+
+Before finishing docs-only changes, run the checks requested by the prompt.
 
 When touching eval/report behavior, also run:
 
@@ -59,6 +90,8 @@ Do not:
 - create real calendar events
 - modify real databases
 - call external APIs
+- publish to npm
+- push to GitHub unless explicitly asked
 - add real OpenAI/model integration
 - print environment variables
 - commit API keys or secrets
@@ -71,17 +104,10 @@ For now, ToolSmith should stay local-first and mock-agent-based unless a prompt 
 Do not start a new version unless explicitly instructed.
 
 Current next planned version:
-- v0.2.0 Tool Linter
-
-v0.2.0 should focus on static analysis of tool definitions:
-- vague tool names
-- overlapping tools
-- missing examples
-- risky tool descriptions
-- unclear schemas
-- missing confirmation requirements
+- Public release readiness, only when explicitly requested.
 
 Do not jump directly to real AI/model integration unless explicitly instructed.
+Do not start packaging, GitHub Actions, npm publishing, or release automation unless explicitly instructed.
 
 ## Code style
 
@@ -98,9 +124,16 @@ Error messages should explain:
 
 Avoid clever abstractions until the product loop is proven.
 
+Maintain cross-platform compatibility for macOS and Windows.
+
+Avoid Unix-only shell commands in source code and tests.
+
+Use Node path/fs APIs instead of hardcoded path separators.
+
 ## Git rules
 
 Do not push to GitHub unless explicitly instructed.
+Do not publish packages unless explicitly instructed.
 
 Before committing:
 - run compile

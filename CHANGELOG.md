@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+
+- Documented the public distribution plan.
+- Documented the GitHub Pages documentation and npm release target.
+- Documented the macOS and Windows support goal.
+- Kept the update docs-only with no publishing and no new runtime behavior.
+
 ## 0.2.0
 
 - Added the `lint` CLI command for static local analysis of tool definitions.

@@ -2,7 +2,7 @@
 
 ToolSmith is a local-first developer tool for testing whether AI agents can correctly use tool definitions.
 
-The project is intentionally small in v0.2.0. It provides a TypeScript Node CLI with a local mock evaluation pipeline and static tool linting:
+The project is intentionally small. The current runtime provides a TypeScript Node CLI with a local mock evaluation pipeline and static tool linting:
 
 - `init` creates a local `toolsmith.config.json` file.
 - `lint` loads local `tools.json`, validates it, and reports static issues that could confuse AI agents.
@@ -16,6 +16,12 @@ ToolSmith does not call models, send email, edit calendars, connect to databases
 ```sh
 npm install
 ```
+
+## Future Install Goal
+
+ToolSmith is not published to npm yet. The planned public install path is npm, with commands such as `npm install -g toolsmith` or `npx toolsmith@latest --help` after publishing is explicitly approved.
+
+For now, use the local development command format: `npm run dev -- <command>`.
 
 ## Use
 
@@ -45,4 +51,4 @@ npm test
 
 ## Current Scope
 
-v0.2.0 adds static tool linting for vague names, weak descriptions, unclear parameters, overlapping tools, risky side-effect wording, and missing examples. Real model/API integration and real tool side effects remain intentionally out of scope.
+v0.2.1 is a docs-only public distribution planning update. The runtime remains local-first: static tool linting, mock evaluation, no real model/API integration, and no real tool side effects.

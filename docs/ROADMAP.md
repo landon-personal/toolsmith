@@ -22,6 +22,20 @@
 - Add an intentionally confusing local-only fixture for lint demos.
 - Keep ToolSmith free of real model/API calls and real tool side effects.
 
+## v0.2.1
+
+- Document the public distribution plan.
+- Clarify the long-term target for a public GitHub repository, GitHub Pages documentation, npm installation, and macOS/Windows support.
+- Keep this release docs-only with no new runtime features and no publishing.
+
+## Public Release Track
+
+- Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.
+- Cross-platform CI: verify compile, tests, lint, eval, and report on macOS and Windows before public release.
+- GitHub Pages docs: publish quickstart, examples, safety notes, and release documentation from the public repository.
+- npm prerelease: publish only after explicit approval, package-name checks, and dry-run verification.
+- npm stable release: publish only after prerelease feedback confirms install, docs, and cross-platform behavior are reliable.
+
 ## Later
 
 - Add stricter JSON schema files for tools and tasks.
