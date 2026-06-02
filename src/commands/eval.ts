@@ -25,6 +25,7 @@ export async function runEval(
 
   printEvalSummary(run, io);
   io.stdout(`Results written to ${LATEST_RUN_PATH}`);
+  io.stdout("Next: npm run dev -- report");
   io.stdout("Safety: used keyword mock agent only; no model/API calls or real tool side effects.");
 
   return run;
@@ -34,6 +35,8 @@ function printEvalSummary(run: EvalRun, io: CommandIO): void {
   io.stdout(`ToolSmith eval ${run.version}`);
   io.stdout(`Example: ${run.examplePath}`);
   io.stdout(`Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)`);
+  io.stdout("");
+  printFailureBreakdown(run, io);
   io.stdout("");
   io.stdout("Passed tasks:");
   for (const result of run.results.filter((item) => item.passed)) {
@@ -47,9 +50,24 @@ function printEvalSummary(run: EvalRun, io: CommandIO): void {
   }
 
   for (const result of failed) {
-    io.stdout(
-      `- ${result.taskId}: expected ${result.expectedTool}, got ${result.actualTool ?? "none"} (${result.failureReason})`
-    );
-    io.stdout(`  suggestion: ${result.suggestion}`);
+    io.stdout(`- [${result.failureCategory}] ${result.taskId}`);
+    io.stdout(`  expected: ${result.expectedTool}`);
+    io.stdout(`  actual: ${result.actualTool ?? "none"}`);
+    io.stdout(`  reason: ${result.reason}`);
+    io.stdout(`  recommendation: ${result.recommendation}`);
+  }
+}
+
+function printFailureBreakdown(run: EvalRun, io: CommandIO): void {
+  io.stdout("Failure breakdown:");
+  const entries = Object.entries(run.summary.failureCategories);
+
+  if (entries.length === 0) {
+    io.stdout("- none");
+    return;
+  }
+
+  for (const [category, count] of entries) {
+    io.stdout(`- ${category}: ${count}`);
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "calendar-email",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "tasks": [
     {
       "id": "calendar-schedule-demo",
@@ -9,24 +9,6 @@
       "successCriteria": [
         "The mock agent chooses the local calendar event tool.",
         "No real calendar service is contacted."
-      ]
-    },
-    {
-      "id": "calendar-doctor-appointment",
-      "prompt": "Add a doctor appointment to my calendar for Friday at 9.",
-      "expectedTool": "create_calendar_event",
-      "successCriteria": [
-        "The mock agent chooses the local calendar event tool.",
-        "No real calendar service is contacted."
-      ]
-    },
-    {
-      "id": "calendar-tricky-message-meeting",
-      "prompt": "Tell the team we need a planning meeting next week.",
-      "expectedTool": "create_calendar_event",
-      "successCriteria": [
-        "This intentionally tricky task should expose keyword conflicts.",
-        "No real email or calendar service is contacted."
       ]
     },
     {
@@ -39,21 +21,30 @@
       ]
     },
     {
-      "id": "email-message-recap",
-      "prompt": "Message Priya with the meeting recap.",
+      "id": "calendar-ambiguous-message-meeting",
+      "prompt": "Message Alex to set up a meeting next week.",
+      "expectedTool": "create_calendar_event",
+      "successCriteria": [
+        "This intentionally ambiguous task should expose keyword conflicts.",
+        "No real email or calendar service is contacted."
+      ]
+    },
+    {
+      "id": "email-unclear-followup",
+      "prompt": "Think about whether Jordan needs a follow-up.",
       "expectedTool": "send_email",
       "successCriteria": [
-        "The mock agent chooses the local email tool.",
+        "This unclear task should show a no-selection failure category.",
         "No real email is sent."
       ]
     },
     {
-      "id": "email-tell-finance",
-      "prompt": "Tell finance that the invoice draft is ready.",
-      "expectedTool": "send_email",
+      "id": "no-tool-review-notes",
+      "prompt": "Review the local planning notes without taking action.",
+      "expectedTool": "none",
       "successCriteria": [
-        "The mock agent chooses the local email tool.",
-        "No real email is sent."
+        "The mock agent does not choose a tool.",
+        "No real side effects occur."
       ]
     }
   ]

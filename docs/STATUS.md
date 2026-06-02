@@ -2,7 +2,7 @@
 
 Date: 2026-06-02
 
-Version: 0.3.0
+Version: 0.4.0
 
 ## Done
 
@@ -20,12 +20,12 @@ Version: 0.3.0
 - Added package-ready CLI metadata for a future npm installable command.
 - Added local package smoke checking with `npm run package:check`.
 - Verified the compiled CLI can be packed, installed from a local tarball, and run as `toolsmith`.
+- Added better eval scoring with failure categories, reasons, recommendations, and failure breakdown counts.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
 ## Not Started
 
-- Argument-level scoring.
 - JSON schema files.
 - Model or API integration.
 - Public GitHub release.
@@ -35,4 +35,4 @@ Version: 0.3.0
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.3.0 update adds package readiness and local tarball verification only; no npm publishing or GitHub push has happened.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.4.0 update improves local mock eval scoring only; no npm publishing or GitHub push has happened.

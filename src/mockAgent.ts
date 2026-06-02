@@ -9,12 +9,22 @@ export interface MockAgentDecision {
 
 export function chooseMockTool(prompt: string, tools: ToolDefinition[]): MockAgentDecision {
   const normalizedPrompt = prompt.toLowerCase();
+  const matchedEmail = hasAnyKeyword(normalizedPrompt, EMAIL_KEYWORDS);
+  const matchedCalendar = hasAnyKeyword(normalizedPrompt, CALENDAR_KEYWORDS);
 
-  if (hasAnyKeyword(normalizedPrompt, EMAIL_KEYWORDS)) {
+  if (matchedEmail && matchedCalendar) {
+    return chooseNamedTool(
+      "send_email",
+      tools,
+      "Prompt matched both email and calendar keywords; deterministic mock tie-breaker chose email."
+    );
+  }
+
+  if (matchedEmail) {
     return chooseNamedTool("send_email", tools, "Prompt matched an email keyword.");
   }
 
-  if (hasAnyKeyword(normalizedPrompt, CALENDAR_KEYWORDS)) {
+  if (matchedCalendar) {
     return chooseNamedTool("create_calendar_event", tools, "Prompt matched a calendar keyword.");
   }
 

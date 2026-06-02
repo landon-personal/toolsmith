@@ -23,6 +23,8 @@ function printReport(run: EvalRun, io: CommandIO): void {
   io.stdout(`Created: ${run.createdAt}`);
   io.stdout(`Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)`);
   io.stdout("");
+  printFailureBreakdown(run, io);
+  io.stdout("");
   io.stdout("Passed tasks:");
   for (const result of run.results.filter((item) => item.passed)) {
     io.stdout(`- ${result.taskId}: expected ${result.expectedTool}, got ${result.actualTool}`);
@@ -35,10 +37,27 @@ function printReport(run: EvalRun, io: CommandIO): void {
   }
 
   for (const result of failed) {
-    io.stdout(`- ${result.taskId}`);
-    io.stdout(`  expected: ${result.expectedTool}`);
-    io.stdout(`  actual: ${result.actualTool ?? "none"}`);
-    io.stdout(`  reason: ${result.failureReason}`);
-    io.stdout(`  suggestion: ${result.suggestion}`);
+    io.stdout(`[${result.failureCategory}]`);
+    io.stdout(`Task: ${result.taskId}`);
+    io.stdout(`Prompt: "${result.prompt}"`);
+    io.stdout(`Expected: ${result.expectedTool}`);
+    io.stdout(`Actual: ${result.actualTool ?? "none"}`);
+    io.stdout(`Reason: ${result.reason}`);
+    io.stdout(`Recommendation: ${result.recommendation}`);
+    io.stdout("");
+  }
+}
+
+function printFailureBreakdown(run: EvalRun, io: CommandIO): void {
+  io.stdout("Failure breakdown:");
+  const entries = Object.entries(run.summary.failureCategories ?? {});
+
+  if (entries.length === 0) {
+    io.stdout("- none");
+    return;
+  }
+
+  for (const [category, count] of entries) {
+    io.stdout(`- ${category}: ${count}`);
   }
 }

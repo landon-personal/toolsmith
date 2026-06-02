@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.3.0 package-ready CLI and macOS/Windows basics.
+Current checkpoint: v0.4.0 better scoring and failure categories.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -43,6 +43,16 @@ v0.3.0 adds:
 - local package smoke checking with `npm run package:check`
 - verification that the compiled CLI can be packed, installed from a local tarball, and run as `toolsmith`
 - macOS/Windows compatibility basics for package-check logic
+- no npm publishing
+- no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
+
+v0.4.0 adds:
+- readable eval failure categories
+- failure breakdown counts in saved results, eval output, and report output
+- short reasons and recommendations for each eval result
+- deterministic mock-agent handling for clear email, clear calendar, ambiguous, and no-match prompts
 - no npm publishing
 - no GitHub push or release automation
 - no real model/API calls

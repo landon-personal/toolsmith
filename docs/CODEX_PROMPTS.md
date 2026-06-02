@@ -41,3 +41,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Improve ToolSmith npm CLI packaging readiness without publishing. Preserve macOS and Windows compatibility, use Node path/fs/os/child_process APIs for package checks, keep `npm run dev --` as the local development command, and do not add GitHub Actions, GitHub Pages publishing, npm publishing, real model/API integration, or real tool side effects.
 ```
+
+## Improve Eval Scoring
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Improve ToolSmith local mock eval scoring with clearer failure categories, saved result summaries, terminal report output, reasons, and recommendations. Keep the agent deterministic and local. Do not add real model/API integration, external API calls, publishing, dashboards, cloud features, or real tool side effects.
+```

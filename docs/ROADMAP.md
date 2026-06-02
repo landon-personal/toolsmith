@@ -36,6 +36,14 @@
 - Preserve macOS and Windows compatibility basics by using Node path, filesystem, OS, and child process APIs in package checks.
 - Keep ToolSmith free of real model/API calls, cloud features, and real tool side effects.
 
+## v0.4.0
+
+- Improve local eval scoring with readable failure categories.
+- Add failure breakdown counts to saved results, eval output, and reports.
+- Add short reasons and practical recommendations for failed tasks.
+- Keep the evaluator deterministic and mock-agent-based with no real model/API calls or real tool side effects.
+- Preserve package-ready CLI behavior from v0.3.0.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.

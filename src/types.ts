@@ -40,10 +40,17 @@ export interface ToolCall {
   reason: string;
 }
 
-export type FailureReason =
-  | "NO_TOOL_SELECTED"
-  | "WRONG_TOOL_SELECTED"
-  | "EXPECTED_TOOL_NOT_DEFINED";
+export type FailureCategory =
+  | "passed"
+  | "wrong_tool"
+  | "no_tool_selected"
+  | "unexpected_tool_selected"
+  | "invalid_tool_call"
+  | "missing_expected_tool"
+  | "unclear_task"
+  | "unknown_error";
+
+export type FailureReason = FailureCategory;
 
 export interface EvalResult {
   taskId: string;
@@ -51,7 +58,10 @@ export interface EvalResult {
   expectedTool: string;
   actualTool: string | null;
   passed: boolean;
+  failureCategory: FailureCategory;
   failureReason?: FailureReason;
+  reason: string;
+  recommendation: string;
   suggestion?: string;
   toolCall: ToolCall | null;
 }
@@ -72,6 +82,7 @@ export interface EvalRun {
     passed: number;
     failed: number;
     score: number;
+    failureCategories: Partial<Record<FailureCategory, number>>;
   };
   results: EvalResult[];
 }

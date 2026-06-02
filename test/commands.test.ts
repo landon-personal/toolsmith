@@ -6,6 +6,7 @@ import { runEval } from "../src/commands/eval.js";
 import { runInit } from "../src/commands/init.js";
 import { runLint } from "../src/commands/lint.js";
 import { runReport } from "../src/commands/report.js";
+import { evaluate } from "../src/evaluator.js";
 import { buildCli } from "../src/index.js";
 import { lintToolFile } from "../src/linter.js";
 import { chooseMockTool } from "../src/mockAgent.js";
@@ -37,11 +38,38 @@ function captureOutput(): { lines: string[]; io: { stdout(message: string): void
 function lintIssues(tools: ToolDefinition[]): ToolLintIssue[] {
   const toolFile: ToolFile = {
     name: "test-tools",
-    version: "0.3.0",
+    version: "0.4.0",
     tools
   };
 
   return lintToolFile(toolFile).issues;
+}
+
+async function writeExample(
+  directory: string,
+  tasks: Array<{ id: string; prompt: string; expectedTool: string }>
+): Promise<void> {
+  await writeFile(
+    join(directory, "tools.json"),
+    JSON.stringify(
+      {
+        name: "test-tools",
+        version: "0.4.0",
+        tools: [
+          { name: "create_calendar_event", description: "Use this tool when scheduling calendar events." },
+          { name: "send_email", description: "Use this tool when sending email messages." }
+        ]
+      },
+      null,
+      2
+    ),
+    "utf8"
+  );
+  await writeFile(
+    join(directory, "tasks.json"),
+    JSON.stringify({ name: "test-tasks", version: "0.4.0", tasks }, null, 2),
+    "utf8"
+  );
 }
 
 describe("ToolSmith commands", () => {
@@ -62,7 +90,7 @@ describe("ToolSmith commands", () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("0.3.0");
+    expect(packageJson.version).toBe("0.4.0");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
     expect(packageJson.files).toEqual(
@@ -80,7 +108,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.3.0");
+      expect(config.version).toBe("0.4.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -94,7 +122,7 @@ describe("ToolSmith commands", () => {
     const tasks = await loadTasksFile(CALENDAR_EMAIL_TASKS_PATH);
 
     expect(tools.tools.map((tool) => tool.name)).toEqual(["create_calendar_event", "send_email"]);
-    expect(tasks.tasks).toHaveLength(6);
+    expect(tasks.tasks).toHaveLength(5);
     expect(tasks.tasks[0]?.expectedTool).toBe("create_calendar_event");
   });
 
@@ -251,7 +279,53 @@ describe("ToolSmith commands", () => {
 
     expect(chooseMockTool("Schedule a meeting.", tools).toolCall?.toolName).toBe("create_calendar_event");
     expect(chooseMockTool("Email the release notes.", tools).toolCall?.toolName).toBe("send_email");
+    expect(chooseMockTool("Message Alex about the meeting.", tools).toolCall?.toolName).toBe("send_email");
     expect(chooseMockTool("Think about the plan.", tools).toolCall).toBeNull();
+  });
+
+  it("eval categorizes passed, wrong-tool, and unclear-task results", async () => {
+    const run = await evaluate({ examplePath: CALENDAR_EMAIL_EXAMPLE });
+
+    expect(run.summary.total).toBe(5);
+    expect(run.summary.passed).toBe(3);
+    expect(run.summary.failed).toBe(2);
+    expect(run.summary.score).toBe(60);
+    expect(run.summary.failureCategories).toEqual({ wrong_tool: 1, unclear_task: 1 });
+    expect(run.results.find((result) => result.taskId === "calendar-schedule-demo")?.failureCategory).toBe("passed");
+    expect(run.results.find((result) => result.taskId === "calendar-ambiguous-message-meeting")?.failureCategory).toBe(
+      "wrong_tool"
+    );
+    expect(run.results.find((result) => result.taskId === "email-unclear-followup")?.failureCategory).toBe(
+      "unclear_task"
+    );
+  });
+
+  it("eval categorizes no tool, unexpected tool, and missing expected tool failures", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-categories-"));
+
+    try {
+      await writeExample(directory, [
+        { id: "no-tool", prompt: "Prepare release notes for Jordan.", expectedTool: "send_email" },
+        { id: "unexpected-tool", prompt: "Email Jordan the release notes.", expectedTool: "none" },
+        { id: "missing-tool", prompt: "Schedule a meeting with Jordan.", expectedTool: "create_task" }
+      ]);
+
+      const run = await evaluate({ examplePath: ".", cwd: directory });
+
+      expect(run.summary.failureCategories).toEqual({
+        no_tool_selected: 1,
+        unexpected_tool_selected: 1,
+        missing_expected_tool: 1
+      });
+      expect(run.results.map((result) => result.failureCategory)).toEqual([
+        "no_tool_selected",
+        "unexpected_tool_selected",
+        "missing_expected_tool"
+      ]);
+      expect(run.results.every((result) => result.reason.length > 0 && result.recommendation.length > 0)).toBe(true);
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   it("eval produces and writes local results", async () => {
@@ -260,12 +334,15 @@ describe("ToolSmith commands", () => {
     const run = await runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE }, output.io);
     const latestRun = JSON.parse(await readFile(join(process.cwd(), LATEST_RUN_PATH), "utf8"));
 
-    expect(run.summary.total).toBe(6);
-    expect(run.summary.passed).toBe(5);
-    expect(run.summary.failed).toBe(1);
+    expect(run.summary.total).toBe(5);
+    expect(run.summary.passed).toBe(3);
+    expect(run.summary.failed).toBe(2);
     expect(latestRun.summary.score).toBe(run.summary.score);
-    expect(output.lines).toContain("Score: 5/6 (83.33%)");
-    expect(output.lines.some((line) => line.includes("calendar-tricky-message-meeting"))).toBe(true);
+    expect(output.lines).toContain("Score: 3/5 (60%)");
+    expect(output.lines).toContain("Failure breakdown:");
+    expect(output.lines).toContain("- wrong_tool: 1");
+    expect(output.lines).toContain("- unclear_task: 1");
+    expect(output.lines).toContain("Next: npm run dev -- report");
   });
 
   it("report reads latest results", async () => {
@@ -275,11 +352,14 @@ describe("ToolSmith commands", () => {
     await runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE }, evalOutput.io);
     const run = await runReport({}, reportOutput.io);
 
-    expect(run.summary.score).toBe(83.33);
+    expect(run.summary.score).toBe(60);
     expect(reportOutput.lines).toContain("ToolSmith latest report");
-    expect(reportOutput.lines).toContain("Score: 5/6 (83.33%)");
-    expect(reportOutput.lines.some((line) => line.includes("expected: create_calendar_event"))).toBe(true);
-    expect(reportOutput.lines.some((line) => line.includes("actual: send_email"))).toBe(true);
+    expect(reportOutput.lines).toContain("Score: 3/5 (60%)");
+    expect(reportOutput.lines).toContain("- wrong_tool: 1");
+    expect(reportOutput.lines).toContain("[wrong_tool]");
+    expect(reportOutput.lines.some((line) => line.includes("Expected: create_calendar_event"))).toBe(true);
+    expect(reportOutput.lines.some((line) => line.includes("Actual: send_email"))).toBe(true);
+    expect(reportOutput.lines.some((line) => line.includes("Recommendation:"))).toBe(true);
     await expect(access(join(process.cwd(), LATEST_RUN_PATH))).resolves.toBeUndefined();
   });
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+
+- Added readable eval failure categories including `passed`, `wrong_tool`, `no_tool_selected`, `unexpected_tool_selected`, `invalid_tool_call`, `missing_expected_tool`, `unclear_task`, and `unknown_error`.
+- Added failure breakdown counts to eval summaries and saved results.
+- Added short reasons and recommendations to each eval result and report output.
+- Improved deterministic mock-agent behavior for clear email, clear calendar, ambiguous, and no-match prompts.
+- Kept ToolSmith mock-agent-based with no real model/API calls, no real tool side effects, no npm publishing, and no GitHub push.
+
 ## 0.3.0
 
 - Prepared package metadata for a future npm-installable `toolsmith` CLI.

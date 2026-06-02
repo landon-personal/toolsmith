@@ -1,6 +1,6 @@
 # Safety
 
-ToolSmith v0.3.0 is a local mock evaluator with static tool linting and local npm package smoke checking. It must not perform real-world actions.
+ToolSmith v0.4.0 is a local mock evaluator with static tool linting, categorized scoring, and local npm package smoke checking. It must not perform real-world actions.
 
 ## Current Rules
 
