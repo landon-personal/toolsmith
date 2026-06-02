@@ -2,6 +2,8 @@
 
 ToolSmith is not published yet. This document describes the intended public distribution model and the guardrails that must stay in place before any release.
 
+As of v0.3.0, ToolSmith can be built, packed into a local npm tarball, installed into a temporary directory, and run as the `toolsmith` command for local smoke testing. This is packaging readiness only, not a public release.
+
 ## Distribution Targets
 
 - Public GitHub repository: source code, issues, pull requests, release tags, and project history.
@@ -20,6 +22,14 @@ The `toolsmith` package name may need to be checked before publishing. If the na
 ## Platform Support
 
 ToolSmith should support macOS and Windows. Source code and tests should use Node path and filesystem APIs instead of hardcoded path separators or Unix-only shell assumptions.
+
+Use this local package smoke check before any future publishing work:
+
+```sh
+npm run package:check
+```
+
+The package check builds the CLI, packs it locally, installs the tarball into an OS temporary directory, runs `toolsmith --help`, runs `toolsmith --version`, and cleans up on success.
 
 ## Publishing Rules
 

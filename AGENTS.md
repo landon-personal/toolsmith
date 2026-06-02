@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.2.1 docs-only public distribution planning.
+Current checkpoint: v0.3.0 package-ready CLI and macOS/Windows basics.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -37,6 +37,16 @@ v0.2.1 adds:
 - public GitHub repository, GitHub Pages docs, npm CLI installation, and macOS/Windows support as long-term targets
 - no new runtime features
 - no publishing
+
+v0.3.0 adds:
+- package metadata for a future npm-installable `toolsmith` CLI
+- local package smoke checking with `npm run package:check`
+- verification that the compiled CLI can be packed, installed from a local tarball, and run as `toolsmith`
+- macOS/Windows compatibility basics for package-check logic
+- no npm publishing
+- no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
 
 ## Important directories
 
@@ -74,6 +84,10 @@ Before finishing any coding change, run:
 npm run compile
 npm test
 
+When touching package metadata or CLI packaging behavior, also run:
+
+npm run package:check
+
 Before finishing docs-only changes, run the checks requested by the prompt.
 
 When touching eval/report behavior, also run:
@@ -108,6 +122,7 @@ Current next planned version:
 
 Do not jump directly to real AI/model integration unless explicitly instructed.
 Do not start packaging, GitHub Actions, npm publishing, or release automation unless explicitly instructed.
+Packaging readiness is allowed only when explicitly requested, and still must not publish.
 
 ## Code style
 

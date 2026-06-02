@@ -3,7 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { ToolSmithError } from "./errors.js";
 import type { EvalRun } from "./types.js";
 
-export const LATEST_RUN_PATH = ".toolsmith/runs/latest.json";
+export const LATEST_RUN_PATH = join(".toolsmith", "runs", "latest.json");
 
 export async function writeLatestRun(run: EvalRun, cwd = process.cwd()): Promise<string> {
   const path = resolve(cwd, LATEST_RUN_PATH);

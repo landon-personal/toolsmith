@@ -2,7 +2,7 @@
 
 Date: 2026-06-02
 
-Version: 0.2.1
+Version: 0.3.0
 
 ## Done
 
@@ -17,6 +17,9 @@ Version: 0.2.1
 - Added static tool linting for names, descriptions, parameters, overlap, risky wording, and missing examples.
 - Added the `examples/confusing-tools` lint demo fixture.
 - Added docs-only public distribution planning for a future public GitHub repo, GitHub Pages docs, npm CLI install path, and macOS/Windows support.
+- Added package-ready CLI metadata for a future npm installable command.
+- Added local package smoke checking with `npm run package:check`.
+- Verified the compiled CLI can be packed, installed from a local tarball, and run as `toolsmith`.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -28,7 +31,8 @@ Version: 0.2.1
 - Public GitHub release.
 - GitHub Pages publishing.
 - npm publishing.
+- GitHub Actions or release automation.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.2.1 update is docs-only public distribution planning with no new runtime features and no publishing.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.3.0 update adds package readiness and local tarball verification only; no npm publishing or GitHub push has happened.

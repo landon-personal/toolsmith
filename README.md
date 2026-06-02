@@ -17,6 +17,8 @@ ToolSmith does not call models, send email, edit calendars, connect to databases
 npm install
 ```
 
+ToolSmith is not published to npm yet. This command installs development dependencies for the local checkout.
+
 ## Future Install Goal
 
 ToolSmith is not published to npm yet. The planned public install path is npm, with commands such as `npm install -g toolsmith` or `npx toolsmith@latest --help` after publishing is explicitly approved.
@@ -39,7 +41,10 @@ npm run dev -- report
 ```sh
 npm run compile
 npm test
+npm run package:check
 ```
+
+`npm run package:check` builds the CLI, creates a local npm tarball, installs it into a temporary directory, runs `toolsmith --help`, runs `toolsmith --version`, and removes the temporary package artifacts on success. It does not publish to npm.
 
 ## Project Layout
 
@@ -51,4 +56,4 @@ npm test
 
 ## Current Scope
 
-v0.2.1 is a docs-only public distribution planning update. The runtime remains local-first: static tool linting, mock evaluation, no real model/API integration, and no real tool side effects.
+v0.3.0 prepares ToolSmith for npm CLI packaging with local pack/install smoke testing and macOS/Windows path basics. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.

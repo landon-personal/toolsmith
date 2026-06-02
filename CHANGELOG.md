@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+- Prepared package metadata for a future npm-installable `toolsmith` CLI.
+- Added local package smoke checking that builds, packs, installs, and runs the CLI from a temporary directory.
+- Added tests for package version, bin metadata, CLI version wiring, and package allowlist basics.
+- Documented the package check command and macOS/Windows compatibility expectations.
+- Kept ToolSmith unpublished with no GitHub push, no release automation, no real model/API integration, and no real tool side effects.
+
 ## 0.2.1
 
 - Documented the public distribution plan.

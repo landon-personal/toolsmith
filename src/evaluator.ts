@@ -1,8 +1,10 @@
-import { relative, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { chooseMockTool } from "./mockAgent.js";
 import { loadTasksFile, loadToolsFile } from "./validation.js";
 import type { EvalResult, EvalRun, FailureReason, TaskDefinition, ToolDefinition } from "./types.js";
 import { VERSION } from "./version.js";
+
+const DEFAULT_EXAMPLE_PATH = join("examples", "calendar-email");
 
 export interface EvaluateOptions {
   examplePath?: string;
@@ -13,10 +15,10 @@ export interface EvaluateOptions {
 
 export async function evaluate(options: EvaluateOptions = {}): Promise<EvalRun> {
   const cwd = options.cwd ?? process.cwd();
-  const examplePath = options.examplePath ?? "examples/calendar-email";
+  const examplePath = options.examplePath ?? DEFAULT_EXAMPLE_PATH;
   const resolvedExamplePath = resolve(cwd, examplePath);
-  const resolvedToolsPath = resolve(cwd, options.toolsPath ?? `${examplePath}/tools.json`);
-  const resolvedTasksPath = resolve(cwd, options.tasksPath ?? `${examplePath}/tasks.json`);
+  const resolvedToolsPath = resolve(cwd, options.toolsPath ?? join(examplePath, "tools.json"));
+  const resolvedTasksPath = resolve(cwd, options.tasksPath ?? join(examplePath, "tasks.json"));
   const toolFile = await loadToolsFile(resolvedToolsPath);
   const taskFile = await loadTasksFile(resolvedTasksPath);
   const toolNames = new Set(toolFile.tools.map((tool) => tool.name));

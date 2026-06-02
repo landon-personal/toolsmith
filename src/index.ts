@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import { Command } from "commander";
 import { runEval } from "./commands/eval.js";
 import { runInit } from "./commands/init.js";
@@ -6,6 +7,8 @@ import { runReport } from "./commands/report.js";
 import type { CommandIO } from "./io.js";
 import { defaultIO } from "./io.js";
 import { VERSION } from "./version.js";
+
+const DEFAULT_EXAMPLE_PATH = join("examples", "calendar-email");
 
 export function buildCli(io: CommandIO = defaultIO): Command {
   const program = new Command();
@@ -26,7 +29,7 @@ export function buildCli(io: CommandIO = defaultIO): Command {
 
   program
     .command("lint")
-    .argument("[examplePath]", "Example directory containing tools.json.", "examples/calendar-email")
+    .argument("[examplePath]", "Example directory containing tools.json.", DEFAULT_EXAMPLE_PATH)
     .description("Run static lint checks against local tool definitions.")
     .option("--tools <path>", "Path to a tools.json file.")
     .action(async (examplePath: string, options: { tools?: string }) => {
@@ -35,7 +38,7 @@ export function buildCli(io: CommandIO = defaultIO): Command {
 
   program
     .command("eval")
-    .argument("[examplePath]", "Example directory containing tools.json and tasks.json.", "examples/calendar-email")
+    .argument("[examplePath]", "Example directory containing tools.json and tasks.json.", DEFAULT_EXAMPLE_PATH)
     .description("Run a local mock evaluation against task and tool files.")
     .option("--tools <path>", "Path to a tools.json file.")
     .option("--tasks <path>", "Path to a tasks.json file.")

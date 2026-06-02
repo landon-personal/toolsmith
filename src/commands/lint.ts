@@ -1,10 +1,12 @@
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { ToolSmithError } from "../errors.js";
 import type { CommandIO } from "../io.js";
 import { defaultIO } from "../io.js";
 import { lintToolFile } from "../linter.js";
 import type { ToolLintIssue, ToolLintReport } from "../types.js";
 import { loadToolsFile } from "../validation.js";
+
+const DEFAULT_EXAMPLE_PATH = join("examples", "calendar-email");
 
 export interface LintOptions {
   examplePath?: string;
@@ -17,8 +19,8 @@ export async function runLint(
   io: CommandIO = defaultIO
 ): Promise<ToolLintReport> {
   const cwd = options.cwd ?? process.cwd();
-  const examplePath = options.examplePath ?? "examples/calendar-email";
-  const resolvedToolsPath = resolve(cwd, options.tools ?? `${examplePath}/tools.json`);
+  const examplePath = options.examplePath ?? DEFAULT_EXAMPLE_PATH;
+  const resolvedToolsPath = resolve(cwd, options.tools ?? join(examplePath, "tools.json"));
   const toolFile = await loadToolsFile(resolvedToolsPath);
   const report = lintToolFile(toolFile);
 

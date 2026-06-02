@@ -4,5 +4,6 @@ coverage/
 .toolsmith/runs/
 .DS_Store
 *.log
+*.tgz
 .env
 .env.*

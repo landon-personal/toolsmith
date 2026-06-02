@@ -33,3 +33,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Improve the v0.2.0 static tool linter for tools.json files. Keep analysis local and deterministic. Do not add real model/API integration, API keys, network calls, or real email, calendar, database, deploy, publish, or other tool side effects.
 ```
+
+## Improve Package Readiness
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Improve ToolSmith npm CLI packaging readiness without publishing. Preserve macOS and Windows compatibility, use Node path/fs/os/child_process APIs for package checks, keep `npm run dev --` as the local development command, and do not add GitHub Actions, GitHub Pages publishing, npm publishing, real model/API integration, or real tool side effects.
+```

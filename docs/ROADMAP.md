@@ -28,6 +28,14 @@
 - Clarify the long-term target for a public GitHub repository, GitHub Pages documentation, npm installation, and macOS/Windows support.
 - Keep this release docs-only with no new runtime features and no publishing.
 
+## v0.3.0
+
+- Prepare the CLI for npm packaging without publishing it.
+- Verify `toolsmith` maps to the compiled `dist/cli.js` package bin.
+- Add a cross-platform local package smoke check that packs, installs, and runs the CLI from a temporary directory.
+- Preserve macOS and Windows compatibility basics by using Node path, filesystem, OS, and child process APIs in package checks.
+- Keep ToolSmith free of real model/API calls, cloud features, and real tool side effects.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.

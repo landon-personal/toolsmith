@@ -12,6 +12,11 @@ import { chooseMockTool } from "../src/mockAgent.js";
 import { LATEST_RUN_PATH } from "../src/results.js";
 import type { ToolDefinition, ToolFile, ToolLintIssue } from "../src/types.js";
 import { loadTasksFile, loadToolsFile } from "../src/validation.js";
+import { VERSION } from "../src/version.js";
+
+const CALENDAR_EMAIL_EXAMPLE = join("examples", "calendar-email");
+const CALENDAR_EMAIL_TOOLS_PATH = join(CALENDAR_EMAIL_EXAMPLE, "tools.json");
+const CALENDAR_EMAIL_TASKS_PATH = join(CALENDAR_EMAIL_EXAMPLE, "tasks.json");
 
 function captureOutput(): { lines: string[]; io: { stdout(message: string): void; stderr(message: string): void } } {
   const lines: string[] = [];
@@ -32,7 +37,7 @@ function captureOutput(): { lines: string[]; io: { stdout(message: string): void
 function lintIssues(tools: ToolDefinition[]): ToolLintIssue[] {
   const toolFile: ToolFile = {
     name: "test-tools",
-    version: "0.2.0",
+    version: "0.3.0",
     tools
   };
 
@@ -49,7 +54,22 @@ describe("ToolSmith commands", () => {
     const commandNames = program.commands.map((command) => command.name());
 
     expect(program.name()).toBe("toolsmith");
+    expect(program.version()).toBe(VERSION);
     expect(commandNames).toEqual(expect.arrayContaining(["init", "lint", "eval", "report"]));
+  });
+
+  it("has package-ready CLI metadata", async () => {
+    const packageJson = JSON.parse(await readFile("package.json", "utf8"));
+    const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
+
+    expect(packageJson.version).toBe("0.3.0");
+    expect(VERSION).toBe(packageJson.version);
+    expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
+    expect(packageJson.files).toEqual(
+      expect.arrayContaining(["dist", "README.md", "CHANGELOG.md", "docs", "examples"])
+    );
+    expect(packageJson.files).not.toEqual(expect.arrayContaining(disallowedPackageFiles));
+    expect(packageJson.scripts["package:check"]).toContain("scripts/package-check.mjs");
   });
 
   it("initializes a local config file", async () => {
@@ -60,7 +80,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.2.0");
+      expect(config.version).toBe("0.3.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -70,8 +90,8 @@ describe("ToolSmith commands", () => {
   });
 
   it("loads valid tools and tasks", async () => {
-    const tools = await loadToolsFile("examples/calendar-email/tools.json");
-    const tasks = await loadTasksFile("examples/calendar-email/tasks.json");
+    const tools = await loadToolsFile(CALENDAR_EMAIL_TOOLS_PATH);
+    const tasks = await loadTasksFile(CALENDAR_EMAIL_TASKS_PATH);
 
     expect(tools.tools.map((tool) => tool.name)).toEqual(["create_calendar_event", "send_email"]);
     expect(tasks.tasks).toHaveLength(6);
@@ -79,7 +99,7 @@ describe("ToolSmith commands", () => {
   });
 
   it("keeps v0.1.0 calendar-email tools valid without examples", async () => {
-    const tools = await loadToolsFile("examples/calendar-email/tools.json");
+    const tools = await loadToolsFile(CALENDAR_EMAIL_TOOLS_PATH);
 
     expect(tools.version).toBe("0.1.0");
     expect(tools.tools).toHaveLength(2);
@@ -108,7 +128,7 @@ describe("ToolSmith commands", () => {
 
   it("lint command prints a static report", async () => {
     const output = captureOutput();
-    const report = await runLint({ examplePath: "examples/calendar-email" }, output.io);
+    const report = await runLint({ examplePath: CALENDAR_EMAIL_EXAMPLE }, output.io);
 
     expect(report.toolsChecked).toBe(2);
     expect(report.summary.warning).toBeGreaterThan(0);
@@ -237,7 +257,7 @@ describe("ToolSmith commands", () => {
   it("eval produces and writes local results", async () => {
     const output = captureOutput();
 
-    const run = await runEval({ examplePath: "examples/calendar-email" }, output.io);
+    const run = await runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE }, output.io);
     const latestRun = JSON.parse(await readFile(join(process.cwd(), LATEST_RUN_PATH), "utf8"));
 
     expect(run.summary.total).toBe(6);
@@ -252,7 +272,7 @@ describe("ToolSmith commands", () => {
     const evalOutput = captureOutput();
     const reportOutput = captureOutput();
 
-    await runEval({ examplePath: "examples/calendar-email" }, evalOutput.io);
+    await runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE }, evalOutput.io);
     const run = await runReport({}, reportOutput.io);
 
     expect(run.summary.score).toBe(83.33);
