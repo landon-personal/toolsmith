@@ -1,6 +1,6 @@
 # Safety
 
-ToolSmith v0.1.0 is a local mock evaluator. It must not perform real-world actions.
+ToolSmith v0.2.0 is a local mock evaluator with static tool linting. It must not perform real-world actions.
 
 ## Current Rules
 

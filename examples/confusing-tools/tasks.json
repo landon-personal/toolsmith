@@ -1,0 +1,15 @@
+{
+  "name": "confusing-tools",
+  "version": "0.2.0",
+  "tasks": [
+    {
+      "id": "demo-process-data",
+      "prompt": "Process this data for me.",
+      "expectedTool": "process_data",
+      "successCriteria": [
+        "This fixture is for lint demos only.",
+        "No real side effects are performed."
+      ]
+    }
+  ]
+}

@@ -25,3 +25,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Improve the report command so it reads local ToolSmith result files and prints a concise text summary. Do not add real tool adapters or external service calls.
 ```
+
+## Improve Tool Linting
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Improve the v0.2.0 static tool linter for tools.json files. Keep analysis local and deterministic. Do not add real model/API integration, API keys, network calls, or real email, calendar, database, deploy, publish, or other tool side effects.
+```

@@ -30,10 +30,7 @@ export function validateToolsFile(value: unknown, path = "tools.json"): ToolFile
     const prefix = `${path}: tools[${index}]`;
     const record = expectRecord(tool, `${prefix} must be a JSON object.`);
     const toolName = expectString(record.name, `${prefix}.name must be a non-empty string.`);
-    const toolDescription = expectString(
-      record.description,
-      `${prefix}.description must be a non-empty string.`
-    );
+    const toolDescription = optionalString(record.description, `${prefix}.description must be a string when present.`);
 
     if (names.has(toolName)) {
       throw new ToolSmithError(`${path}: duplicate tool name "${toolName}".`);
@@ -42,10 +39,15 @@ export function validateToolsFile(value: unknown, path = "tools.json"): ToolFile
 
     return {
       name: toolName,
-      description: toolDescription,
+      ...(toolDescription ? { description: toolDescription } : {}),
       sideEffects: optionalString(record.sideEffects, `${prefix}.sideEffects must be a string when present.`),
       inputSchema: optionalJsonObject(record.inputSchema, `${prefix}.inputSchema must be an object when present.`),
-      outputSchema: optionalJsonObject(record.outputSchema, `${prefix}.outputSchema must be an object when present.`)
+      outputSchema: optionalJsonObject(record.outputSchema, `${prefix}.outputSchema must be an object when present.`),
+      examples: optionalStringArray(record.examples, `${prefix}.examples must be an array of strings when present.`),
+      requiresConfirmation: optionalBoolean(
+        record.requiresConfirmation,
+        `${prefix}.requiresConfirmation must be a boolean when present.`
+      )
     };
   });
 

@@ -2,10 +2,12 @@ export type JsonValue = string | number | boolean | null | JsonValue[] | { [key:
 
 export interface ToolDefinition {
   name: string;
-  description: string;
+  description?: string;
   sideEffects?: string;
   inputSchema?: Record<string, JsonValue>;
   outputSchema?: Record<string, JsonValue>;
+  examples?: string[];
+  requiresConfirmation?: boolean;
 }
 
 export interface ToolFile {
@@ -72,4 +74,31 @@ export interface EvalRun {
     score: number;
   };
   results: EvalResult[];
+}
+
+export type ToolLintSeverity = "info" | "warning" | "error";
+
+export type ToolLintCategory =
+  | "naming"
+  | "description"
+  | "parameters"
+  | "overlap"
+  | "safety"
+  | "examples";
+
+export interface ToolLintIssue {
+  id: string;
+  severity: ToolLintSeverity;
+  category: ToolLintCategory;
+  message: string;
+  recommendation: string;
+  toolName?: string;
+  toolNames?: string[];
+}
+
+export interface ToolLintReport {
+  version: string;
+  toolsChecked: number;
+  issues: ToolLintIssue[];
+  summary: Record<ToolLintSeverity, number>;
 }

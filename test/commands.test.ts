@@ -4,11 +4,13 @@ import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { runEval } from "../src/commands/eval.js";
 import { runInit } from "../src/commands/init.js";
+import { runLint } from "../src/commands/lint.js";
 import { runReport } from "../src/commands/report.js";
 import { buildCli } from "../src/index.js";
+import { lintToolFile } from "../src/linter.js";
 import { chooseMockTool } from "../src/mockAgent.js";
 import { LATEST_RUN_PATH } from "../src/results.js";
-import type { ToolDefinition } from "../src/types.js";
+import type { ToolDefinition, ToolFile, ToolLintIssue } from "../src/types.js";
 import { loadTasksFile, loadToolsFile } from "../src/validation.js";
 
 function captureOutput(): { lines: string[]; io: { stdout(message: string): void; stderr(message: string): void } } {
@@ -27,6 +29,16 @@ function captureOutput(): { lines: string[]; io: { stdout(message: string): void
   };
 }
 
+function lintIssues(tools: ToolDefinition[]): ToolLintIssue[] {
+  const toolFile: ToolFile = {
+    name: "test-tools",
+    version: "0.2.0",
+    tools
+  };
+
+  return lintToolFile(toolFile).issues;
+}
+
 describe("ToolSmith commands", () => {
   beforeEach(async () => {
     await rm(join(process.cwd(), ".toolsmith"), { recursive: true, force: true });
@@ -37,7 +49,7 @@ describe("ToolSmith commands", () => {
     const commandNames = program.commands.map((command) => command.name());
 
     expect(program.name()).toBe("toolsmith");
-    expect(commandNames).toEqual(expect.arrayContaining(["init", "eval", "report"]));
+    expect(commandNames).toEqual(expect.arrayContaining(["init", "lint", "eval", "report"]));
   });
 
   it("initializes a local config file", async () => {
@@ -48,7 +60,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.1.0");
+      expect(config.version).toBe("0.2.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -64,6 +76,14 @@ describe("ToolSmith commands", () => {
     expect(tools.tools.map((tool) => tool.name)).toEqual(["create_calendar_event", "send_email"]);
     expect(tasks.tasks).toHaveLength(6);
     expect(tasks.tasks[0]?.expectedTool).toBe("create_calendar_event");
+  });
+
+  it("keeps v0.1.0 calendar-email tools valid without examples", async () => {
+    const tools = await loadToolsFile("examples/calendar-email/tools.json");
+
+    expect(tools.version).toBe("0.1.0");
+    expect(tools.tools).toHaveLength(2);
+    expect(tools.tools.every((tool) => tool.examples === undefined)).toBe(true);
   });
 
   it("rejects invalid tools and tasks", async () => {
@@ -84,6 +104,123 @@ describe("ToolSmith commands", () => {
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
+  });
+
+  it("lint command prints a static report", async () => {
+    const output = captureOutput();
+    const report = await runLint({ examplePath: "examples/calendar-email" }, output.io);
+
+    expect(report.toolsChecked).toBe(2);
+    expect(report.summary.warning).toBeGreaterThan(0);
+    expect(output.lines).toContain("ToolSmith Lint Report");
+    expect(output.lines).toContain("Tools checked: 2");
+    expect(output.lines.some((line) => line.includes("[warning] send_email"))).toBe(true);
+  });
+
+  it("linter catches vague tool names", () => {
+    const issues = lintIssues([
+      {
+        name: "process_data",
+        description: "Use this tool when raw import data needs normalization.",
+        examples: ["Normalize imported rows."]
+      }
+    ]);
+
+    expect(issues.some((issue) => issue.id === "vague-tool-name" && issue.toolName === "process_data")).toBe(true);
+  });
+
+  it("linter catches missing and weak descriptions", () => {
+    const issues = lintIssues([
+      { name: "search_docs", examples: ["Find API docs."] },
+      { name: "draft_reply", description: "Draft reply.", examples: ["Draft a response."] }
+    ]);
+
+    expect(issues.some((issue) => issue.id === "missing-description" && issue.toolName === "search_docs")).toBe(true);
+    expect(issues.some((issue) => issue.id === "weak-description" && issue.toolName === "draft_reply")).toBe(true);
+  });
+
+  it("linter catches unclear parameter names", () => {
+    const issues = lintIssues([
+      {
+        name: "create_ticket",
+        description: "Use this tool when a support ticket should be created.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            payload: {
+              type: "object"
+            }
+          }
+        },
+        examples: ["Create a support ticket for a billing problem."]
+      }
+    ]);
+
+    expect(issues.some((issue) => issue.id === "unclear-parameter-name")).toBe(true);
+  });
+
+  it("linter catches overlapping tools", () => {
+    const issues = lintIssues([
+      {
+        name: "send_message",
+        description: "Use this tool when sending an internal message to a user.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            recipient: {
+              type: "string"
+            }
+          }
+        },
+        examples: ["Message a teammate."]
+      },
+      {
+        name: "send_email",
+        description: "Use this tool when sending an email message to a user.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            to: {
+              type: "string"
+            }
+          }
+        },
+        examples: ["Email a teammate."]
+      }
+    ]);
+
+    expect(issues.some((issue) => issue.id === "overlapping-tools")).toBe(true);
+  });
+
+  it("linter catches risky side-effect tools", () => {
+    const issues = lintIssues([
+      {
+        name: "delete_item",
+        description: "Use this tool when deleting an item from the local mock store.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            itemId: {
+              type: "string"
+            }
+          }
+        },
+        examples: ["Delete a mock item."]
+      }
+    ]);
+
+    expect(issues.some((issue) => issue.id === "risky-side-effect-tool")).toBe(true);
+  });
+
+  it("linter warns about missing examples", () => {
+    const issues = lintIssues([
+      {
+        name: "lookup_user",
+        description: "Use this tool when looking up a user by id."
+      }
+    ]);
+
+    expect(issues.some((issue) => issue.id === "missing-examples" && issue.toolName === "lookup_user")).toBe(true);
   });
 
   it("mock agent chooses expected tools by keyword", () => {

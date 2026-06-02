@@ -17,11 +17,14 @@
 
 ## v0.2.0
 
-- Add stricter JSON schema files for tools and tasks.
-- Add richer failure messages for missing tools, wrong arguments, and unsafe actions.
-- Add more local-only examples.
+- Add a static `lint` command for local tool definitions.
+- Flag vague tool names, weak descriptions, unclear parameters, overlapping tools, risky side-effect wording, and missing examples.
+- Add an intentionally confusing local-only fixture for lint demos.
+- Keep ToolSmith free of real model/API calls and real tool side effects.
 
 ## Later
 
+- Add stricter JSON schema files for tools and tasks.
+- Add richer failure messages for missing tools, wrong arguments, and unsafe actions.
 - Consider model/provider integration only after the local runner, schemas, and safety model are stable.
 - Keep all real-world side effects behind explicit mock adapters unless a future design proves otherwise.

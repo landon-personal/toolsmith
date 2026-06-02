@@ -1,0 +1,77 @@
+{
+  "name": "confusing-tools",
+  "version": "0.2.0",
+  "description": "Intentionally confusing local tool definitions for demonstrating ToolSmith lint warnings.",
+  "safety": {
+    "network": false,
+    "realSideEffects": false
+  },
+  "tools": [
+    {
+      "name": "process_data",
+      "description": "Process data.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          }
+        },
+        "required": ["data"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "manage_user",
+      "description": "Manage user.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "payload": {
+            "type": "object"
+          }
+        },
+        "required": ["payload"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "send_message",
+      "description": "Send a message to a user.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string"
+          }
+        },
+        "required": ["input"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "send_email",
+      "description": "Send an email to a user.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": ["to", "subject", "value"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "delete_item",
+      "description": "Delete item."
+    }
+  ]
+}
