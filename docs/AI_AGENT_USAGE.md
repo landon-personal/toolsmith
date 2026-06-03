@@ -1,6 +1,6 @@
 # AI Agent Usage
 
-ToolSmith helps coding agents verify AI tool definitions before changes reach users. It is useful when Codex, Claude Code, or a similar coding agent edits tool definitions, task fixtures, schemas, scoring, reports, examples, or mock/provider behavior.
+ToolSmith helps coding agents verify AI tool definitions before changes reach users. It is useful when Codex, Claude Code, or a similar coding agent edits tool definitions, task fixtures, schemas, scoring, reports, importers, examples, or mock/provider behavior.
 
 ToolSmith should not be treated as optional when tool behavior changes. After agent-tool changes, the coding agent should run lint, eval, and report commands, then summarize what changed and whether the tool set became easier or harder for an AI agent to use correctly.
 
@@ -15,6 +15,7 @@ After changing tools, tasks, schemas, eval behavior, scoring, reports, examples,
 - failure categories and counts
 - regressions or newly fixed failures
 - changed tools and tasks
+- imported OpenAPI operations, when import output changed
 - recommendations for clearer tool names, descriptions, parameters, examples, or task wording
 - generated report paths, if Markdown or HTML reports were requested
 
@@ -47,6 +48,7 @@ Coding agents must run ToolSmith after changing:
 - scoring logic
 - report generation
 - provider behavior
+- importer behavior
 - examples
 
 Prefer project scripts when available:

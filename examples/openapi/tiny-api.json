@@ -1,0 +1,136 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Tiny Users and Orders API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/users/{id}": {
+      "get": {
+        "operationId": "getUserById",
+        "summary": "Retrieve a user by ID.",
+        "description": "Use this operation when looking up one user record.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeOrders",
+            "in": "query",
+            "description": "Whether to include recent orders.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "Delete a user.",
+        "description": "Use this operation when a user should be removed.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "operationId": "createUser",
+        "summary": "Create a user.",
+        "description": "Use this operation when creating a new user record.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "name"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address for the user."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Display name for the user."
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": ["admin", "member"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "summary": "List orders.",
+        "description": "Use this operation when listing recent orders.",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Optional order status filter.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/orders/{id}/refund": {
+      "post": {
+        "operationId": "refundOrder",
+        "summary": "Refund an order.",
+        "description": "Use this operation when an order refund should be requested.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Order ID.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "description": "Reason for the refund."
+                  },
+                  "amount": {
+                    "type": "number",
+                    "description": "Optional amount to refund."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

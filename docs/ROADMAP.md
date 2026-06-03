@@ -86,6 +86,14 @@ toolsmith agents setup --codex --claude
 - Document GitHub Actions examples without creating workflow files or enabling automation in this repo.
 - Keep ToolSmith mock-agent-based with no real model/API calls, no real tool side effects, no npm publishing, and no GitHub push.
 
+## v0.7.0
+
+- Add basic OpenAPI JSON import with `toolsmith import openapi <path> --out <path>`.
+- Support a small OpenAPI subset: `openapi`, `info.title`, `paths`, GET/POST/PUT/PATCH/DELETE operations, `operationId`, summary, description, parameters, and JSON request bodies.
+- Generate stable snake_case tool names and ToolSmith-compatible input schemas.
+- Mark non-GET generated tools with warning-friendly side-effect metadata and confirmation requirements.
+- Keep import local and definition-only; do not execute imported APIs, build a full MCP server, publish to npm, push to GitHub, or add real model/API integration.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.
@@ -98,5 +106,6 @@ toolsmith agents setup --codex --claude
 
 - Add stricter JSON schema files for tools and tasks.
 - Add richer failure messages for missing tools, wrong arguments, and unsafe actions.
+- Consider MCP-style import after the basic OpenAPI importer is stable.
 - Consider model/provider integration only after the local runner, schemas, and safety model are stable.
 - Keep all real-world side effects behind explicit mock adapters unless a future design proves otherwise.

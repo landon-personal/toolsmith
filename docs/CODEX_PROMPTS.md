@@ -81,3 +81,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Add CI-friendly ToolSmith eval thresholds and saved-run regression comparison. Support eval --fail-under, compare baseline/current run JSON files, and compare --fail-on-regression. Keep GitHub Actions examples docs-only, and do not publish to npm, push to GitHub, create workflow files, add real model/API integration, or add real tool side effects.
 ```
+
+## Add OpenAPI Importer
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Add a local OpenAPI JSON importer that converts a small supported subset into ToolSmith tool definitions. Support toolsmith import openapi <path> --out <path>, generate stable names and input schemas, warn on unsupported features, and do not execute imported APIs, build MCP server behavior, publish to npm, push to GitHub, add real model/API integration, or add real tool side effects.
+```

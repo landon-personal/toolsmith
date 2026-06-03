@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0
+
+- Added `import openapi <path> --out <path>` for basic OpenAPI JSON imports.
+- Converted supported OpenAPI operations into ToolSmith tool definitions with stable snake_case names.
+- Converted path/query/header parameters and JSON request body properties into ToolSmith `inputSchema` properties.
+- Added warning-friendly side-effect metadata for non-GET imported operations.
+- Added a tiny OpenAPI fixture under `examples/openapi/`.
+- Kept import local and definition-only with no imported API execution, no real model/API calls, no real tool side effects, no npm publishing, and no GitHub push.
+
 ## 0.6.0
 
 - Added `eval --fail-under <score>` for CI-friendly score thresholds.

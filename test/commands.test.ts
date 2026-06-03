@@ -4,10 +4,12 @@ import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { runCompare } from "../src/commands/compare.js";
 import { runEval } from "../src/commands/eval.js";
+import { runImportOpenApi } from "../src/commands/importOpenApi.js";
 import { runInit } from "../src/commands/init.js";
 import { runLint } from "../src/commands/lint.js";
 import { runReport } from "../src/commands/report.js";
 import { evaluate } from "../src/evaluator.js";
+import { importOpenApiDocument } from "../src/importers/openapi.js";
 import { buildCli } from "../src/index.js";
 import { lintToolFile } from "../src/linter.js";
 import { chooseMockTool } from "../src/mockAgent.js";
@@ -22,6 +24,8 @@ import { VERSION } from "../src/version.js";
 const CALENDAR_EMAIL_EXAMPLE = join("examples", "calendar-email");
 const CALENDAR_EMAIL_TOOLS_PATH = join(CALENDAR_EMAIL_EXAMPLE, "tools.json");
 const CALENDAR_EMAIL_TASKS_PATH = join(CALENDAR_EMAIL_EXAMPLE, "tasks.json");
+const OPENAPI_EXAMPLE = join("examples", "openapi");
+const OPENAPI_TINY_API_PATH = join(OPENAPI_EXAMPLE, "tiny-api.json");
 
 function captureOutput(): { lines: string[]; io: { stdout(message: string): void; stderr(message: string): void } } {
   const lines: string[] = [];
@@ -97,14 +101,14 @@ function buildRunFixture(
 ): EvalRun {
   return {
     id,
-    version: "0.6.0",
+    version: "0.7.0",
     createdAt: "2026-06-03T00:00:00.000Z",
     examplePath: ".",
     toolsPath: "tools.json",
     tasksPath: "tasks.json",
     agent: {
       name: "keyword-mock-agent",
-      version: "0.6.0"
+      version: "0.7.0"
     },
     summary: {
       total,
@@ -136,14 +140,14 @@ describe("ToolSmith commands", () => {
 
     expect(program.name()).toBe("toolsmith");
     expect(program.version()).toBe(VERSION);
-    expect(commandNames).toEqual(expect.arrayContaining(["init", "lint", "eval", "report", "compare"]));
+    expect(commandNames).toEqual(expect.arrayContaining(["init", "lint", "eval", "report", "compare", "import"]));
   });
 
   it("has package-ready CLI metadata", async () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("0.6.0");
+    expect(packageJson.version).toBe("0.7.0");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
     expect(packageJson.files).toEqual(
@@ -161,7 +165,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.6.0");
+      expect(config.version).toBe("0.7.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -322,6 +326,122 @@ describe("ToolSmith commands", () => {
     ]);
 
     expect(issues.some((issue) => issue.id === "missing-examples" && issue.toolName === "lookup_user")).toBe(true);
+  });
+
+  it("imports OpenAPI fixture into valid lintable tools", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-openapi-"));
+    const output = captureOutput();
+
+    try {
+      const out = join(directory, "tools.generated.json");
+      const result = await runImportOpenApi(OPENAPI_TINY_API_PATH, { out }, output.io);
+      const generated = await loadToolsFile(out);
+      const lintReport = lintToolFile(generated);
+
+      expect(result.pathsScanned).toBe(4);
+      expect(result.operationsImported).toBe(5);
+      expect(generated.version).toBe("0.7.0");
+      expect(generated.tools.map((tool) => tool.name)).toEqual([
+        "get_user_by_id",
+        "delete_user",
+        "create_user",
+        "get_orders",
+        "refund_order"
+      ]);
+      expect(lintReport.toolsChecked).toBe(5);
+      expect(output.lines).toContain("ToolSmith OpenAPI Import");
+      expect(output.lines).toContain("Operations imported: 5");
+      expect(output.lines).toContain("Safety: generated tool definitions only; no imported API operations were executed.");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("normalizes operationId and fallback names", async () => {
+    const document = JSON.parse(await readFile(OPENAPI_TINY_API_PATH, "utf8"));
+    const result = importOpenApiDocument(document);
+
+    expect(result.toolFile.tools.find((tool) => tool.name === "create_user")).toBeDefined();
+    expect(result.toolFile.tools.find((tool) => tool.name === "get_orders")).toBeDefined();
+  });
+
+  it("converts path query and JSON request body parameters", async () => {
+    const document = JSON.parse(await readFile(OPENAPI_TINY_API_PATH, "utf8"));
+    const result = importOpenApiDocument(document);
+    const getUser = result.toolFile.tools.find((tool) => tool.name === "get_user_by_id");
+    const createUser = result.toolFile.tools.find((tool) => tool.name === "create_user");
+
+    expect(getUser?.inputSchema?.properties).toMatchObject({
+      id: { type: "string" },
+      include_orders: { type: "boolean" }
+    });
+    expect(getUser?.inputSchema?.required).toEqual(["id"]);
+    expect(createUser?.inputSchema?.properties).toMatchObject({
+      email: { type: "string" },
+      name: { type: "string" },
+      role: { type: "string", enum: ["admin", "member"] }
+    });
+    expect(createUser?.inputSchema?.required).toEqual(["email", "name"]);
+  });
+
+  it("marks non-GET imported operations as warning-friendly side effect tools", async () => {
+    const document = JSON.parse(await readFile(OPENAPI_TINY_API_PATH, "utf8"));
+    const result = importOpenApiDocument(document);
+    const deleteUser = result.toolFile.tools.find((tool) => tool.name === "delete_user");
+    const refundOrder = result.toolFile.tools.find((tool) => tool.name === "refund_order");
+
+    expect(deleteUser?.requiresConfirmation).toBe(true);
+    expect(deleteUser?.sideEffects).toContain("destructive");
+    expect(refundOrder?.requiresConfirmation).toBe(true);
+    expect(refundOrder?.sideEffects).toContain("external side effect");
+  });
+
+  it("OpenAPI import handles unsupported and malformed operations without crashing", () => {
+    const result = importOpenApiDocument({
+      openapi: "3.0.3",
+      info: { title: "Odd API" },
+      paths: {
+        "/items": {
+          get: {
+            summary: "List items.",
+            parameters: "bad"
+          },
+          trace: {
+            summary: "Trace items."
+          },
+          post: "bad"
+        }
+      }
+    });
+
+    expect(result.operationsImported).toBe(1);
+    expect(result.warnings).toEqual(
+      expect.arrayContaining([
+        "Skipping parameters for GET /items: parameters must be an array.",
+        'Skipping unsupported method "TRACE" for /items.',
+        "Skipping POST /items: operation must be an object."
+      ])
+    );
+  });
+
+  it("OpenAPI import reports missing and malformed files with friendly errors", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-openapi-invalid-"));
+
+    try {
+      await writeFile(join(directory, "malformed.json"), "{", "utf8");
+
+      await expect(
+        runImportOpenApi(join(directory, "missing.json"), { out: join(directory, "tools.json") }, captureOutput().io)
+      ).rejects.toThrow("Missing OpenAPI file");
+      await expect(
+        runImportOpenApi(join(directory, "malformed.json"), { out: join(directory, "tools.json") }, captureOutput().io)
+      ).rejects.toThrow("Malformed OpenAPI file");
+      await expect(
+        runImportOpenApi(OPENAPI_TINY_API_PATH, {}, captureOutput().io)
+      ).rejects.toThrow("Missing required --out");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   it("mock agent chooses expected tools by keyword", () => {

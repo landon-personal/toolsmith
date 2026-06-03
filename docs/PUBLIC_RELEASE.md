@@ -10,6 +10,8 @@ As of v0.5.0, ToolSmith can generate local Markdown and static HTML reports from
 
 As of v0.6.0, ToolSmith includes CI-friendly local eval thresholds and saved-run regression comparison. GitHub Actions documentation is example-only; no workflow automation, GitHub push, npm publishing, model/API integration, or real tool side effects are added.
 
+As of v0.7.0, ToolSmith can import a basic OpenAPI JSON file into ToolSmith tool definitions. Import is local and definition-only; ToolSmith does not execute imported API endpoints, send network requests, build a full MCP server, or add real side effects.
+
 ## Distribution Targets
 
 - Public GitHub repository: source code, issues, pull requests, release tags, and project history.

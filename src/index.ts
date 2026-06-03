@@ -3,6 +3,7 @@ import { Command } from "commander";
 import { ToolSmithError } from "./errors.js";
 import { runCompare } from "./commands/compare.js";
 import { runEval } from "./commands/eval.js";
+import { runImportOpenApi } from "./commands/importOpenApi.js";
 import { runInit } from "./commands/init.js";
 import { runLint } from "./commands/lint.js";
 import { runReport } from "./commands/report.js";
@@ -69,10 +70,21 @@ export function buildCli(io: CommandIO = defaultIO): Command {
       await runCompare(baselineRun, currentRun, { failOnRegression: options.failOnRegression }, io);
     });
 
+  const importCommand = program.command("import").description("Import external tool definitions into ToolSmith.");
+
+  importCommand
+    .command("openapi")
+    .argument("<path>", "Path to an OpenAPI JSON file.")
+    .description("Convert a basic OpenAPI JSON file into ToolSmith tool definitions.")
+    .requiredOption("--out <path>", "Output path for the generated tools JSON file.")
+    .action(async (path: string, options: { out: string }) => {
+      await runImportOpenApi(path, { out: options.out }, io);
+    });
+
   return program;
 }
 
-export { runCompare, runEval, runInit, runLint, runReport };
+export { runCompare, runEval, runImportOpenApi, runInit, runLint, runReport };
 
 function parseReportFormat(value: string | undefined): "terminal" | "json" | "markdown" | "html" {
   if (value === undefined || value === "terminal" || value === "json" || value === "markdown" || value === "html") {

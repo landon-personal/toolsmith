@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 0.6.0
+Version: 0.7.0
 
 ## Done
 
@@ -27,6 +27,8 @@ Version: 0.6.0
 - Added CI-friendly `eval --fail-under <score>` threshold checks.
 - Added `compare <baseline-run> <current-run>` regression comparison for saved eval run JSON files.
 - Added docs-only GitHub Actions examples for future users.
+- Added basic OpenAPI JSON import for generating ToolSmith tool definitions.
+- Added `examples/openapi/tiny-api.json` as a local import fixture.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -39,7 +41,8 @@ Version: 0.6.0
 - npm publishing.
 - GitHub Actions or release automation.
 - GitHub Actions workflow files in this repo.
+- MCP-style import.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.6.0 update adds local CI threshold and regression comparison behavior only; no npm publishing happened, no GitHub push happened, and no GitHub Actions workflow automation was added.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.7.0 update adds local OpenAPI JSON import only; imported API operations are not executed. No npm publishing happened, no GitHub push happened, and no GitHub Actions workflow automation was added.

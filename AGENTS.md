@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.6.0 CI mode and regression checks.
+Current checkpoint: v0.7.0 OpenAPI importer.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -89,6 +89,17 @@ v0.6.0 adds:
 - optional `compare --fail-on-regression` behavior for CI
 - docs-only GitHub Actions examples
 - no GitHub Actions workflow files in this repo
+- no npm publishing
+- no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
+
+v0.7.0 adds:
+- basic OpenAPI JSON import with `toolsmith import openapi <path> --out <path>`
+- generated ToolSmith tool definitions from supported OpenAPI operations
+- examples/openapi/ as a tiny local import fixture
+- no imported API execution
+- no full MCP server behavior
 - no npm publishing
 - no GitHub push or release automation
 - no real model/API calls

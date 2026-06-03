@@ -9,6 +9,7 @@ The project is intentionally small. The current runtime provides a TypeScript No
 - `eval` loads local `tools.json` and `tasks.json`, runs tasks through a keyword mock agent, scores results, categorizes failures, and writes `.toolsmith/runs/latest.json`. It can fail CI with `--fail-under <score>`.
 - `report` reads `.toolsmith/runs/latest.json` and prints score, failure breakdown, passed tasks, failed tasks, reasons, and recommendations. It can also generate local JSON, Markdown, and static HTML reports.
 - `compare` compares two saved eval run JSON files and can fail CI with `--fail-on-regression`.
+- `import openapi` converts a basic OpenAPI JSON file into ToolSmith tool definitions for review and linting.
 
 ToolSmith does not call models, send email, edit calendars, connect to databases, deploy, publish, use API keys, or print environment variables.
 
@@ -39,7 +40,11 @@ npm run dev -- report
 npm run dev -- report --format markdown
 npm run dev -- report --format html
 npm run dev -- compare baseline.json .toolsmith/runs/latest.json --fail-on-regression
+npm run dev -- import openapi examples/openapi/tiny-api.json --out examples/openapi/tools.generated.json
+npm run dev -- lint . --tools examples/openapi/tools.generated.json
 ```
+
+Imported OpenAPI tools should be reviewed and linted before use. ToolSmith does not execute imported APIs, send network requests, or perform imported API side effects.
 
 ## Using ToolSmith with Coding Agents
 
@@ -66,7 +71,8 @@ npm run package:check
 - `docs/` contains planning and safety notes.
 - `examples/calendar-email/` contains starter mocked tool and task definitions.
 - `examples/confusing-tools/` contains intentionally confusing tool definitions for lint demos.
+- `examples/openapi/` contains a tiny OpenAPI import fixture.
 
 ## Current Scope
 
-v0.6.0 adds CI-friendly eval thresholds and saved-run regression comparison while preserving shareable reports and package-ready CLI behavior. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.
+v0.7.0 adds basic OpenAPI JSON import while preserving CI checks, shareable reports, and package-ready CLI behavior. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.
