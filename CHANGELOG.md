@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2
+
+- Added the approved root MIT `LICENSE` file.
+- Added safe GitHub `repository` and `bugs` package metadata.
+- Updated public release docs, status, and README for public GitHub repository visibility.
+- Kept npm publishing, release tags, GitHub Pages deployment, GitHub Actions workflows, real model/API integration, and real tool side effects out of scope.
+
 ## 1.0.1
 
 - Added `docs/PUBLIC_REPOSITORY_PREP.md` for future public GitHub repository and npm publishing review.

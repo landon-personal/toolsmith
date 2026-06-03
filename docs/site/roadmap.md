@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v1.0.1.
+Current version: v1.0.2.
 
 Completed:
 
@@ -19,6 +19,7 @@ Completed:
 - v0.9.0: public beta readiness docs, troubleshooting, release checklist, and example polish
 - v1.0.0: stable public local CLI baseline
 - v1.0.1: public repository prep docs, security/privacy/contributing docs, and release audit
+- v1.0.2: root MIT license, GitHub repository metadata, and public visibility readiness
 
 Near-term path:
 

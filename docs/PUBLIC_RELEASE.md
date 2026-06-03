@@ -20,9 +20,11 @@ As of v1.0.0, ToolSmith's stable local-first CLI preparation is complete. The pr
 
 As of v1.0.1, ToolSmith has public repository preparation docs, basic security/privacy/contributing docs, and a local release audit script. A private GitHub repository now exists at `https://github.com/landon-personal/toolsmith`, but public visibility, release tags, npm publishing, GitHub Pages deployment, GitHub Actions workflow, model/API integration, and real tool side effects remain out of scope until explicitly approved.
 
+As of v1.0.2, ToolSmith adds the approved root MIT `LICENSE` file and safe GitHub `repository`/`bugs` package metadata. The existing GitHub repository is prepared for public visibility at `https://github.com/landon-personal/toolsmith`, while npm publishing, release tags, GitHub Pages deployment, GitHub Actions workflow, model/API integration, and real tool side effects remain out of scope until explicitly approved.
+
 ## Distribution Targets
 
-- Public GitHub repository: source code, issues, pull requests, releases, release tags, and project history.
+- Public GitHub repository: `https://github.com/landon-personal/toolsmith` for source code, issues, pull requests, releases, release tags, and project history.
 - GitHub Pages: documentation site with the quickstart, examples, safety notes, roadmap, and release instructions.
 - npm: CLI installation path for users who want to run ToolSmith without cloning the repository.
 
@@ -55,7 +57,7 @@ Publishing should not happen until explicitly approved. Do not publish to npm, p
 
 Before any npm publish, verify package name availability and complete `docs/RELEASE_CHECKLIST.md`.
 
-Before making the repository public, complete `docs/PUBLIC_REPOSITORY_PREP.md`. Current blockers include configuring a security contact, checking npm package name availability, confirming the license file decision, and approving public-facing package metadata.
+Before any npm publish, complete `docs/PUBLIC_REPOSITORY_PREP.md`. Current blockers include configuring a security contact and checking npm package name availability.
 
 GitHub Pages deployment should not happen until explicitly approved. Do not create Pages workflows or change repository Pages settings as part of ordinary documentation work.
 

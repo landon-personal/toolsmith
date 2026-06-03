@@ -147,11 +147,16 @@ describe("ToolSmith commands", () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("1.0.1");
+    expect(packageJson.version).toBe("1.0.2");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
+    expect(packageJson.repository).toEqual({
+      type: "git",
+      url: "git+https://github.com/landon-personal/toolsmith.git"
+    });
+    expect(packageJson.bugs).toEqual({ url: "https://github.com/landon-personal/toolsmith/issues" });
     expect(packageJson.files).toEqual(
-      expect.arrayContaining(["dist", "README.md", "CHANGELOG.md", "docs", "examples"])
+      expect.arrayContaining(["dist", "README.md", "LICENSE", "CHANGELOG.md", "docs", "examples"])
     );
     expect(packageJson.files).not.toEqual(expect.arrayContaining(disallowedPackageFiles));
     expect(packageJson.scripts["package:check"]).toContain("scripts/package-check.mjs");
@@ -161,6 +166,7 @@ describe("ToolSmith commands", () => {
   it("keeps public beta documentation files in place", async () => {
     const docs = [
       "docs/TROUBLESHOOTING.md",
+      "LICENSE",
       "docs/RELEASE_CHECKLIST.md",
       "docs/CROSS_PLATFORM.md",
       "docs/SCHEMA.md",
@@ -189,7 +195,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("1.0.1");
+      expect(config.version).toBe("1.0.2");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -364,7 +370,7 @@ describe("ToolSmith commands", () => {
 
       expect(result.pathsScanned).toBe(4);
       expect(result.operationsImported).toBe(5);
-      expect(generated.version).toBe("1.0.1");
+      expect(generated.version).toBe("1.0.2");
       expect(generated.tools.map((tool) => tool.name)).toEqual([
         "get_user_by_id",
         "delete_user",

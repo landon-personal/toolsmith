@@ -4,7 +4,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 
 For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
 
-For v1.0.1 public repository prep, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, and approval blockers.
+For v1.0.2 public repository readiness, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, and approval blockers.
 
 ## Local Verification
 

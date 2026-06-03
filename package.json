@@ -1,6 +1,6 @@
 {
   "name": "toolsmith",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Local-first CLI for testing whether AI agents use tool definitions correctly.",
   "type": "module",
   "bin": {
@@ -10,6 +10,7 @@
   "files": [
     "dist",
     "README.md",
+    "LICENSE",
     "CHANGELOG.md",
     "docs",
     "examples"
@@ -31,6 +32,13 @@
   ],
   "author": "ToolSmith contributors",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/landon-personal/toolsmith.git"
+  },
+  "bugs": {
+    "url": "https://github.com/landon-personal/toolsmith/issues"
+  },
   "engines": {
     "node": ">=20"
   },

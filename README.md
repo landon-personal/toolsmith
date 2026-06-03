@@ -19,16 +19,14 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.1 public repository preparation. It is stable locally, but it is not published to npm or pushed to a public GitHub repository yet unless a future explicit approval changes that.
+ToolSmith is at v1.0.2 public repository readiness. It is stable locally and available on GitHub, but it is not published to npm yet.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
 ## Quickstart
 
-Use the real repository URL once the repo is public:
-
 ```sh
-git clone <repo-url>
+git clone https://github.com/landon-personal/toolsmith.git
 cd toolsmith
 npm install
 npm run compile
@@ -160,7 +158,8 @@ This compiles ToolSmith, creates a local npm tarball, installs it into a tempora
 ToolSmith is stable locally at v1.0.x. Public repository and npm release work remains approval-gated.
 
 - npm publishing has not happened.
-- GitHub push and release tags have not happened.
+- The GitHub repository is public at `https://github.com/landon-personal/toolsmith`.
+- Release tags have not been created.
 - GitHub Pages deployment is not enabled.
 - Current usage remains local development and local package smoke checks.
 
@@ -171,7 +170,7 @@ npm install -g toolsmith
 npx toolsmith@latest --help
 ```
 
-Before any public release, review `docs/PUBLIC_REPOSITORY_PREP.md`, run `npm run release:audit`, confirm the repository URL, confirm package name availability, configure a security contact, and explicitly approve publishing steps.
+Before npm publishing, review `docs/PUBLIC_REPOSITORY_PREP.md`, run `npm run release:audit`, confirm package name availability, configure a security contact, and explicitly approve publishing steps.
 
 ## Future Install Goal
 

@@ -123,6 +123,13 @@ toolsmith agents setup --codex --claude
 - Document package metadata TODOs, including repository URL, package name availability, security contact, and license file confirmation.
 - Keep this as release preparation with no npm publishing, no GitHub push, no release tags, no GitHub Pages deployment, no GitHub Actions workflow automation, no model/API integration, and no real tool side effects.
 
+## v1.0.2
+
+- Add the approved root MIT license file.
+- Add safe GitHub `repository` and `bugs` package metadata.
+- Prepare and apply public GitHub repository visibility.
+- Keep npm publishing, release tags, GitHub Pages deployment, GitHub Actions workflow automation, model/API integration, and real tool side effects out of scope.
+
 ## Near-Term Public Release Path
 
 - v1.1.0: optional real model provider.

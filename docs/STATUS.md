@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 1.0.1
+Version: 1.0.2
 
 ## Done
 
@@ -37,6 +37,9 @@ Version: 1.0.1
 - Added security, privacy, and contributing docs for future public review.
 - Added a local release audit script for generated files and obvious secret-shaped strings.
 - Updated release checklist and public release notes for approval-gated public repo/npm prep.
+- Added the approved root MIT `LICENSE` file.
+- Added safe GitHub `repository` and `bugs` package metadata.
+- Prepared/applied public GitHub repository visibility.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -53,9 +56,9 @@ Version: 1.0.1
 - MCP-style import.
 - npm prerelease publishing.
 - release tags.
-- Public repository setup review.
+- npm publishing.
 - v1.1.0 optional real model provider.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.1 update is a public repository prep patch with no runtime features added; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, no release tags were created, and no GitHub push happened.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.2 update adds a root MIT license file, safe GitHub package metadata, and public repository visibility preparation with no runtime feature changes; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.

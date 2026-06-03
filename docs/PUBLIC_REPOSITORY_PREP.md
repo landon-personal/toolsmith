@@ -1,10 +1,10 @@
 # Public Repository Prep
 
-ToolSmith v1.0.1 is a release-prep patch for a future public GitHub repository and future npm publishing review.
+ToolSmith v1.0.2 is a release-prep patch that adds the root MIT license file, records safe GitHub package metadata, and prepares the repository for public visibility.
 
-This checklist does not publish to npm, tag, deploy, enable automation, or make the repository public. Public release steps remain approval-gated.
+This checklist does not publish to npm, tag, deploy, enable GitHub Pages, enable automation, or publish packages. npm release steps remain approval-gated.
 
-Private setup repository:
+GitHub repository:
 
 ```text
 https://github.com/landon-personal/toolsmith
@@ -12,10 +12,9 @@ https://github.com/landon-personal/toolsmith
 
 ## Repository Name
 
-- Private repository name: `toolsmith`.
-- TODO: Confirm the final public repository name before changing visibility.
+- Repository name: `toolsmith`.
 - TODO: Confirm whether the npm package name should remain `toolsmith` after checking availability.
-- `origin` is configured for the private GitHub repository after explicit approval.
+- `origin` is configured for `https://github.com/landon-personal/toolsmith.git`.
 
 ## Repository Description
 
@@ -25,18 +24,18 @@ Current package description:
 Local-first CLI for testing whether AI agents use tool definitions correctly.
 ```
 
-Private repository description:
+Repository description:
 
 ```text
 Test, lint, and report on AI agent tool use before shipping.
 ```
 
-TODO: Confirm the public GitHub repository description before making the repository public.
+The repository description is configured on GitHub.
 
 ## README Readiness
 
 - README explains what ToolSmith is, who it is for, the local-first status, quickstart commands, stable commands, reports, CI mode, importers, coding-agent usage, safety, and package checks.
-- README still uses `<repo-url>` as a placeholder until public visibility is explicitly approved.
+- README uses the GitHub repository clone URL.
 - README must not claim npm or GitHub publication before those steps are explicitly approved.
 
 ## Docs Readiness
@@ -58,25 +57,28 @@ TODO: Confirm the public GitHub repository description before making the reposit
 Reviewed fields:
 
 - `name`: `toolsmith`
-- `version`: `1.0.1`
+- `version`: `1.0.2`
 - `description`: present
 - `bin`: maps `toolsmith` to `./dist/cli.js`
 - `files`: allows `dist`, README, changelog, docs, and examples
 - `scripts`: includes compile, test, package smoke check, and release audit
 - `keywords`: present
 - `license`: currently `MIT` in `package.json`
+- `repository`: `git+https://github.com/landon-personal/toolsmith.git`
+- `bugs`: `https://github.com/landon-personal/toolsmith/issues`
 - `engines`: Node `>=20`
 
 Release blockers and TODOs:
 
 - TODO: Check npm package name availability before publishing.
-- TODO: Confirm the license decision and add a root `LICENSE` file if approved. The package metadata currently says `MIT`, but there is no root license file.
-- TODO: Add `repository`, `bugs`, and `homepage` package fields only after public-facing metadata is explicitly approved. The current private repository URL is `https://github.com/landon-personal/toolsmith`.
+- Root `LICENSE` file: added with approved MIT text.
+- `repository` and `bugs` package fields: added.
+- Homepage field: intentionally not added; GitHub Pages is not enabled and npm is not published.
 - TODO: Run a final package dry run before any npm publish.
 
 ## License Decision
 
-The current `package.json` declares `MIT`. This should be confirmed before public release, and a matching root `LICENSE` file should be added only after approval.
+The current `package.json` declares `MIT`, and v1.0.2 adds the matching root `LICENSE` file with no private contact information.
 
 ## Security And Safety Review
 
@@ -84,7 +86,7 @@ The current `package.json` declares `MIT`. This should be confirmed before publi
 - `docs/SAFETY.md` documents the local mock-provider safety model.
 - ToolSmith should not print API keys, secrets, or environment variables.
 - ToolSmith does not execute real side-effect tools by default.
-- Real model providers are future optional work and are not part of v1.0.1.
+- Real model providers are future optional work and are not part of v1.0.2.
 
 ## Secret Scan
 
@@ -123,12 +125,12 @@ Intentional example fixtures should not be ignored accidentally.
 - Local package smoke checks are available through `npm run package:check`.
 - npm publishing has not happened.
 - TODO: Check package name availability.
-- TODO: Confirm package metadata after public-facing repository metadata is approved.
+- Package metadata now includes safe repository and bugs fields.
 - TODO: Get explicit approval before any `npm publish`.
 
 ## Release Tagging Readiness
 
-- No release tags were created for v1.0.1.
+- No release tags were created for v1.0.2.
 - TODO: Define a tagging policy before public release.
 - TODO: Get explicit approval before creating public release tags.
 
@@ -136,8 +138,6 @@ Intentional example fixtures should not be ignored accidentally.
 
 These actions must be explicitly approved before public release:
 
-- making the private GitHub repository public
-- pushing to a public GitHub repository
 - creating release tags
 - publishing to npm
 - enabling GitHub Pages deployment
@@ -145,9 +145,11 @@ These actions must be explicitly approved before public release:
 - adding real model/API integration
 - adding real side-effect tool execution
 
-## v1.0.1 Status
+## v1.0.2 Status
 
-- Private GitHub repository setup was approved and pushed to `https://github.com/landon-personal/toolsmith`.
+- Root MIT `LICENSE` file was added.
+- Package `repository` and `bugs` metadata was added.
+- Public repository visibility was approved for `https://github.com/landon-personal/toolsmith`.
 - No release tags were created.
 - No npm publish happened.
 - No GitHub Pages deployment was enabled.

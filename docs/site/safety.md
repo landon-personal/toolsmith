@@ -18,4 +18,4 @@ OpenAPI importers generate tool definitions only. They do not execute endpoints 
 
 Do not publish to npm, push to GitHub, enable GitHub Pages, or add GitHub Actions deployment unless explicitly approved.
 
-v1.0.1 public repository preparation does not change this safety model.
+v1.0.2 public repository readiness does not change this safety model.
