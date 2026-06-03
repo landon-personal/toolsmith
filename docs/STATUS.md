@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 1.0.4
+Version: 1.0.5
 
 ## Done
 
@@ -46,6 +46,8 @@ Version: 1.0.4
 - Prepared scoped npm package metadata for `@landon-personal/toolsmith`.
 - Documented that the unscoped `toolsmith` package name is taken on npm.
 - Added npm publishing dry-run documentation.
+- Completed the final npm publish gate with scoped package availability, release audit, package contents, and dry-run publish checks.
+- Confirmed GitHub Pages documentation is built and live at `https://landon-personal.github.io/toolsmith/`.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -65,4 +67,4 @@ Version: 1.0.4
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.4 update prepares the scoped npm package `@landon-personal/toolsmith` with dry-run publishing checks and no runtime feature changes; no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.5 update records the final npm publish gate for `@landon-personal/toolsmith` with no runtime feature changes; no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.

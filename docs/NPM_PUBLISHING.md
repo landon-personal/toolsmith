@@ -14,6 +14,20 @@ The CLI binary command remains:
 toolsmith --help
 ```
 
+## v1.0.5 Final Gate
+
+The final npm publish gate verifies:
+
+- npm user: `landon-personal`
+- package name: `@landon-personal/toolsmith`
+- CLI binary: `toolsmith`
+- package availability: expected 404 before first publish
+- GitHub Pages: `https://landon-personal.github.io/toolsmith/`
+- `npm pack --dry-run`
+- `npm publish --dry-run --access public`
+
+This gate does not run a real npm publish and does not create release tags.
+
 ## Future Install Goal
 
 After npm publishing is explicitly approved and completed, expected install commands are:

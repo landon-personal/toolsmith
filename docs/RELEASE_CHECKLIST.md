@@ -4,7 +4,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 
 For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
 
-For v1.0.4 scoped npm package prep, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, Pages docs checks, npm dry-runs, and approval blockers.
+For v1.0.5 final npm publish gate, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, Pages docs checks, npm dry-runs, package contents, npm auth, and approval blockers.
 
 ## Local Verification
 
@@ -22,6 +22,8 @@ For v1.0.4 scoped npm package prep, this checklist also covers repository metada
 - Run `npm run release:audit`.
 - Run `npm pack --dry-run`.
 - Run `npm publish --dry-run --access public`.
+- Confirm `npm whoami` returns `landon-personal`.
+- Confirm `npm view @landon-personal/toolsmith name version description` returns 404 before the first publish.
 
 ## Package Review
 

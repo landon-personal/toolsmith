@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ToolSmith currently runs locally with a deterministic mock agent. It does not call real models, execute real tools, send email, edit calendars, connect to databases, execute imported APIs, deploy, publish, or print secrets.
 
-Current status: v1.0.4 scoped npm package preparation. ToolSmith is stable locally and available on GitHub, but it is not published to npm.
+Current status: v1.0.5 final npm publish gate. ToolSmith is stable locally and available on GitHub, but it is not published to npm.
 
 Current commands:
 

@@ -19,7 +19,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.4 scoped npm package preparation. It is stable locally and available on GitHub, but it is not published to npm yet.
+ToolSmith is at v1.0.5 final npm publish gate. It is stable locally and available on GitHub, but it is not published to npm yet.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
@@ -160,7 +160,7 @@ ToolSmith is stable locally at v1.0.x. Public repository and npm release work re
 - npm publishing has not happened.
 - The GitHub repository is public at `https://github.com/landon-personal/toolsmith`.
 - Release tags have not been created.
-- GitHub Pages documentation is enabled from the `main` branch `/docs` folder.
+- GitHub Pages documentation is live at `https://landon-personal.github.io/toolsmith/`.
 - Current usage remains local development and local package smoke checks.
 
 Future public install goals remain:
@@ -173,7 +173,7 @@ toolsmith --help
 
 The unscoped `toolsmith` package name is already taken on npm. The scoped package name `@landon-personal/toolsmith` appears available based on `npm view`, and the CLI binary command remains `toolsmith`.
 
-Before npm publishing, review `docs/NPM_PUBLISHING.md`, run `npm run release:audit`, confirm package name availability, configure npm auth, and explicitly approve publishing steps.
+Before npm publishing, review `docs/NPM_PUBLISHING.md`, run `npm run release:audit`, confirm package name availability, confirm npm auth, run pack/publish dry-runs, and explicitly approve publishing steps.
 
 ## Future Install Goal
 

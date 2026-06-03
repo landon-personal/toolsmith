@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.5
+
+- Recorded the final npm publish gate for `@landon-personal/toolsmith`.
+- Confirmed the CLI binary command remains `toolsmith`.
+- Documented GitHub Pages as live at `https://landon-personal.github.io/toolsmith/`.
+- Updated npm publishing docs and release checklist for final pre-publish verification.
+- Kept real npm publishing, release tags, GitHub Actions workflows, real model/API integration, and real tool side effects out of scope.
+
 ## 1.0.4
 
 - Changed package metadata from unscoped `toolsmith` to scoped `@landon-personal/toolsmith` because the unscoped name is taken on npm.

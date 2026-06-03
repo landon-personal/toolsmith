@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v1.0.4.
+Current version: v1.0.5.
 
 Completed:
 
@@ -22,6 +22,7 @@ Completed:
 - v1.0.2: root MIT license, GitHub repository metadata, and public visibility readiness
 - v1.0.3: GitHub Pages documentation from `main` `/docs`
 - v1.0.4: scoped npm package prep with `@landon-personal/toolsmith`
+- v1.0.5: final npm publish gate with dry-run verification
 
 Near-term path:
 
