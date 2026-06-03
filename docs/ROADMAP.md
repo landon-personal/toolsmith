@@ -94,6 +94,18 @@ toolsmith agents setup --codex --claude
 - Mark non-GET generated tools with warning-friendly side-effect metadata and confirmation requirements.
 - Keep import local and definition-only; do not execute imported APIs, build a full MCP server, publish to npm, push to GitHub, or add real model/API integration.
 
+## v0.8.0
+
+- Prepare public-facing Markdown documentation content for future GitHub Pages hosting.
+- Add `docs/site/` pages for quickstart, installation, tools, tasks, evals, reports, CI mode, importers, coding agents, safety, and roadmap.
+- Keep this as content-only preparation with no GitHub Pages deployment, no GitHub Actions workflow, no npm publishing, no GitHub push, no model/API integration, and no real tool side effects.
+
+## Near-Term Public Release Path
+
+- v0.9.0: public beta readiness.
+- v1.0.0: stable public local CLI.
+- v1.1.0: optional real model provider.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.
@@ -107,5 +119,6 @@ toolsmith agents setup --codex --claude
 - Add stricter JSON schema files for tools and tasks.
 - Add richer failure messages for missing tools, wrong arguments, and unsafe actions.
 - Consider MCP-style import after the basic OpenAPI importer is stable.
+- Consider an agent setup command after the public local CLI stabilizes.
 - Consider model/provider integration only after the local runner, schemas, and safety model are stable.
 - Keep all real-world side effects behind explicit mock adapters unless a future design proves otherwise.

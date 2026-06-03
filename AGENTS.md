@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.7.0 OpenAPI importer.
+Current checkpoint: v0.8.0 GitHub Pages-ready docs content.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -100,6 +100,16 @@ v0.7.0 adds:
 - examples/openapi/ as a tiny local import fixture
 - no imported API execution
 - no full MCP server behavior
+- no npm publishing
+- no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
+
+v0.8.0 adds:
+- plain Markdown documentation content under docs/site/ for future GitHub Pages hosting
+- public-facing quickstart, installation, writing tools/tasks, evals, reports, CI, importers, coding agents, safety, and roadmap pages
+- no GitHub Pages deployment
+- no GitHub Actions workflow files
 - no npm publishing
 - no GitHub push or release automation
 - no real model/API calls

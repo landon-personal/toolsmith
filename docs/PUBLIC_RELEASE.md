@@ -12,6 +12,8 @@ As of v0.6.0, ToolSmith includes CI-friendly local eval thresholds and saved-run
 
 As of v0.7.0, ToolSmith can import a basic OpenAPI JSON file into ToolSmith tool definitions. Import is local and definition-only; ToolSmith does not execute imported API endpoints, send network requests, build a full MCP server, or add real side effects.
 
+As of v0.8.0, ToolSmith has plain Markdown documentation content under `docs/site/` for future GitHub Pages hosting. This is documentation preparation only; no Pages deployment, GitHub Actions workflow, npm publishing, or GitHub push is enabled.
+
 ## Distribution Targets
 
 - Public GitHub repository: source code, issues, pull requests, release tags, and project history.
@@ -42,5 +44,7 @@ The package check builds the CLI, packs it locally, installs the tarball into an
 ## Publishing Rules
 
 Publishing should not happen until explicitly approved. Do not publish to npm, push release tags, or turn on public release automation as part of ordinary development.
+
+GitHub Pages deployment should not happen until explicitly approved. Do not create Pages workflows or change repository Pages settings as part of ordinary documentation work.
 
 ToolSmith must keep no real tool side effects by default. Public distribution should not add real email, calendar, database, deploy, publish, model, API, or network behavior unless explicitly approved in a future scope.

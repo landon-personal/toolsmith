@@ -46,6 +46,19 @@ npm run dev -- lint . --tools examples/openapi/tools.generated.json
 
 Imported OpenAPI tools should be reviewed and linted before use. ToolSmith does not execute imported APIs, send network requests, or perform imported API side effects.
 
+## Documentation Site Draft
+
+v0.8.0 adds plain Markdown documentation prepared for future GitHub Pages hosting under `docs/site/`.
+
+Start with:
+
+- `docs/site/index.md`
+- `docs/site/quickstart.md`
+- `docs/site/installation.md`
+- `docs/site/roadmap.md`
+
+No GitHub Pages deployment or GitHub Actions workflow is enabled.
+
 ## Using ToolSmith with Coding Agents
 
 ToolSmith is useful when Codex, Claude Code, or similar coding agents edit AI tool definitions. Keep shared instructions in `AGENTS.md`; Claude Code projects can use `CLAUDE.md`, and can import shared rules with `@AGENTS.md` when appropriate.
@@ -75,4 +88,4 @@ npm run package:check
 
 ## Current Scope
 
-v0.7.0 adds basic OpenAPI JSON import while preserving CI checks, shareable reports, and package-ready CLI behavior. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.
+v0.8.0 adds GitHub Pages-ready documentation content while preserving OpenAPI import, CI checks, shareable reports, and package-ready CLI behavior. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.

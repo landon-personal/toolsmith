@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0
+
+- Added plain Markdown documentation content under `docs/site/` for future GitHub Pages hosting.
+- Added public-facing quickstart, installation, tool/task authoring, eval, report, CI, importer, coding-agent, safety, and roadmap pages.
+- Added `docs/SITE.md` and `docs/site/README.md` to clarify that no deployment is enabled.
+- Kept this release documentation-only apart from version metadata, with no GitHub Pages deployment, no GitHub Actions workflow, no npm publishing, no GitHub push, no real model/API calls, and no real tool side effects.
+
 ## 0.7.0
 
 - Added `import openapi <path> --out <path>` for basic OpenAPI JSON imports.

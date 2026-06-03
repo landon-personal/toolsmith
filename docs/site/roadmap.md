@@ -1,0 +1,33 @@
+# Roadmap
+
+Current version: v0.8.0.
+
+Completed:
+
+- v0.0.0: TypeScript CLI skeleton and starter fixtures
+- v0.1.0: local validation, mock evals, saved runs, reports
+- v0.2.0: static tool linter
+- v0.2.1: public distribution planning docs
+- v0.3.0: package-ready CLI smoke checks
+- v0.4.0: better scoring and failure categories
+- v0.4.1: roadmap-aligned score breakdown and category names
+- v0.5.0: Markdown and static HTML reports
+- v0.5.1: coding-agent usage docs for Codex and Claude Code
+- v0.6.0: CI mode and saved-run regression comparison
+- v0.7.0: basic OpenAPI JSON importer
+- v0.8.0: GitHub Pages-ready documentation content
+
+Near-term path:
+
+- v0.9.0: public beta readiness
+- v1.0.0: stable public local CLI
+- v1.1.0: optional real model provider
+
+Post-1.0 ideas:
+
+- agent setup command for `AGENTS.md` and `CLAUDE.md`
+- MCP-style import
+- stricter JSON schema files
+- richer eval cases and argument validation
+
+Real model providers and real side-effect adapters should remain optional and explicit.

@@ -89,3 +89,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Add a local OpenAPI JSON importer that converts a small supported subset into ToolSmith tool definitions. Support toolsmith import openapi <path> --out <path>, generate stable names and input schemas, warn on unsupported features, and do not execute imported APIs, build MCP server behavior, publish to npm, push to GitHub, add real model/API integration, or add real tool side effects.
 ```
+
+## Prepare Docs Site
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Prepare plain Markdown documentation under docs/site for future GitHub Pages hosting. Cover quickstart, installation, tools, tasks, evals, reports, CI mode, importers, coding agents, safety, and roadmap. Do not enable GitHub Pages deployment, create GitHub Actions workflows, publish to npm, push to GitHub, add real model/API integration, or add real tool side effects.
+```

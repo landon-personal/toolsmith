@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 0.7.0
+Version: 0.8.0
 
 ## Done
 
@@ -29,6 +29,7 @@ Version: 0.7.0
 - Added docs-only GitHub Actions examples for future users.
 - Added basic OpenAPI JSON import for generating ToolSmith tool definitions.
 - Added `examples/openapi/tiny-api.json` as a local import fixture.
+- Added plain Markdown documentation site content under `docs/site/` for future GitHub Pages hosting.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -41,8 +42,9 @@ Version: 0.7.0
 - npm publishing.
 - GitHub Actions or release automation.
 - GitHub Actions workflow files in this repo.
+- GitHub Pages deployment configuration.
 - MCP-style import.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.7.0 update adds local OpenAPI JSON import only; imported API operations are not executed. No npm publishing happened, no GitHub push happened, and no GitHub Actions workflow automation was added.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.8.0 update adds GitHub Pages-ready documentation content only; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, and no GitHub push happened.
