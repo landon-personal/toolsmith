@@ -19,11 +19,26 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.5 final npm publish gate. It is stable locally and available on GitHub, but it is not published to npm yet.
+ToolSmith is at v1.0.5. It is stable locally, available on GitHub, documented through GitHub Pages, and published to npm as `@landon-personal/toolsmith`.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
 ## Quickstart
+
+Install from npm:
+
+```sh
+npm install -g @landon-personal/toolsmith
+toolsmith --help
+```
+
+Or run without a global install:
+
+```sh
+npx @landon-personal/toolsmith@latest --help
+```
+
+Local development:
 
 ```sh
 git clone https://github.com/landon-personal/toolsmith.git
@@ -155,29 +170,15 @@ This compiles ToolSmith, creates a local npm tarball, installs it into a tempora
 
 ## Public Release Status
 
-ToolSmith is stable locally at v1.0.x. Public repository and npm release work remains approval-gated.
+ToolSmith is stable locally at v1.0.x. The GitHub repository, GitHub Pages documentation, and npm package are public.
 
-- npm publishing has not happened.
+- npm package: `@landon-personal/toolsmith`
 - The GitHub repository is public at `https://github.com/landon-personal/toolsmith`.
 - Release tags have not been created.
 - GitHub Pages documentation is live at `https://landon-personal.github.io/toolsmith/`.
-- Current usage remains local development and local package smoke checks.
+- The CLI binary command remains `toolsmith`.
 
-Future public install goals remain:
-
-```sh
-npm install -g @landon-personal/toolsmith
-npx @landon-personal/toolsmith@latest --help
-toolsmith --help
-```
-
-The unscoped `toolsmith` package name is already taken on npm. The scoped package name `@landon-personal/toolsmith` appears available based on `npm view`, and the CLI binary command remains `toolsmith`.
-
-Before npm publishing, review `docs/NPM_PUBLISHING.md`, run `npm run release:audit`, confirm package name availability, confirm npm auth, run pack/publish dry-runs, and explicitly approve publishing steps.
-
-## Future Install Goal
-
-ToolSmith is not published to npm yet. Future public install commands are expected to be:
+Install commands:
 
 ```sh
 npm install -g @landon-personal/toolsmith
@@ -185,7 +186,21 @@ npx @landon-personal/toolsmith@latest --help
 toolsmith --help
 ```
 
-The scoped package name must be checked before publishing. npm publishing requires explicit approval.
+The unscoped `toolsmith` package name is already taken on npm. ToolSmith uses the scoped package name `@landon-personal/toolsmith`.
+
+Before any future npm publishing, review `docs/NPM_PUBLISHING.md`, run `npm run release:audit`, confirm npm auth, run pack/publish dry-runs, and explicitly approve publishing steps.
+
+## npm Install
+
+ToolSmith is published to npm as `@landon-personal/toolsmith`:
+
+```sh
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
+toolsmith --help
+```
+
+Future npm publishing requires explicit approval.
 
 ## Documentation
 
