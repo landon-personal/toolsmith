@@ -38,6 +38,14 @@ npm run dev -- report --format markdown
 npm run dev -- report --format html
 ```
 
+## Using ToolSmith with Coding Agents
+
+ToolSmith is useful when Codex, Claude Code, or similar coding agents edit AI tool definitions. Keep shared instructions in `AGENTS.md`; Claude Code projects can use `CLAUDE.md`, and can import shared rules with `@AGENTS.md` when appropriate.
+
+After changing agent tools, tasks, schemas, eval behavior, scoring, reports, provider behavior, or examples, run lint/eval/report and summarize the score, failure categories, regressions, changed tools/tasks, and recommendations. This is especially useful for people vibe coding agent tools because ToolSmith gives the agent a concrete local check instead of relying on intuition.
+
+See `docs/AI_AGENT_USAGE.md` for copy-paste `AGENTS.md` and `CLAUDE.md` guidance.
+
 ## Develop
 
 ```sh

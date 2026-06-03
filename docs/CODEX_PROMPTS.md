@@ -65,3 +65,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Add local shareable report generation from saved eval run JSON. Keep terminal reports working, generate Markdown and static HTML locally, escape HTML content, avoid external assets or analytics, and do not publish to npm, push to GitHub, deploy GitHub Pages, add real model/API integration, or add real tool side effects.
 ```
+
+## Add Coding Agent Usage Docs
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Add docs-only guidance for using ToolSmith with Codex, Claude Code, and similar coding agents. Document AGENTS.md and CLAUDE.md snippets, explain when agents should run lint/eval/report, include docs-only Claude command examples, and do not add runtime features, setup commands, publishing, GitHub push, real model/API integration, or real tool side effects.
+```

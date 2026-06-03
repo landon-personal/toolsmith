@@ -57,6 +57,27 @@
 - Include score breakdowns, failure breakdowns, task tables, failed task details, recommendations, tool confusion matrices, and raw JSON details.
 - Keep reports dependency-light, static, local-only, and free of analytics, network calls, model/API calls, and real tool side effects.
 
+## v0.5.1
+
+- Add docs-only guidance for using ToolSmith with Codex, Claude Code, and similar coding agents.
+- Document copy-paste `AGENTS.md` and `CLAUDE.md` snippets for projects that use ToolSmith.
+- Document example Claude command workflows without creating `.claude/commands` files.
+- Keep this release docs-only with no runtime behavior changes, publishing, GitHub push, model/API integration, or real tool side effects.
+
+## Future Agent Setup
+
+- Consider an agent setup command that generates `AGENTS.md` and `CLAUDE.md` snippets and optional Claude command examples.
+- Possible future commands:
+
+```sh
+toolsmith init --agent codex
+toolsmith init --agent claude
+toolsmith init --agent both
+toolsmith agents setup --codex --claude
+```
+
+- This is future work and is not implemented in v0.5.1.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.

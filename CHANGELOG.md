@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1
+
+- Added coding-agent usage docs for ToolSmith.
+- Added Codex `AGENTS.md` guidance.
+- Added Claude Code `CLAUDE.md` guidance, including importing shared rules with `@AGENTS.md`.
+- Added docs-only Claude command examples for lint, eval, report, and fix-plan workflows.
+- Kept this release docs-only with no runtime behavior changes.
+
 ## 0.5.0
 
 - Added local JSON, Markdown, and static HTML report generation from saved eval runs.

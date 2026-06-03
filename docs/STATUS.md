@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 0.5.0
+Version: 0.5.1
 
 ## Done
 
@@ -23,6 +23,7 @@ Version: 0.5.0
 - Added better eval scoring with failure categories, reasons, recommendations, and failure breakdown counts.
 - Aligned eval score breakdown fields and failure category names with the v0.4.0 roadmap.
 - Added locally generated JSON, Markdown, and static HTML reports from saved eval runs.
+- Added docs-only coding-agent usage guidance for Codex, Claude Code, AGENTS.md, CLAUDE.md, and example Claude command workflows.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -34,7 +35,8 @@ Version: 0.5.0
 - GitHub Pages publishing or deployment.
 - npm publishing.
 - GitHub Actions or release automation.
+- Runtime changes in v0.5.1.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.5.0 update adds local shareable report generation only; no npm publishing, GitHub Pages deployment, or GitHub push has happened.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.5.1 update is docs-only coding-agent usage guidance; no runtime features were added, no npm publishing happened, and no GitHub push happened. The next planned runtime milestone is v0.6.0 CI mode.
