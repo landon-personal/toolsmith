@@ -108,9 +108,15 @@ toolsmith agents setup --codex --claude
 - Review package metadata and document that package name availability and npm publishing require explicit approval.
 - Keep this as public beta preparation with no npm publishing, no GitHub push, no release tags, no GitHub Pages deployment, no GitHub Actions workflow automation, no model/API integration, and no real tool side effects.
 
+## v1.0.0
+
+- Finalize ToolSmith as the stable public local CLI baseline.
+- Confirm stable commands for init, lint, eval, report, compare, and OpenAPI import.
+- Add v1.0.0 schema documentation, migration notes, release notes, and refreshed safety docs.
+- Keep this as release preparation with no npm publishing, no GitHub push, no release tags, no GitHub Pages deployment, no GitHub Actions workflow automation, no model/API integration, and no real tool side effects.
+
 ## Near-Term Public Release Path
 
-- v1.0.0: stable public local CLI.
 - v1.1.0: optional real model provider.
 
 ## Public Release Track

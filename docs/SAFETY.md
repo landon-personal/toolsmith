@@ -1,26 +1,40 @@
 # Safety
 
-ToolSmith v0.5.0 is a local mock evaluator with static tool linting, roadmap-aligned scoring categories, local shareable reports, and local npm package smoke checking. It must not perform real-world actions.
+ToolSmith v1.0.0 is a local-first CLI for testing and linting AI agent tool use. It must not perform real-world actions.
 
-## Current Rules
+## Default Behavior
 
-- Do not send email.
-- Do not create, update, or delete calendar events.
-- Do not connect to databases.
-- Do not make network calls.
-- Do not include API keys.
-- Do not print environment variables.
-- Use mocked fixtures for examples.
-- Keep the mock agent deterministic and local.
+- ToolSmith uses a deterministic local mock agent by default.
+- ToolSmith does not call real model providers by default.
+- ToolSmith does not call external APIs by default.
+- ToolSmith stores eval output locally under `.toolsmith/runs/`.
 
-## Fixture Rules
+## No Real Tool Side Effects
 
-Example tool definitions may describe email, calendar, or database-shaped behavior, but they must be clearly marked as mocked and side-effect free.
+ToolSmith v1.0.0 does not:
 
-## Future Guardrails
+- send emails
+- create, update, or delete calendar events
+- charge money
+- delete data
+- modify databases
+- deploy code
+- publish packages
+- modify production systems
+- execute imported OpenAPI endpoints
 
-- Validate tool definitions for declared side effects.
-- Require explicit dry-run mode by default.
-- Store evaluation outputs locally.
-- Redact secrets if logs are ever introduced.
-- Add tests that fail if unsafe adapters are added by accident.
+Example tools may describe email, calendar, refund, delete, or API-shaped behavior, but they are definitions only.
+
+## Secrets
+
+API keys and secrets should never be printed, committed, or included in reports. ToolSmith should not print environment variables.
+
+## OpenAPI Import
+
+OpenAPI import reads a local JSON file and writes local ToolSmith tool definitions. It does not send network requests and does not execute imported endpoints.
+
+## Future Work
+
+Real model providers are future optional work planned after v1.0.0. They should be opt-in and documented.
+
+Real side-effect integrations are not part of v1.0.0. If future versions ever support them, they should require explicit scope, dry-run defaults, confirmation rules, and tests that protect against accidental real-world actions.

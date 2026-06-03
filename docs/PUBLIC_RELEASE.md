@@ -16,6 +16,8 @@ As of v0.8.0, ToolSmith has plain Markdown documentation content under `docs/sit
 
 As of v0.9.0, ToolSmith has public beta readiness documentation, troubleshooting, release checklist, cross-platform notes, and example READMEs. This prepares outside testers to clone and run ToolSmith locally, but it is not a public release and does not publish anything.
 
+As of v1.0.0, ToolSmith's stable local-first CLI preparation is complete. The project is ready for future public release approval steps, but v1.0.0 preparation does not publish to npm, push to GitHub, create release tags, or enable GitHub Pages.
+
 ## Distribution Targets
 
 - Public GitHub repository: source code, issues, pull requests, release tags, and project history.
@@ -48,6 +50,8 @@ The package check builds the CLI, packs it locally, installs the tarball into an
 ## Publishing Rules
 
 Publishing should not happen until explicitly approved. Do not publish to npm, push release tags, or turn on public release automation as part of ordinary development.
+
+Before any npm publish, verify package name availability and complete `docs/RELEASE_CHECKLIST.md`.
 
 GitHub Pages deployment should not happen until explicitly approved. Do not create Pages workflows or change repository Pages settings as part of ordinary documentation work.
 

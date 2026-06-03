@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 0.9.0
+Version: 1.0.0
 
 ## Done
 
@@ -31,6 +31,8 @@ Version: 0.9.0
 - Added `examples/openapi/tiny-api.json` as a local import fixture.
 - Added plain Markdown documentation site content under `docs/site/` for future GitHub Pages hosting.
 - Added public beta readiness documentation for fresh clones, troubleshooting, release checks, cross-platform expectations, and examples.
+- Added v1.0.0 schema documentation, migration notes, and release notes.
+- Confirmed the stable local CLI command surface.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -47,7 +49,8 @@ Version: 0.9.0
 - MCP-style import.
 - npm prerelease publishing.
 - release tags.
+- v1.1.0 optional real model provider.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.9.0 update prepares ToolSmith for outside testers with docs, examples, troubleshooting, and release checklist polish; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, no release tags were created, and no GitHub push happened.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.0 update finalizes ToolSmith as a stable local-first CLI baseline; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, no release tags were created, and no GitHub push happened.

@@ -2,13 +2,13 @@
 
 Before shipping your AI agent, test whether it knows how to use its tools.
 
-ToolSmith is a local-first CLI for testing AI tool definitions. It helps developers define tools, define example tasks, run evals, and see whether an agent chooses the correct tool.
+ToolSmith is a local-first CLI for testing and linting AI agent tool definitions. It helps developers define tools, write example tasks, run local evals, inspect failure categories, generate reports, compare runs, and import basic OpenAPI specs into ToolSmith tool definitions.
 
-ToolSmith is for:
+## Who It Is For
 
 - developers building tool-using AI agents
 - teams reviewing tool definitions before release
-- coding agents such as Codex or Claude Code that edit tools, tasks, scoring, reports, or examples
+- coding agents such as Codex or Claude Code that edit tools, tasks, scoring, reports, importers, or examples
 - people who want a local eval lab before adding real model or provider integrations
 
 Core workflow:
@@ -17,23 +17,13 @@ Core workflow:
 tools + tasks -> eval run -> score/report -> suggestions
 ```
 
-ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, use API keys, execute imported APIs, or print environment variables.
-
 ## Current Status
 
-ToolSmith is at v0.9.0 public beta readiness. It is not published to npm yet.
+ToolSmith is at v1.0.0 stable public local CLI preparation. It is not published to npm yet.
 
-Current local features:
+ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
-- `init` creates a local `toolsmith.config.json` file.
-- `lint` validates `tools.json` and reports static issues that could confuse agents.
-- `eval` validates tools/tasks, runs a mock eval, scores results, categorizes failures, and writes `.toolsmith/runs/latest.json`.
-- `report` prints terminal reports and can generate JSON, Markdown, and static HTML.
-- `compare` compares saved eval runs for regressions.
-- `import openapi` converts basic OpenAPI JSON into ToolSmith tool definitions.
-- `package:check` verifies the CLI can be packed, installed locally, and run as `toolsmith`.
-
-## Fresh Clone Quickstart
+## Quickstart
 
 Use the real repository URL once the repo is public:
 
@@ -50,7 +40,31 @@ npm run dev -- report
 npm run package:check
 ```
 
-## Run Examples
+## Command Overview
+
+```sh
+npm run dev -- --help
+npm run dev -- --version
+npm run dev -- init
+npm run dev -- lint examples/calendar-email
+npm run dev -- eval examples/calendar-email
+npm run dev -- report
+npm run dev -- compare .toolsmith/runs/latest.json .toolsmith/runs/latest.json
+npm run dev -- import openapi examples/openapi/tiny-api.json --out examples/openapi/tools.generated.json
+```
+
+Stable CLI commands:
+
+- `toolsmith --help`
+- `toolsmith --version`
+- `toolsmith init`
+- `toolsmith lint <path>`
+- `toolsmith eval <path>`
+- `toolsmith report`
+- `toolsmith compare <baseline-run> <current-run>`
+- `toolsmith import openapi <path> --out <path>`
+
+## Examples
 
 Starter calendar/email eval:
 
@@ -81,9 +95,10 @@ Terminal report:
 npm run dev -- report
 ```
 
-Markdown and HTML reports:
+JSON, Markdown, and HTML reports:
 
 ```sh
+npm run dev -- report --format json
 npm run dev -- report --format markdown
 npm run dev -- report --format html
 ```
@@ -97,7 +112,7 @@ npm run dev -- report --format html --out report.html
 
 Generated `report.md` and `report.html` are local artifacts and should not be committed unless a future task explicitly asks for fixtures.
 
-## CI and Regression Checks
+## CI Mode
 
 Fail when score is below a threshold:
 
@@ -113,6 +128,24 @@ npm run dev -- compare baseline.json .toolsmith/runs/latest.json --fail-on-regre
 ```
 
 The docs-only GitHub Actions example is in `docs/examples/github-actions.md`. No real workflow is enabled in this repo.
+
+## Importers
+
+OpenAPI import supports a small useful subset of OpenAPI JSON:
+
+```sh
+npm run dev -- import openapi examples/openapi/tiny-api.json --out examples/openapi/tools.generated.json
+```
+
+Imported tools should be reviewed and linted. ToolSmith does not execute imported API endpoints.
+
+## Coding Agent Usage
+
+Use ToolSmith after coding agents edit tools, tasks, schemas, scoring, reports, importers, examples, or mock/provider behavior.
+
+- Codex should follow `AGENTS.md`.
+- Claude Code can use `CLAUDE.md` and import shared rules with `@AGENTS.md`.
+- See `docs/AI_AGENT_USAGE.md`.
 
 ## Local Package Smoke Check
 
@@ -135,11 +168,13 @@ The package name must be checked before publishing. npm publishing requires expl
 
 ## Documentation
 
-- `docs/site/` contains public-facing Markdown docs prepared for future GitHub Pages hosting.
+- `docs/SCHEMA.md` documents the v1.0.0 local file shapes.
+- `docs/MIGRATIONS.md` summarizes migration notes.
+- `docs/RELEASE_NOTES_v1.0.0.md` contains v1.0.0 release notes.
 - `docs/TROUBLESHOOTING.md` covers common setup and command issues.
 - `docs/RELEASE_CHECKLIST.md` covers future public release checks.
 - `docs/CROSS_PLATFORM.md` documents macOS and Windows expectations.
-- `docs/AI_AGENT_USAGE.md` explains how Codex, Claude Code, and similar coding agents should use ToolSmith.
+- `docs/site/` contains public-facing Markdown docs prepared for future GitHub Pages hosting.
 
 No GitHub Pages deployment is enabled. No GitHub Actions release/deploy workflow is created.
 
@@ -152,8 +187,11 @@ It does not:
 - call real models or external APIs
 - send real email
 - create real calendar events
-- modify real databases
-- deploy or publish
+- charge money
+- delete data
+- modify databases
+- deploy code
+- publish packages
 - execute imported OpenAPI endpoints
 - print secrets or environment variables
 

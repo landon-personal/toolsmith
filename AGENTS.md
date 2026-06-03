@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.9.0 public beta readiness.
+Current checkpoint: v1.0.0 stable public local CLI preparation.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -120,6 +120,18 @@ v0.9.0 adds:
 - troubleshooting, release checklist, and cross-platform docs
 - example README files for starter, confusing, and OpenAPI examples
 - public beta readiness documentation without publishing
+- no npm publishing
+- no GitHub push, release tags, or release automation
+- no GitHub Pages deployment
+- no GitHub Actions workflow files
+- no real model/API calls
+- no real tool side effects
+
+v1.0.0 adds:
+- stable local-first CLI baseline
+- confirmed command surface for help, version, init, lint, eval, report, compare, and OpenAPI import
+- schema docs, migration notes, and release notes
+- refreshed safety and public release docs
 - no npm publishing
 - no GitHub push, release tags, or release automation
 - no GitHub Pages deployment

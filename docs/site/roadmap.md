@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v0.9.0.
+Current version: v1.0.0.
 
 Completed:
 
@@ -17,10 +17,10 @@ Completed:
 - v0.7.0: basic OpenAPI JSON importer
 - v0.8.0: GitHub Pages-ready documentation content
 - v0.9.0: public beta readiness docs, troubleshooting, release checklist, and example polish
+- v1.0.0: stable public local CLI baseline
 
 Near-term path:
 
-- v1.0.0: stable public local CLI
 - v1.1.0: optional real model provider
 
 Post-1.0 ideas:

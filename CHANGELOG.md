@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0
+
+- Finalized ToolSmith as the stable local-first CLI baseline.
+- Confirmed stable commands for help, version, init, lint, eval, report, compare, and OpenAPI import.
+- Added `docs/SCHEMA.md`.
+- Added `docs/MIGRATIONS.md`.
+- Added `docs/RELEASE_NOTES_v1.0.0.md`.
+- Refreshed README and safety documentation for v1.0.0.
+- Kept npm publishing, GitHub push, release tags, GitHub Pages deployment, GitHub Actions workflow automation, real model/API integration, and real tool side effects out of scope.
+
 ## 0.9.0
 
 - Polished README for outside testers and fresh clone usage.

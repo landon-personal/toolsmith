@@ -1,6 +1,6 @@
 {
   "name": "tiny-users-and-orders-api",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Generated from OpenAPI: Tiny Users and Orders API. Review and lint before using with agents.",
   "safety": {
     "network": false,

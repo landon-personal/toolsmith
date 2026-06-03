@@ -101,14 +101,14 @@ function buildRunFixture(
 ): EvalRun {
   return {
     id,
-    version: "0.9.0",
+    version: "1.0.0",
     createdAt: "2026-06-03T00:00:00.000Z",
     examplePath: ".",
     toolsPath: "tools.json",
     tasksPath: "tasks.json",
     agent: {
       name: "keyword-mock-agent",
-      version: "0.9.0"
+      version: "1.0.0"
     },
     summary: {
       total,
@@ -147,7 +147,7 @@ describe("ToolSmith commands", () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("0.9.0");
+    expect(packageJson.version).toBe("1.0.0");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
     expect(packageJson.files).toEqual(
@@ -162,6 +162,9 @@ describe("ToolSmith commands", () => {
       "docs/TROUBLESHOOTING.md",
       "docs/RELEASE_CHECKLIST.md",
       "docs/CROSS_PLATFORM.md",
+      "docs/SCHEMA.md",
+      "docs/MIGRATIONS.md",
+      "docs/RELEASE_NOTES_v1.0.0.md",
       "docs/site/index.md",
       "docs/site/quickstart.md",
       "docs/site/installation.md",
@@ -181,7 +184,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.9.0");
+      expect(config.version).toBe("1.0.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -356,7 +359,7 @@ describe("ToolSmith commands", () => {
 
       expect(result.pathsScanned).toBe(4);
       expect(result.operationsImported).toBe(5);
-      expect(generated.version).toBe("0.9.0");
+      expect(generated.version).toBe("1.0.0");
       expect(generated.tools.map((tool) => tool.name)).toEqual([
         "get_user_by_id",
         "delete_user",

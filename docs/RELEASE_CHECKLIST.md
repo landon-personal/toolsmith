@@ -2,6 +2,8 @@
 
 Use this checklist before any future public beta, prerelease, or stable release.
 
+For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
+
 ## Local Verification
 
 - Run `npm run compile`.
@@ -19,6 +21,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 ## Package Review
 
 - Verify `package.json` name, version, description, bin, files allowlist, scripts, keywords, license, and Node engine.
+- Verify `docs/SCHEMA.md`, `docs/MIGRATIONS.md`, and release notes are current.
 - Verify package files do not include `node_modules`, `dist` unless intentionally packed from build output, `coverage`, `.toolsmith/runs`, `.env`, npm tarballs, temp install folders, or generated reports.
 - Verify package name availability before publishing.
 - Verify npm publishing has explicit approval.
@@ -33,6 +36,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 - Verify `docs/site/` content is current.
 - Verify example READMEs are current.
 - Verify macOS and Windows compatibility expectations are documented.
+- Verify package name availability before publishing.
 
 ## Approval Gates
 
