@@ -4,7 +4,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 
 For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
 
-For v1.0.3 GitHub Pages documentation launch, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, Pages docs checks, and approval blockers.
+For v1.0.4 scoped npm package prep, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, Pages docs checks, npm dry-runs, and approval blockers.
 
 ## Local Verification
 
@@ -20,13 +20,15 @@ For v1.0.3 GitHub Pages documentation launch, this checklist also covers reposit
 - Run `npm run dev -- import openapi examples/openapi/tiny-api.json --out examples/openapi/tools.generated.json`.
 - Run `npm run package:check`.
 - Run `npm run release:audit`.
+- Run `npm pack --dry-run`.
+- Run `npm publish --dry-run --access public`.
 
 ## Package Review
 
 - Verify `package.json` name, version, description, bin, files allowlist, scripts, keywords, license, and Node engine.
 - Verify `docs/SCHEMA.md`, `docs/MIGRATIONS.md`, and release notes are current.
 - Verify package files do not include `node_modules`, `dist` unless intentionally packed from build output, `coverage`, `.toolsmith/runs`, `.env`, npm tarballs, temp install folders, or generated reports.
-- Verify package name availability before publishing.
+- Verify scoped package name availability before publishing.
 - Verify npm publishing has explicit approval.
 
 ## Public Repository Prep
@@ -34,7 +36,7 @@ For v1.0.3 GitHub Pages documentation launch, this checklist also covers reposit
 - Verify `docs/PUBLIC_REPOSITORY_PREP.md` is current.
 - Choose or confirm the final public repository name.
 - Confirm the public GitHub repository URL before adding `repository`, `bugs`, or `homepage` package fields.
-- Confirm package name availability before npm publishing.
+- Confirm scoped package name availability before npm publishing.
 - Confirm the license decision and add a matching root `LICENSE` file if approved.
 - Configure a security contact before public release.
 - Decide whether to add a code of conduct before public release.
@@ -56,7 +58,7 @@ For v1.0.3 GitHub Pages documentation launch, this checklist also covers reposit
 - Verify `docs/site/` content is current.
 - Verify example READMEs are current.
 - Verify macOS and Windows compatibility expectations are documented.
-- Verify package name availability before publishing.
+- Verify scoped package name availability before publishing.
 
 ## Approval Gates
 

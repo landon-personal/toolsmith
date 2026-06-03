@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ToolSmith currently runs locally with a deterministic mock agent. It does not call real models, execute real tools, send email, edit calendars, connect to databases, execute imported APIs, deploy, publish, or print secrets.
 
-Current status: v1.0.3 GitHub Pages documentation launch. ToolSmith is stable locally and available on GitHub, but it is not published to npm.
+Current status: v1.0.4 scoped npm package preparation. ToolSmith is stable locally and available on GitHub, but it is not published to npm.
 
 Current commands:
 
@@ -30,8 +30,9 @@ npm run dev -- import openapi examples/openapi/tiny-api.json --out examples/open
 Future install goal:
 
 ```sh
-npm install -g toolsmith
-npx toolsmith@latest --help
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
-ToolSmith is not published to npm yet. Public release, npm publishing, GitHub Pages deployment, and GitHub push should happen only after explicit approval.
+ToolSmith is not published to npm yet. Real npm publishing and release tags require explicit approval. The CLI binary command remains `toolsmith`.

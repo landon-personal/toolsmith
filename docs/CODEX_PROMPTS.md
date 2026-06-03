@@ -129,3 +129,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Prepare ToolSmith v1.0.3 GitHub Pages documentation using the public GitHub repository. Publish from the main branch /docs folder, add a simple docs/index.md landing page and minimal docs/_config.yml if useful, and do not publish to npm, create release tags, create GitHub Actions workflows, add real model/API integration, or add real tool side effects.
 ```
+
+## Prepare Scoped npm Package
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Prepare ToolSmith v1.0.4 for scoped npm package dry-runs. Use the npm username from `npm whoami` as the scope, keep the CLI binary command as `toolsmith`, document that the unscoped `toolsmith` package is taken, run npm pack and npm publish dry-runs only, and do not run real npm publish, create release tags, create GitHub Actions workflows, add real model/API integration, or add real tool side effects.
+```

@@ -5,22 +5,23 @@ ToolSmith is not published to npm yet.
 Current local usage:
 
 ```sh
-git clone <repo-url>
+git clone https://github.com/landon-personal/toolsmith.git
 cd toolsmith
 npm install
 npm run dev -- <command>
 ```
 
-Use the real repository URL after the repository is public.
-
 Future public install goal:
 
 ```sh
-npm install -g toolsmith
-npx toolsmith@latest --help
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
-The `toolsmith` package name must be verified before publishing. Publishing must not happen without explicit approval.
+The unscoped `toolsmith` package name is already taken on npm. ToolSmith is preparing the scoped package `@landon-personal/toolsmith`, while keeping the CLI binary command as `toolsmith`.
+
+Publishing must not happen without explicit approval.
 
 Local package smoke check:
 

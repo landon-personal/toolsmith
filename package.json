@@ -1,10 +1,10 @@
 {
-  "name": "toolsmith",
-  "version": "1.0.3",
+  "name": "@landon-personal/toolsmith",
+  "version": "1.0.4",
   "description": "Local-first CLI for testing whether AI agents use tool definitions correctly.",
   "type": "module",
   "bin": {
-    "toolsmith": "./dist/cli.js"
+    "toolsmith": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "files": [
@@ -39,6 +39,7 @@
   "bugs": {
     "url": "https://github.com/landon-personal/toolsmith/issues"
   },
+  "homepage": "https://landon-personal.github.io/toolsmith/",
   "engines": {
     "node": ">=20"
   },

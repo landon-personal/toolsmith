@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.4
+
+- Changed package metadata from unscoped `toolsmith` to scoped `@landon-personal/toolsmith` because the unscoped name is taken on npm.
+- Kept the CLI binary command as `toolsmith`.
+- Added `docs/NPM_PUBLISHING.md` for scoped npm dry-run publishing prep.
+- Updated README, public release docs, release checklist, status, roadmap, Codex prompts, and docs-site installation examples for the scoped package name.
+- Kept real npm publishing, release tags, GitHub Actions workflows, real model/API integration, and real tool side effects out of scope.
+
 ## 1.0.3
 
 - Added `docs/index.md` as the GitHub Pages documentation landing page.

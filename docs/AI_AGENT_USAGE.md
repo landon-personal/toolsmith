@@ -63,9 +63,9 @@ npm run toolsmith:report
 If project scripts are not available, use the published CLI when the project allows it:
 
 ```sh
-npx toolsmith@latest lint .
-npx toolsmith@latest eval .
-npx toolsmith@latest report
+npx @landon-personal/toolsmith@latest lint .
+npx @landon-personal/toolsmith@latest eval .
+npx @landon-personal/toolsmith@latest report
 ```
 
 In the final summary, include:
@@ -117,7 +117,7 @@ npm run toolsmith:lint
 Fallback:
 
 ```sh
-npx toolsmith@latest lint .
+npx @landon-personal/toolsmith@latest lint .
 ```
 
 Summarize the number of issues, severity levels, affected tools, and recommendations.
@@ -135,7 +135,7 @@ npm run toolsmith:eval
 Fallback:
 
 ```sh
-npx toolsmith@latest eval .
+npx @landon-personal/toolsmith@latest eval .
 ```
 
 Summarize the score, failure category breakdown, failed tasks, expected tools, actual tools, reasons, and recommendations.
@@ -153,7 +153,7 @@ npm run toolsmith:report
 Fallback:
 
 ```sh
-npx toolsmith@latest report
+npx @landon-personal/toolsmith@latest report
 ```
 
 Summarize the overall score, failure categories, regressions, and any generated Markdown or HTML report path.
@@ -173,9 +173,9 @@ npm run toolsmith:report
 Fallback:
 
 ```sh
-npx toolsmith@latest lint .
-npx toolsmith@latest eval .
-npx toolsmith@latest report
+npx @landon-personal/toolsmith@latest lint .
+npx @landon-personal/toolsmith@latest eval .
+npx @landon-personal/toolsmith@latest report
 ```
 
 Summarize a short plan that names the affected tools/tasks, the failure categories, the likely cause, and the smallest safe change to try next.

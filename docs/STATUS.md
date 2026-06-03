@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 1.0.3
+Version: 1.0.4
 
 ## Done
 
@@ -43,6 +43,9 @@ Version: 1.0.3
 - Added `docs/index.md` as a GitHub Pages landing page.
 - Added minimal `docs/_config.yml` for branch/folder GitHub Pages publishing.
 - Enabled GitHub Pages documentation from the `main` branch `/docs` folder.
+- Prepared scoped npm package metadata for `@landon-personal/toolsmith`.
+- Documented that the unscoped `toolsmith` package name is taken on npm.
+- Added npm publishing dry-run documentation.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -62,4 +65,4 @@ Version: 1.0.3
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.3 update enables GitHub Pages documentation from `main` `/docs` with no runtime feature changes; no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.4 update prepares the scoped npm package `@landon-personal/toolsmith` with dry-run publishing checks and no runtime feature changes; no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.

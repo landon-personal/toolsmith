@@ -19,7 +19,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.3 GitHub Pages documentation launch. It is stable locally and available on GitHub, but it is not published to npm yet.
+ToolSmith is at v1.0.4 scoped npm package preparation. It is stable locally and available on GitHub, but it is not published to npm yet.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
@@ -166,22 +166,26 @@ ToolSmith is stable locally at v1.0.x. Public repository and npm release work re
 Future public install goals remain:
 
 ```sh
-npm install -g toolsmith
-npx toolsmith@latest --help
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
-Before npm publishing, review `docs/PUBLIC_REPOSITORY_PREP.md`, run `npm run release:audit`, confirm package name availability, configure a security contact, and explicitly approve publishing steps.
+The unscoped `toolsmith` package name is already taken on npm. The scoped package name `@landon-personal/toolsmith` appears available based on `npm view`, and the CLI binary command remains `toolsmith`.
+
+Before npm publishing, review `docs/NPM_PUBLISHING.md`, run `npm run release:audit`, confirm package name availability, configure npm auth, and explicitly approve publishing steps.
 
 ## Future Install Goal
 
 ToolSmith is not published to npm yet. Future public install commands are expected to be:
 
 ```sh
-npm install -g toolsmith
-npx toolsmith@latest --help
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
-The package name must be checked before publishing. npm publishing requires explicit approval.
+The scoped package name must be checked before publishing. npm publishing requires explicit approval.
 
 ## Documentation
 
@@ -189,6 +193,7 @@ The package name must be checked before publishing. npm publishing requires expl
 - `docs/MIGRATIONS.md` summarizes migration notes.
 - `docs/RELEASE_NOTES_v1.0.0.md` contains v1.0.0 release notes.
 - `docs/PUBLIC_REPOSITORY_PREP.md` tracks public repository and npm publishing readiness TODOs.
+- `docs/NPM_PUBLISHING.md` documents npm dry-run checks and scoped package prep.
 - `docs/SECURITY.md`, `docs/PRIVACY.md`, and `docs/CONTRIBUTING.md` cover public repo review basics.
 - `docs/TROUBLESHOOTING.md` covers common setup and command issues.
 - `docs/RELEASE_CHECKLIST.md` covers future public release checks.

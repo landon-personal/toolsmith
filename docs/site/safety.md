@@ -18,4 +18,4 @@ OpenAPI importers generate tool definitions only. They do not execute endpoints 
 
 Do not publish to npm, create release tags, add GitHub Actions deployment, or add real side-effect behavior unless explicitly approved.
 
-v1.0.3 GitHub Pages documentation launch does not change this safety model.
+v1.0.4 scoped npm package preparation does not change this safety model.

@@ -14,7 +14,7 @@ ToolSmith currently requires Node 20 or newer. If dependencies still fail to ins
 npm install
 ```
 
-Do not use `npm install -g toolsmith` yet. ToolSmith is not published to npm.
+Do not use `npm install -g @landon-personal/toolsmith` yet. ToolSmith is not published to npm.
 
 ## Node Version Problems
 
@@ -111,8 +111,8 @@ Prefer npm scripts and Node paths instead of Unix-only shell assumptions. Comman
 ToolSmith is not published. Do not rely on:
 
 ```sh
-npm install -g toolsmith
-npx toolsmith@latest --help
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
 ```
 
 Those are future public install goals and should be used only after explicit publishing approval.

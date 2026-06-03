@@ -137,6 +137,13 @@ toolsmith agents setup --codex --claude
 - Enable GitHub Pages documentation from the `main` branch `/docs` folder.
 - Keep npm publishing, release tags, GitHub Actions workflow automation, model/API integration, and real tool side effects out of scope.
 
+## v1.0.4
+
+- Prepare scoped npm package metadata because the unscoped `toolsmith` name is taken.
+- Use `@landon-personal/toolsmith` as the package name while keeping the CLI binary command `toolsmith`.
+- Add npm publishing dry-run documentation.
+- Keep real npm publishing, release tags, GitHub Actions workflow automation, model/API integration, and real tool side effects out of scope.
+
 ## Near-Term Public Release Path
 
 - v1.1.0: optional real model provider.

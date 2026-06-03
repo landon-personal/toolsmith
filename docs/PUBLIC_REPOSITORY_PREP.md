@@ -1,6 +1,6 @@
 # Public Repository Prep
 
-ToolSmith v1.0.3 is a release-prep patch that enables GitHub Pages documentation from the public repository.
+ToolSmith v1.0.4 is a release-prep patch for scoped npm package dry-run preparation.
 
 This checklist does not publish to npm, tag, enable GitHub Actions automation, or publish packages. npm release steps remain approval-gated.
 
@@ -13,7 +13,9 @@ https://github.com/landon-personal/toolsmith
 ## Repository Name
 
 - Repository name: `toolsmith`.
-- TODO: Confirm whether the npm package name should remain `toolsmith` after checking availability.
+- Unscoped npm package `toolsmith` is taken.
+- Scoped npm package for prep: `@landon-personal/toolsmith`.
+- CLI binary command remains `toolsmith`.
 - `origin` is configured for `https://github.com/landon-personal/toolsmith.git`.
 
 ## Repository Description
@@ -56,8 +58,8 @@ The repository description is configured on GitHub.
 
 Reviewed fields:
 
-- `name`: `toolsmith`
-- `version`: `1.0.3`
+- `name`: `@landon-personal/toolsmith`
+- `version`: `1.0.4`
 - `description`: present
 - `bin`: maps `toolsmith` to `./dist/cli.js`
 - `files`: allows `dist`, README, changelog, docs, and examples
@@ -66,14 +68,16 @@ Reviewed fields:
 - `license`: currently `MIT` in `package.json`
 - `repository`: `git+https://github.com/landon-personal/toolsmith.git`
 - `bugs`: `https://github.com/landon-personal/toolsmith/issues`
+- `homepage`: `https://landon-personal.github.io/toolsmith/`
 - `engines`: Node `>=20`
 
 Release blockers and TODOs:
 
-- TODO: Check npm package name availability before publishing.
+- Unscoped `toolsmith` is taken on npm.
+- Scoped `@landon-personal/toolsmith` appears available based on `npm view`.
 - Root `LICENSE` file: added with approved MIT text.
 - `repository` and `bugs` package fields: added.
-- Homepage field: intentionally not added until the Pages URL is verified and approved for package metadata.
+- Homepage field: added for the verified GitHub Pages URL.
 - TODO: Run a final package dry run before any npm publish.
 
 ## License Decision
@@ -86,7 +90,7 @@ The current `package.json` declares `MIT`, and v1.0.2 adds the matching root `LI
 - `docs/SAFETY.md` documents the local mock-provider safety model.
 - ToolSmith should not print API keys, secrets, or environment variables.
 - ToolSmith does not execute real side-effect tools by default.
-- Real model providers are future optional work and are not part of v1.0.3.
+- Real model providers are future optional work and are not part of v1.0.4.
 
 ## Secret Scan
 
@@ -126,13 +130,13 @@ Intentional example fixtures should not be ignored accidentally.
 
 - Local package smoke checks are available through `npm run package:check`.
 - npm publishing has not happened.
-- TODO: Check package name availability.
+- Scoped package availability should be rechecked before publishing.
 - Package metadata now includes safe repository and bugs fields.
 - TODO: Get explicit approval before any `npm publish`.
 
 ## Release Tagging Readiness
 
-- No release tags were created for v1.0.3.
+- No release tags were created for v1.0.4.
 - TODO: Define a tagging policy before public release.
 - TODO: Get explicit approval before creating public release tags.
 
@@ -147,12 +151,14 @@ These actions must be explicitly approved before public release:
 - adding real model/API integration
 - adding real side-effect tool execution
 
-## v1.0.3 Status
+## v1.0.4 Status
 
 - Root MIT `LICENSE` file was added.
 - Package `repository` and `bugs` metadata was added.
 - Public repository visibility was approved for `https://github.com/landon-personal/toolsmith`.
 - GitHub Pages documentation was prepared/enabled from `main` `/docs`.
+- Scoped npm package prep uses `@landon-personal/toolsmith`.
+- The CLI binary command remains `toolsmith`.
 - No release tags were created.
 - No npm publish happened.
 - No GitHub Actions workflow files were created.

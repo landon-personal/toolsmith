@@ -35,8 +35,8 @@ jobs:
 ToolSmith is not published yet. After publishing is explicitly approved, future projects may use a package-installed command like:
 
 ```yaml
-- run: npx toolsmith@latest eval . --fail-under 90
-- run: npx toolsmith@latest report
+- run: npx @landon-personal/toolsmith@latest eval . --fail-under 90
+- run: npx @landon-personal/toolsmith@latest report
 ```
 
 ## Regression Comparison Example

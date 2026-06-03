@@ -75,8 +75,9 @@ ToolSmith uses a deterministic local mock agent by default. It does not call rea
 Future npm install commands are expected to be:
 
 ```sh
-npm install -g toolsmith
-npx toolsmith@latest --help
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
 These commands should not be used until npm publishing is explicitly approved and completed.

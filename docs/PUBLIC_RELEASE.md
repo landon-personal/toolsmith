@@ -24,6 +24,8 @@ As of v1.0.2, ToolSmith adds the approved root MIT `LICENSE` file and safe GitHu
 
 As of v1.0.3, ToolSmith enables GitHub Pages documentation from the `main` branch `/docs` folder. Pages is for documentation only; npm publishing, release tags, GitHub Actions workflow automation, model/API integration, and real tool side effects remain out of scope until explicitly approved.
 
+As of v1.0.4, ToolSmith prepares npm publishing under the scoped package `@landon-personal/toolsmith` because the unscoped `toolsmith` package name is already taken on npm. The CLI binary command remains `toolsmith`. This is dry-run preparation only; no real npm publish or release tag is created.
+
 ## Distribution Targets
 
 - Public GitHub repository: `https://github.com/landon-personal/toolsmith` for source code, issues, pull requests, releases, release tags, and project history.
@@ -33,11 +35,12 @@ As of v1.0.3, ToolSmith enables GitHub Pages documentation from the `main` branc
 ## Planned Install Commands
 
 ```sh
-npm install -g toolsmith
-npx toolsmith@latest --help
+npm install -g @landon-personal/toolsmith
+npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
-The `toolsmith` package name may need to be checked before publishing. If the name is unavailable or unsuitable, choose a package name intentionally and update the docs before release.
+The unscoped `toolsmith` package name is taken. The scoped package `@landon-personal/toolsmith` appears available based on `npm view`, but real publishing still requires explicit approval.
 
 ## Platform Support
 
@@ -57,9 +60,9 @@ The package check builds the CLI, packs it locally, installs the tarball into an
 
 Publishing should not happen until explicitly approved. Do not publish to npm, push release tags, or turn on public release automation as part of ordinary development.
 
-Before any npm publish, verify package name availability and complete `docs/RELEASE_CHECKLIST.md`.
+Before any npm publish, verify scoped package name availability and complete `docs/RELEASE_CHECKLIST.md`.
 
-Before any npm publish, complete `docs/PUBLIC_REPOSITORY_PREP.md`. Current blockers include configuring a security contact and checking npm package name availability.
+Before any npm publish, complete `docs/PUBLIC_REPOSITORY_PREP.md` and `docs/NPM_PUBLISHING.md`. Current blockers include final approval for real publishing and any npm account or 2FA requirements.
 
 GitHub Pages is enabled for documentation only from `main` `/docs`. Do not add Pages workflows, analytics, external scripts, trackers, CDN dependencies, or complex docs build systems without explicit approval.
 
