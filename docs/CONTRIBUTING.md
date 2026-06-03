@@ -24,7 +24,7 @@ npm run release:audit
 
 - Do not commit `node_modules/`, `dist/`, `coverage/`, `.toolsmith/runs/`, `.env` files, npm tarballs, root generated reports, or secrets.
 - Do not add real tool side effects without explicit approval.
-- Do not publish to npm, push release tags, enable GitHub Pages, or add release automation without explicit approval.
+- Do not publish to npm, push release tags, change GitHub Pages settings, or add release automation without explicit approval.
 - Keep macOS and Windows compatibility in mind. Prefer Node `path`, `fs`, `os`, and `child_process` APIs over shell-specific assumptions.
 - Coding agents should follow `AGENTS.md`.
 

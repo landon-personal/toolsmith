@@ -19,7 +19,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.2 public repository readiness. It is stable locally and available on GitHub, but it is not published to npm yet.
+ToolSmith is at v1.0.3 GitHub Pages documentation launch. It is stable locally and available on GitHub, but it is not published to npm yet.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
@@ -160,7 +160,7 @@ ToolSmith is stable locally at v1.0.x. Public repository and npm release work re
 - npm publishing has not happened.
 - The GitHub repository is public at `https://github.com/landon-personal/toolsmith`.
 - Release tags have not been created.
-- GitHub Pages deployment is not enabled.
+- GitHub Pages documentation is enabled from the `main` branch `/docs` folder.
 - Current usage remains local development and local package smoke checks.
 
 Future public install goals remain:
@@ -194,8 +194,9 @@ The package name must be checked before publishing. npm publishing requires expl
 - `docs/RELEASE_CHECKLIST.md` covers future public release checks.
 - `docs/CROSS_PLATFORM.md` documents macOS and Windows expectations.
 - `docs/site/` contains public-facing Markdown docs prepared for future GitHub Pages hosting.
+- `docs/index.md` is the GitHub Pages landing page.
 
-No GitHub Pages deployment is enabled. No GitHub Actions release/deploy workflow is created.
+No GitHub Actions release/deploy workflow is created.
 
 ## Safety Model
 

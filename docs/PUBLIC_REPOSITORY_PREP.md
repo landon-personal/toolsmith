@@ -1,8 +1,8 @@
 # Public Repository Prep
 
-ToolSmith v1.0.2 is a release-prep patch that adds the root MIT license file, records safe GitHub package metadata, and prepares the repository for public visibility.
+ToolSmith v1.0.3 is a release-prep patch that enables GitHub Pages documentation from the public repository.
 
-This checklist does not publish to npm, tag, deploy, enable GitHub Pages, enable automation, or publish packages. npm release steps remain approval-gated.
+This checklist does not publish to npm, tag, enable GitHub Actions automation, or publish packages. npm release steps remain approval-gated.
 
 GitHub repository:
 
@@ -57,7 +57,7 @@ The repository description is configured on GitHub.
 Reviewed fields:
 
 - `name`: `toolsmith`
-- `version`: `1.0.2`
+- `version`: `1.0.3`
 - `description`: present
 - `bin`: maps `toolsmith` to `./dist/cli.js`
 - `files`: allows `dist`, README, changelog, docs, and examples
@@ -73,7 +73,7 @@ Release blockers and TODOs:
 - TODO: Check npm package name availability before publishing.
 - Root `LICENSE` file: added with approved MIT text.
 - `repository` and `bugs` package fields: added.
-- Homepage field: intentionally not added; GitHub Pages is not enabled and npm is not published.
+- Homepage field: intentionally not added until the Pages URL is verified and approved for package metadata.
 - TODO: Run a final package dry run before any npm publish.
 
 ## License Decision
@@ -86,7 +86,7 @@ The current `package.json` declares `MIT`, and v1.0.2 adds the matching root `LI
 - `docs/SAFETY.md` documents the local mock-provider safety model.
 - ToolSmith should not print API keys, secrets, or environment variables.
 - ToolSmith does not execute real side-effect tools by default.
-- Real model providers are future optional work and are not part of v1.0.2.
+- Real model providers are future optional work and are not part of v1.0.3.
 
 ## Secret Scan
 
@@ -115,10 +115,12 @@ Intentional example fixtures should not be ignored accidentally.
 
 ## GitHub Pages Readiness
 
-- `docs/site/` is prepared as plain Markdown content.
-- No GitHub Pages deployment is enabled.
+- `docs/index.md` is the Pages landing page.
+- `docs/site/` contains plain Markdown content.
+- `docs/_config.yml` keeps the Pages configuration minimal.
+- GitHub Pages uses branch publishing from `main` `/docs`.
 - No GitHub Actions workflow has been created for Pages.
-- TODO: Choose a Pages publishing approach only after explicit approval.
+- No analytics, external scripts, trackers, CDN dependencies, or complex docs framework has been added.
 
 ## npm Publishing Readiness
 
@@ -130,7 +132,7 @@ Intentional example fixtures should not be ignored accidentally.
 
 ## Release Tagging Readiness
 
-- No release tags were created for v1.0.2.
+- No release tags were created for v1.0.3.
 - TODO: Define a tagging policy before public release.
 - TODO: Get explicit approval before creating public release tags.
 
@@ -140,17 +142,17 @@ These actions must be explicitly approved before public release:
 
 - creating release tags
 - publishing to npm
-- enabling GitHub Pages deployment
+- adding GitHub Pages workflow automation
 - creating GitHub Actions release or deployment automation
 - adding real model/API integration
 - adding real side-effect tool execution
 
-## v1.0.2 Status
+## v1.0.3 Status
 
 - Root MIT `LICENSE` file was added.
 - Package `repository` and `bugs` metadata was added.
 - Public repository visibility was approved for `https://github.com/landon-personal/toolsmith`.
+- GitHub Pages documentation was prepared/enabled from `main` `/docs`.
 - No release tags were created.
 - No npm publish happened.
-- No GitHub Pages deployment was enabled.
 - No GitHub Actions workflow files were created.

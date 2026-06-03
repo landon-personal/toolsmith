@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 1.0.2
+Version: 1.0.3
 
 ## Done
 
@@ -40,6 +40,9 @@ Version: 1.0.2
 - Added the approved root MIT `LICENSE` file.
 - Added safe GitHub `repository` and `bugs` package metadata.
 - Prepared/applied public GitHub repository visibility.
+- Added `docs/index.md` as a GitHub Pages landing page.
+- Added minimal `docs/_config.yml` for branch/folder GitHub Pages publishing.
+- Enabled GitHub Pages documentation from the `main` branch `/docs` folder.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -48,11 +51,9 @@ Version: 1.0.2
 - JSON schema files.
 - Model or API integration.
 - Public GitHub release.
-- GitHub Pages publishing or deployment.
 - npm publishing.
 - GitHub Actions or release automation.
 - GitHub Actions workflow files in this repo.
-- GitHub Pages deployment configuration.
 - MCP-style import.
 - npm prerelease publishing.
 - release tags.
@@ -61,4 +62,4 @@ Version: 1.0.2
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.2 update adds a root MIT license file, safe GitHub package metadata, and public repository visibility preparation with no runtime feature changes; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.3 update enables GitHub Pages documentation from `main` `/docs` with no runtime feature changes; no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.

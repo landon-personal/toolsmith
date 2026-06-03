@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v1.0.2.
+Current version: v1.0.3.
 
 Completed:
 
@@ -20,6 +20,7 @@ Completed:
 - v1.0.0: stable public local CLI baseline
 - v1.0.1: public repository prep docs, security/privacy/contributing docs, and release audit
 - v1.0.2: root MIT license, GitHub repository metadata, and public visibility readiness
+- v1.0.3: GitHub Pages documentation from `main` `/docs`
 
 Near-term path:
 

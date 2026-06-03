@@ -31,6 +31,6 @@ The docs-only GitHub Actions example lives at:
 docs/examples/github-actions.md
 ```
 
-No GitHub Actions workflow is enabled in this repo. No GitHub Pages deployment is enabled.
+No GitHub Actions workflow is enabled in this repo. GitHub Pages is used for documentation only and does not run CI checks.
 
 Before using CI checks publicly, review `docs/RELEASE_CHECKLIST.md` and verify macOS/Windows expectations in `docs/CROSS_PLATFORM.md`.

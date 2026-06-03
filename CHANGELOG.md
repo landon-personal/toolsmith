@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3
+
+- Added `docs/index.md` as the GitHub Pages documentation landing page.
+- Added minimal `docs/_config.yml` for GitHub Pages branch/folder publishing.
+- Updated public release docs, status, roadmap, and README for GitHub Pages documentation.
+- Kept npm publishing, release tags, GitHub Actions workflows, real model/API integration, and real tool side effects out of scope.
+
 ## 1.0.2
 
 - Added the approved root MIT `LICENSE` file.

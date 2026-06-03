@@ -22,6 +22,8 @@ As of v1.0.1, ToolSmith has public repository preparation docs, basic security/p
 
 As of v1.0.2, ToolSmith adds the approved root MIT `LICENSE` file and safe GitHub `repository`/`bugs` package metadata. The existing GitHub repository is prepared for public visibility at `https://github.com/landon-personal/toolsmith`, while npm publishing, release tags, GitHub Pages deployment, GitHub Actions workflow, model/API integration, and real tool side effects remain out of scope until explicitly approved.
 
+As of v1.0.3, ToolSmith enables GitHub Pages documentation from the `main` branch `/docs` folder. Pages is for documentation only; npm publishing, release tags, GitHub Actions workflow automation, model/API integration, and real tool side effects remain out of scope until explicitly approved.
+
 ## Distribution Targets
 
 - Public GitHub repository: `https://github.com/landon-personal/toolsmith` for source code, issues, pull requests, releases, release tags, and project history.
@@ -59,6 +61,6 @@ Before any npm publish, verify package name availability and complete `docs/RELE
 
 Before any npm publish, complete `docs/PUBLIC_REPOSITORY_PREP.md`. Current blockers include configuring a security contact and checking npm package name availability.
 
-GitHub Pages deployment should not happen until explicitly approved. Do not create Pages workflows or change repository Pages settings as part of ordinary documentation work.
+GitHub Pages is enabled for documentation only from `main` `/docs`. Do not add Pages workflows, analytics, external scripts, trackers, CDN dependencies, or complex docs build systems without explicit approval.
 
 ToolSmith must keep no real tool side effects by default. Public distribution should not add real email, calendar, database, deploy, publish, model, API, or network behavior unless explicitly approved in a future scope.

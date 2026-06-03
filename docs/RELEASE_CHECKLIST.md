@@ -4,7 +4,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 
 For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
 
-For v1.0.2 public repository readiness, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, and approval blockers.
+For v1.0.3 GitHub Pages documentation launch, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, Pages docs checks, and approval blockers.
 
 ## Local Verification
 
@@ -43,7 +43,7 @@ For v1.0.2 public repository readiness, this checklist also covers repository me
 - Explicitly approve GitHub push before pushing.
 - Explicitly approve release tags before tagging.
 - Explicitly approve npm publish before publishing.
-- Explicitly approve GitHub Pages deployment before enabling Pages.
+- Explicitly approve GitHub Pages setup or setting changes before changing Pages configuration.
 
 ## Repository Review
 
@@ -63,7 +63,7 @@ For v1.0.2 public repository readiness, this checklist also covers repository me
 - npm publish requires explicit approval.
 - GitHub push requires explicit approval.
 - Release tags require explicit approval.
-- GitHub Pages deployment requires explicit approval.
+- GitHub Pages setup or setting changes require explicit approval.
 - GitHub Actions release automation requires explicit approval.
 - Real model/API integration requires explicit approval.
 - Real tool side effects require explicit approval.

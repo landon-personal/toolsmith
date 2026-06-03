@@ -130,6 +130,13 @@ toolsmith agents setup --codex --claude
 - Prepare and apply public GitHub repository visibility.
 - Keep npm publishing, release tags, GitHub Pages deployment, GitHub Actions workflow automation, model/API integration, and real tool side effects out of scope.
 
+## v1.0.3
+
+- Add `docs/index.md` as the GitHub Pages landing page.
+- Add a minimal `docs/_config.yml`.
+- Enable GitHub Pages documentation from the `main` branch `/docs` folder.
+- Keep npm publishing, release tags, GitHub Actions workflow automation, model/API integration, and real tool side effects out of scope.
+
 ## Near-Term Public Release Path
 
 - v1.1.0: optional real model provider.

@@ -121,3 +121,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Prepare ToolSmith v1.0.1 for future public GitHub repository and npm publishing review. Keep changes focused on docs, metadata review, repo hygiene, and safety checks. Add public repository prep, security, privacy, and contributing docs, document package metadata blockers, optionally add a local release audit, and do not publish to npm, push to GitHub, create release tags, enable GitHub Pages, create GitHub Actions workflows, add real model/API integration, or add real tool side effects.
 ```
+
+## Launch GitHub Pages Docs
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Prepare ToolSmith v1.0.3 GitHub Pages documentation using the public GitHub repository. Publish from the main branch /docs folder, add a simple docs/index.md landing page and minimal docs/_config.yml if useful, and do not publish to npm, create release tags, create GitHub Actions workflows, add real model/API integration, or add real tool side effects.
+```

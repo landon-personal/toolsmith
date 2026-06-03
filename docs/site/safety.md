@@ -16,6 +16,6 @@ Current safety properties:
 
 OpenAPI importers generate tool definitions only. They do not execute endpoints or make network requests.
 
-Do not publish to npm, push to GitHub, enable GitHub Pages, or add GitHub Actions deployment unless explicitly approved.
+Do not publish to npm, create release tags, add GitHub Actions deployment, or add real side-effect behavior unless explicitly approved.
 
-v1.0.2 public repository readiness does not change this safety model.
+v1.0.3 GitHub Pages documentation launch does not change this safety model.
