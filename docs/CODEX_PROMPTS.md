@@ -57,3 +57,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Align ToolSmith local mock eval scoring with the roadmap category names and score breakdown fields. Keep all scoring deterministic and local. Do not start a new version line, add Markdown/HTML reports, publish to npm, push to GitHub, add real model/API integration, or add real tool side effects.
 ```
+
+## Add Shareable Reports
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Add local shareable report generation from saved eval run JSON. Keep terminal reports working, generate Markdown and static HTML locally, escape HTML content, avoid external assets or analytics, and do not publish to npm, push to GitHub, deploy GitHub Pages, add real model/API integration, or add real tool side effects.
+```

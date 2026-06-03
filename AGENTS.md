@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.4.1 roadmap-aligned scoring and failure categories.
+Current checkpoint: v0.5.0 Markdown and HTML reports.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -62,6 +62,16 @@ v0.4.1 adds:
 - roadmap-aligned eval failure category names
 - score breakdown fields for correct tool selection, valid arguments, unnecessary tool calls, safe behavior, clarification behavior, and error recovery
 - deterministic mock-agent scoring placeholders for categories that will deepen later
+- no npm publishing
+- no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
+
+v0.5.0 adds:
+- local JSON, Markdown, and static HTML report generation from saved eval runs
+- tool confusion matrix reporting
+- terminal report behavior preserved as the default
+- no GitHub Pages deployment
 - no npm publishing
 - no GitHub push or release automation
 - no real model/API calls

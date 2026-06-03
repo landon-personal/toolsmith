@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 0.4.1
+Version: 0.5.0
 
 ## Done
 
@@ -22,6 +22,7 @@ Version: 0.4.1
 - Verified the compiled CLI can be packed, installed from a local tarball, and run as `toolsmith`.
 - Added better eval scoring with failure categories, reasons, recommendations, and failure breakdown counts.
 - Aligned eval score breakdown fields and failure category names with the v0.4.0 roadmap.
+- Added locally generated JSON, Markdown, and static HTML reports from saved eval runs.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -30,10 +31,10 @@ Version: 0.4.1
 - JSON schema files.
 - Model or API integration.
 - Public GitHub release.
-- GitHub Pages publishing.
+- GitHub Pages publishing or deployment.
 - npm publishing.
 - GitHub Actions or release automation.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.4.1 update aligns local mock eval scoring categories only; no npm publishing or GitHub push has happened.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.5.0 update adds local shareable report generation only; no npm publishing, GitHub Pages deployment, or GitHub push has happened.

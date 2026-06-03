@@ -10,6 +10,9 @@ import { evaluate } from "../src/evaluator.js";
 import { buildCli } from "../src/index.js";
 import { lintToolFile } from "../src/linter.js";
 import { chooseMockTool } from "../src/mockAgent.js";
+import { buildConfusionMatrix } from "../src/reports/confusionMatrix.js";
+import { renderHtmlReport } from "../src/reports/htmlReport.js";
+import { renderMarkdownReport } from "../src/reports/markdownReport.js";
 import { LATEST_RUN_PATH } from "../src/results.js";
 import type { ToolDefinition, ToolFile, ToolLintIssue } from "../src/types.js";
 import { loadTasksFile, loadToolsFile } from "../src/validation.js";
@@ -98,7 +101,7 @@ describe("ToolSmith commands", () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("0.4.1");
+    expect(packageJson.version).toBe("0.5.0");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
     expect(packageJson.files).toEqual(
@@ -116,7 +119,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.4.1");
+      expect(config.version).toBe("0.5.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -450,6 +453,107 @@ describe("ToolSmith commands", () => {
     expect(reportOutput.lines.some((line) => line.includes("Actual: send_email"))).toBe(true);
     expect(reportOutput.lines.some((line) => line.includes("Recommendation:"))).toBe(true);
     await expect(access(join(process.cwd(), LATEST_RUN_PATH))).resolves.toBeUndefined();
+  });
+
+  it("generates markdown reports with score, failures, tasks, recommendations, and raw JSON", async () => {
+    const run = await evaluate({ examplePath: CALENDAR_EMAIL_EXAMPLE });
+    const markdown = renderMarkdownReport(run, new Date("2026-06-03T00:00:00.000Z"));
+
+    expect(markdown).toContain("# ToolSmith Eval Report");
+    expect(markdown).toContain("Score: 3/5 (60%)");
+    expect(markdown).toContain("should_have_asked_clarifying_question: 1");
+    expect(markdown).toContain("| calendar-ambiguous-message-meeting |");
+    expect(markdown).toContain("Recommendation:");
+    expect(markdown).toContain("| create_calendar_event | send_email | 1 |");
+    expect(markdown).toContain("```json");
+  });
+
+  it("generates escaped static html reports without external resources", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-html-"));
+
+    try {
+      await writeCustomExample(
+        directory,
+        [
+          { name: "create_calendar_event", description: "Use this tool when scheduling calendar events." },
+          { name: "send_email", description: "Use this tool when sending email messages." }
+        ],
+        [
+          {
+            id: "html-escape",
+            prompt: "Email <script>alert('x')</script> to Jordan.",
+            expectedTool: "none"
+          }
+        ]
+      );
+
+      const run = await evaluate({ examplePath: ".", cwd: directory });
+      const html = renderHtmlReport(run, new Date("2026-06-03T00:00:00.000Z"));
+
+      expect(html).toContain("<title>ToolSmith Eval Report</title>");
+      expect(html).toContain("&lt;script&gt;alert(&#39;x&#39;)&lt;/script&gt;");
+      expect(html).not.toContain("<script");
+      expect(html).not.toContain("https://");
+      expect(html).not.toContain("http://");
+      expect(html).toContain("<details>");
+      expect(html).toContain("Tool Confusion Matrix");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("builds confusion matrix counts", async () => {
+    const run = await evaluate({ examplePath: CALENDAR_EMAIL_EXAMPLE });
+    const matrix = buildConfusionMatrix(run);
+
+    expect(matrix).toEqual(
+      expect.arrayContaining([
+        { expectedTool: "create_calendar_event", actualTool: "create_calendar_event", count: 1 },
+        { expectedTool: "create_calendar_event", actualTool: "send_email", count: 1 },
+        { expectedTool: "send_email", actualTool: "none", count: 1 }
+      ])
+    );
+  });
+
+  it("report command supports markdown, html, json, run path, and out files", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-report-"));
+    const output = captureOutput();
+
+    try {
+      await writeExample(directory, [
+        { id: "calendar", prompt: "Schedule a meeting with Jordan.", expectedTool: "create_calendar_event" },
+        { id: "ambiguous", prompt: "Message Jordan about a meeting.", expectedTool: "create_calendar_event" },
+        { id: "email", prompt: "Email Jordan the release notes.", expectedTool: "send_email" }
+      ]);
+      await runEval({ examplePath: ".", cwd: directory }, captureOutput().io);
+
+      const markdownRun = await runReport(
+        { cwd: directory, format: "markdown", out: "custom-report.md" },
+        output.io
+      );
+      await runReport({ cwd: directory, format: "html" }, output.io);
+      await runReport({ cwd: directory, format: "json", out: "report.json" }, output.io);
+      await runReport(
+        { cwd: directory, runPath: join(".toolsmith", "runs", "latest.json"), format: "markdown", out: "by-path.md" },
+        output.io
+      );
+
+      const markdown = await readFile(join(directory, "custom-report.md"), "utf8");
+      const html = await readFile(join(directory, "report.html"), "utf8");
+      const json = JSON.parse(await readFile(join(directory, "report.json"), "utf8"));
+      const byPath = await readFile(join(directory, "by-path.md"), "utf8");
+
+      expect(markdownRun.summary.score).toBe(66.67);
+      expect(markdown).toContain("# ToolSmith Eval Report");
+      expect(html).toContain("<title>ToolSmith Eval Report</title>");
+      expect(json.summary.score).toBe(66.67);
+      expect(byPath).toContain("Tool Confusion Matrix");
+      expect(output.lines).toContain("Report written to custom-report.md");
+      expect(output.lines).toContain("Report written to report.html");
+      expect(output.lines).toContain("Report written to report.json");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   it("eval reports missing files with a friendly error", async () => {

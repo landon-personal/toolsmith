@@ -14,19 +14,25 @@ export async function writeLatestRun(run: EvalRun, cwd = process.cwd()): Promise
 
 export async function readLatestRun(cwd = process.cwd()): Promise<EvalRun> {
   const path = resolve(cwd, LATEST_RUN_PATH);
+  return readRunFile(path, `No latest run found at ${path}. Run "npm run dev -- eval examples/calendar-email" first.`);
+}
+
+export async function readRunFile(
+  path: string,
+  missingMessage = `No run file found at ${resolve(path)}.`
+): Promise<EvalRun> {
+  const resolvedPath = resolve(path);
 
   try {
-    const raw = await readFile(path, "utf8");
+    const raw = await readFile(resolvedPath, "utf8");
     return JSON.parse(raw) as EvalRun;
   } catch (error: unknown) {
     if (isNodeError(error) && error.code === "ENOENT") {
-      throw new ToolSmithError(
-        `No latest run found at ${path}. Run "npm run dev -- eval examples/calendar-email" first.`
-      );
+      throw new ToolSmithError(missingMessage);
     }
 
     if (error instanceof SyntaxError) {
-      throw new ToolSmithError(`Latest run file is malformed JSON: ${path}.`);
+      throw new ToolSmithError(`Run file is malformed JSON: ${resolvedPath}.`);
     }
 
     throw error;

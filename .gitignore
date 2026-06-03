@@ -5,5 +5,7 @@ coverage/
 .DS_Store
 *.log
 *.tgz
+report.md
+report.html
 .env
 .env.*

@@ -1,20 +1,69 @@
+import { writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import type { CommandIO } from "../io.js";
 import { defaultIO } from "../io.js";
-import { readLatestRun } from "../results.js";
+import { readLatestRun, readRunFile } from "../results.js";
+import { renderHtmlReport } from "../reports/htmlReport.js";
+import { renderMarkdownReport } from "../reports/markdownReport.js";
 import type { EvalRun } from "../types.js";
+
+export type ReportFormat = "terminal" | "json" | "markdown" | "html";
 
 export interface ReportOptions {
   cwd?: string;
+  format?: ReportFormat;
+  out?: string;
+  runPath?: string;
 }
 
 export async function runReport(
   options: ReportOptions = {},
   io: CommandIO = defaultIO
 ): Promise<EvalRun> {
-  const run = await readLatestRun(options.cwd);
+  const cwd = options.cwd ?? process.cwd();
+  const run = options.runPath ? await readRunFile(resolve(cwd, options.runPath)) : await readLatestRun(cwd);
+  const format = options.format ?? "terminal";
 
-  printReport(run, io);
+  if (format === "terminal") {
+    printReport(run, io);
+    return run;
+  }
+
+  const rendered = renderReport(run, format);
+  const outputPath = options.out ?? defaultOutputPath(format);
+
+  if (outputPath) {
+    await writeFile(resolve(cwd, outputPath), rendered, "utf8");
+    io.stdout(`Report written to ${outputPath}`);
+  } else {
+    io.stdout(rendered);
+  }
+
   return run;
+}
+
+function renderReport(run: EvalRun, format: Exclude<ReportFormat, "terminal">): string {
+  if (format === "json") {
+    return `${JSON.stringify(run, null, 2)}\n`;
+  }
+
+  if (format === "markdown") {
+    return renderMarkdownReport(run);
+  }
+
+  return renderHtmlReport(run);
+}
+
+function defaultOutputPath(format: Exclude<ReportFormat, "terminal">): string | undefined {
+  if (format === "markdown") {
+    return "report.md";
+  }
+
+  if (format === "html") {
+    return "report.html";
+  }
+
+  return undefined;
 }
 
 function printReport(run: EvalRun, io: CommandIO): void {

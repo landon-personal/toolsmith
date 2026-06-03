@@ -1,6 +1,6 @@
 {
   "name": "toolsmith",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Local-first CLI for testing whether AI agents use tool definitions correctly.",
   "type": "module",
   "bin": {

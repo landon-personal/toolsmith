@@ -7,7 +7,7 @@ The project is intentionally small. The current runtime provides a TypeScript No
 - `init` creates a local `toolsmith.config.json` file.
 - `lint` loads local `tools.json`, validates it, and reports static issues that could confuse AI agents.
 - `eval` loads local `tools.json` and `tasks.json`, runs tasks through a keyword mock agent, scores results, categorizes failures, and writes `.toolsmith/runs/latest.json`.
-- `report` reads `.toolsmith/runs/latest.json` and prints score, failure breakdown, passed tasks, failed tasks, reasons, and recommendations.
+- `report` reads `.toolsmith/runs/latest.json` and prints score, failure breakdown, passed tasks, failed tasks, reasons, and recommendations. It can also generate local JSON, Markdown, and static HTML reports.
 
 ToolSmith does not call models, send email, edit calendars, connect to databases, deploy, publish, use API keys, or print environment variables.
 
@@ -34,6 +34,8 @@ npm run dev -- lint examples/calendar-email
 npm run dev -- lint examples/confusing-tools
 npm run dev -- eval examples/calendar-email
 npm run dev -- report
+npm run dev -- report --format markdown
+npm run dev -- report --format html
 ```
 
 ## Develop
@@ -56,4 +58,4 @@ npm run package:check
 
 ## Current Scope
 
-v0.4.1 aligns eval score breakdowns and failure categories with the roadmap while preserving the package-ready CLI behavior from v0.3.0. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.
+v0.5.0 adds locally generated JSON, Markdown, and static HTML reports while preserving the package-ready CLI behavior from v0.3.0. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.

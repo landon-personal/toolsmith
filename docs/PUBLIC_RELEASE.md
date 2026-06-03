@@ -6,6 +6,8 @@ As of v0.3.0, ToolSmith can be built, packed into a local npm tarball, installed
 
 As of v0.4.1, eval results include roadmap-aligned failure categories, score breakdown fields, reasons, recommendations, and breakdown counts. This remains local mock-agent behavior and does not add real model/API integration or real tool side effects.
 
+As of v0.5.0, ToolSmith can generate local Markdown and static HTML reports from saved eval runs. These reports are local files only; no GitHub Pages deployment, analytics, external assets, or network calls are added.
+
 ## Distribution Targets
 
 - Public GitHub repository: source code, issues, pull requests, release tags, and project history.

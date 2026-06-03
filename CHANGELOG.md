@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0
+
+- Added local JSON, Markdown, and static HTML report generation from saved eval runs.
+- Added `report --format json|markdown|html` and `--out <path>` support.
+- Added tool confusion matrix helpers for shareable reports.
+- Kept terminal report output as the default behavior.
+- Kept reports local and static with no external assets, analytics, network calls, real model/API calls, real tool side effects, npm publishing, GitHub push, or GitHub Pages deployment.
+
 ## 0.4.1
 
 - Aligned eval failure categories with the roadmap names, including `wrong_tool`, `missing_tool_call`, `hallucinated_tool`, `invalid_arguments`, `missing_required_argument`, `unnecessary_tool_call`, `unsafe_tool_attempt`, `should_have_asked_clarifying_question`, and `should_not_have_asked_clarifying_question`.

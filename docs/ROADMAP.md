@@ -50,6 +50,13 @@
 - Align failure category names with the roadmap, including wrong tools, missing tool calls, hallucinated tools, invalid arguments, missing required arguments, unnecessary tool calls, unsafe attempts, and clarification behavior failures.
 - Keep deeper scoring deterministic and mock-agent-based until later versions add richer argument validation and agent behavior.
 
+## v0.5.0
+
+- Add locally generated Markdown and static HTML reports from saved eval run JSON.
+- Keep terminal report output as the default.
+- Include score breakdowns, failure breakdowns, task tables, failed task details, recommendations, tool confusion matrices, and raw JSON details.
+- Keep reports dependency-light, static, local-only, and free of analytics, network calls, model/API calls, and real tool side effects.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.

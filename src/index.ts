@@ -48,12 +48,23 @@ export function buildCli(io: CommandIO = defaultIO): Command {
 
   program
     .command("report")
+    .argument("[runPath]", "Path to a saved eval run JSON file.")
     .description("Show the latest local evaluation report.")
-    .action(async () => {
-      await runReport({}, io);
+    .option("--format <format>", "Report format: terminal, json, markdown, or html.", "terminal")
+    .option("--out <path>", "Write report output to a file.")
+    .action(async (runPath: string | undefined, options: { format?: string; out?: string }) => {
+      await runReport({ runPath, format: parseReportFormat(options.format), out: options.out }, io);
     });
 
   return program;
 }
 
 export { runEval, runInit, runLint, runReport };
+
+function parseReportFormat(value: string | undefined): "terminal" | "json" | "markdown" | "html" {
+  if (value === undefined || value === "terminal" || value === "json" || value === "markdown" || value === "html") {
+    return value ?? "terminal";
+  }
+
+  throw new Error(`Unsupported report format "${value}". Use terminal, json, markdown, or html.`);
+}
