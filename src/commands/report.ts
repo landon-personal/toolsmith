@@ -23,6 +23,8 @@ function printReport(run: EvalRun, io: CommandIO): void {
   io.stdout(`Created: ${run.createdAt}`);
   io.stdout(`Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)`);
   io.stdout("");
+  printScoreBreakdown(run, io);
+  io.stdout("");
   printFailureBreakdown(run, io);
   io.stdout("");
   io.stdout("Passed tasks:");
@@ -45,6 +47,13 @@ function printReport(run: EvalRun, io: CommandIO): void {
     io.stdout(`Reason: ${result.reason}`);
     io.stdout(`Recommendation: ${result.recommendation}`);
     io.stdout("");
+  }
+}
+
+function printScoreBreakdown(run: EvalRun, io: CommandIO): void {
+  io.stdout("Score breakdown:");
+  for (const [key, score] of Object.entries(run.summary.scoreBreakdown ?? {})) {
+    io.stdout(`- ${key}: ${score}%`);
   }
 }
 

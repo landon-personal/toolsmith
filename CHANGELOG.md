@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+- Aligned eval failure categories with the roadmap names, including `wrong_tool`, `missing_tool_call`, `hallucinated_tool`, `invalid_arguments`, `missing_required_argument`, `unnecessary_tool_call`, `unsafe_tool_attempt`, `should_have_asked_clarifying_question`, and `should_not_have_asked_clarifying_question`.
+- Added score breakdown fields for `correct_tool_selection`, `valid_arguments`, `no_unnecessary_tool_calls`, `safe_behavior`, `clarification_behavior`, and `error_recovery`.
+- Kept score breakdowns deterministic and mock-agent-based, with deeper argument and behavior scoring left for later versions.
+- Kept ToolSmith unpublished with no real model/API calls and no real tool side effects.
+
 ## 0.4.0
 
 - Added readable eval failure categories including `passed`, `wrong_tool`, `no_tool_selected`, `unexpected_tool_selected`, `invalid_tool_call`, `missing_expected_tool`, `unclear_task`, and `unknown_error`.

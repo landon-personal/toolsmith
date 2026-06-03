@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.4.0 better scoring and failure categories.
+Current checkpoint: v0.4.1 roadmap-aligned scoring and failure categories.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -53,6 +53,15 @@ v0.4.0 adds:
 - failure breakdown counts in saved results, eval output, and report output
 - short reasons and recommendations for each eval result
 - deterministic mock-agent handling for clear email, clear calendar, ambiguous, and no-match prompts
+- no npm publishing
+- no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
+
+v0.4.1 adds:
+- roadmap-aligned eval failure category names
+- score breakdown fields for correct tool selection, valid arguments, unnecessary tool calls, safe behavior, clarification behavior, and error recovery
+- deterministic mock-agent scoring placeholders for categories that will deepen later
 - no npm publishing
 - no GitHub push or release automation
 - no real model/API calls

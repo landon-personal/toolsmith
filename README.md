@@ -56,4 +56,4 @@ npm run package:check
 
 ## Current Scope
 
-v0.4.0 adds better eval scoring and failure categories while preserving the package-ready CLI behavior from v0.3.0. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.
+v0.4.1 aligns eval score breakdowns and failure categories with the roadmap while preserving the package-ready CLI behavior from v0.3.0. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.

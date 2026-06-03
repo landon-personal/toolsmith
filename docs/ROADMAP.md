@@ -44,6 +44,12 @@
 - Keep the evaluator deterministic and mock-agent-based with no real model/API calls or real tool side effects.
 - Preserve package-ready CLI behavior from v0.3.0.
 
+## v0.4.1
+
+- Align score breakdown fields with the roadmap: correct tool selection, valid arguments, unnecessary tool calls, safe behavior, clarification behavior, and error recovery.
+- Align failure category names with the roadmap, including wrong tools, missing tool calls, hallucinated tools, invalid arguments, missing required arguments, unnecessary tool calls, unsafe attempts, and clarification behavior failures.
+- Keep deeper scoring deterministic and mock-agent-based until later versions add richer argument validation and agent behavior.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.

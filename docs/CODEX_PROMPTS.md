@@ -49,3 +49,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Improve ToolSmith local mock eval scoring with clearer failure categories, saved result summaries, terminal report output, reasons, and recommendations. Keep the agent deterministic and local. Do not add real model/API integration, external API calls, publishing, dashboards, cloud features, or real tool side effects.
 ```
+
+## Align Scoring Roadmap
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Align ToolSmith local mock eval scoring with the roadmap category names and score breakdown fields. Keep all scoring deterministic and local. Do not start a new version line, add Markdown/HTML reports, publish to npm, push to GitHub, add real model/API integration, or add real tool side effects.
+```

@@ -1,8 +1,8 @@
 # Status
 
-Date: 2026-06-02
+Date: 2026-06-03
 
-Version: 0.4.0
+Version: 0.4.1
 
 ## Done
 
@@ -21,6 +21,7 @@ Version: 0.4.0
 - Added local package smoke checking with `npm run package:check`.
 - Verified the compiled CLI can be packed, installed from a local tarball, and run as `toolsmith`.
 - Added better eval scoring with failure categories, reasons, recommendations, and failure breakdown counts.
+- Aligned eval score breakdown fields and failure category names with the v0.4.0 roadmap.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -35,4 +36,4 @@ Version: 0.4.0
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.4.0 update improves local mock eval scoring only; no npm publishing or GitHub push has happened.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.4.1 update aligns local mock eval scoring categories only; no npm publishing or GitHub push has happened.

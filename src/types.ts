@@ -41,16 +41,30 @@ export interface ToolCall {
 }
 
 export type FailureCategory =
-  | "passed"
   | "wrong_tool"
-  | "no_tool_selected"
-  | "unexpected_tool_selected"
-  | "invalid_tool_call"
-  | "missing_expected_tool"
-  | "unclear_task"
+  | "missing_tool_call"
+  | "hallucinated_tool"
+  | "invalid_arguments"
+  | "missing_required_argument"
+  | "unnecessary_tool_call"
+  | "unsafe_tool_attempt"
+  | "should_have_asked_clarifying_question"
+  | "should_not_have_asked_clarifying_question"
   | "unknown_error";
 
 export type FailureReason = FailureCategory;
+
+export type ResultCategory = "passed" | FailureCategory;
+
+export type ScoreBreakdownKey =
+  | "correct_tool_selection"
+  | "valid_arguments"
+  | "no_unnecessary_tool_calls"
+  | "safe_behavior"
+  | "clarification_behavior"
+  | "error_recovery";
+
+export type ScoreBreakdown = Record<ScoreBreakdownKey, number>;
 
 export interface EvalResult {
   taskId: string;
@@ -58,7 +72,7 @@ export interface EvalResult {
   expectedTool: string;
   actualTool: string | null;
   passed: boolean;
-  failureCategory: FailureCategory;
+  failureCategory: ResultCategory;
   failureReason?: FailureReason;
   reason: string;
   recommendation: string;
@@ -82,6 +96,7 @@ export interface EvalRun {
     passed: number;
     failed: number;
     score: number;
+    scoreBreakdown: ScoreBreakdown;
     failureCategories: Partial<Record<FailureCategory, number>>;
   };
   results: EvalResult[];

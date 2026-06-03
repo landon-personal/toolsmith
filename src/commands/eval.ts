@@ -36,6 +36,8 @@ function printEvalSummary(run: EvalRun, io: CommandIO): void {
   io.stdout(`Example: ${run.examplePath}`);
   io.stdout(`Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)`);
   io.stdout("");
+  printScoreBreakdown(run, io);
+  io.stdout("");
   printFailureBreakdown(run, io);
   io.stdout("");
   io.stdout("Passed tasks:");
@@ -55,6 +57,13 @@ function printEvalSummary(run: EvalRun, io: CommandIO): void {
     io.stdout(`  actual: ${result.actualTool ?? "none"}`);
     io.stdout(`  reason: ${result.reason}`);
     io.stdout(`  recommendation: ${result.recommendation}`);
+  }
+}
+
+function printScoreBreakdown(run: EvalRun, io: CommandIO): void {
+  io.stdout("Score breakdown:");
+  for (const [key, score] of Object.entries(run.summary.scoreBreakdown)) {
+    io.stdout(`- ${key}: ${score}%`);
   }
 }
 

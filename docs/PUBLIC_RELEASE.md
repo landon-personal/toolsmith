@@ -4,7 +4,7 @@ ToolSmith is not published yet. This document describes the intended public dist
 
 As of v0.3.0, ToolSmith can be built, packed into a local npm tarball, installed into a temporary directory, and run as the `toolsmith` command for local smoke testing. This is packaging readiness only, not a public release.
 
-As of v0.4.0, eval results include failure categories, reasons, recommendations, and breakdown counts. This remains local mock-agent behavior and does not add real model/API integration or real tool side effects.
+As of v0.4.1, eval results include roadmap-aligned failure categories, score breakdown fields, reasons, recommendations, and breakdown counts. This remains local mock-agent behavior and does not add real model/API integration or real tool side effects.
 
 ## Distribution Targets
 
