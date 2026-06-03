@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 0.5.1
+Version: 0.6.0
 
 ## Done
 
@@ -24,6 +24,9 @@ Version: 0.5.1
 - Aligned eval score breakdown fields and failure category names with the v0.4.0 roadmap.
 - Added locally generated JSON, Markdown, and static HTML reports from saved eval runs.
 - Added docs-only coding-agent usage guidance for Codex, Claude Code, AGENTS.md, CLAUDE.md, and example Claude command workflows.
+- Added CI-friendly `eval --fail-under <score>` threshold checks.
+- Added `compare <baseline-run> <current-run>` regression comparison for saved eval run JSON files.
+- Added docs-only GitHub Actions examples for future users.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -35,8 +38,8 @@ Version: 0.5.1
 - GitHub Pages publishing or deployment.
 - npm publishing.
 - GitHub Actions or release automation.
-- Runtime changes in v0.5.1.
+- GitHub Actions workflow files in this repo.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v0.5.1 update is docs-only coding-agent usage guidance; no runtime features were added, no npm publishing happened, and no GitHub push happened. The next planned runtime milestone is v0.6.0 CI mode.
+The project currently has no real email, calendar, database, network, model, or API integration. The v0.6.0 update adds local CI threshold and regression comparison behavior only; no npm publishing happened, no GitHub push happened, and no GitHub Actions workflow automation was added.

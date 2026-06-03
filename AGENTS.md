@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.5.0 Markdown and HTML reports.
+Current checkpoint: v0.6.0 CI mode and regression checks.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -77,6 +77,23 @@ v0.5.0 adds:
 - no real model/API calls
 - no real tool side effects
 
+v0.5.1 adds:
+- docs-only guidance for using ToolSmith with Codex, Claude Code, AGENTS.md, CLAUDE.md, and example Claude command workflows
+- no runtime behavior changes
+- no npm publishing
+- no GitHub push or release automation
+
+v0.6.0 adds:
+- CI-friendly `eval --fail-under <score>` threshold checks
+- saved-run regression comparison with `compare <baseline-run> <current-run>`
+- optional `compare --fail-on-regression` behavior for CI
+- docs-only GitHub Actions examples
+- no GitHub Actions workflow files in this repo
+- no npm publishing
+- no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
+
 ## Important directories
 
 - src/ contains CLI source code.
@@ -123,6 +140,11 @@ When touching eval/report behavior, also run:
 
 npm run dev -- eval examples/calendar-email
 npm run dev -- report
+
+When touching CI or regression behavior, also run:
+
+npm run dev -- eval examples/calendar-email --fail-under 80
+npm run dev -- eval examples/calendar-email --fail-under 90
 
 ## Safety rules
 

@@ -73,3 +73,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Add docs-only guidance for using ToolSmith with Codex, Claude Code, and similar coding agents. Document AGENTS.md and CLAUDE.md snippets, explain when agents should run lint/eval/report, include docs-only Claude command examples, and do not add runtime features, setup commands, publishing, GitHub push, real model/API integration, or real tool side effects.
 ```
+
+## Add CI Mode and Regression Compare
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Add CI-friendly ToolSmith eval thresholds and saved-run regression comparison. Support eval --fail-under, compare baseline/current run JSON files, and compare --fail-on-regression. Keep GitHub Actions examples docs-only, and do not publish to npm, push to GitHub, create workflow files, add real model/API integration, or add real tool side effects.
+```

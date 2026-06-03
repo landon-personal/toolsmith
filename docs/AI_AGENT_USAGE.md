@@ -11,6 +11,7 @@ Codex should follow the project `AGENTS.md` instructions. Use `AGENTS.md` to kee
 After changing tools, tasks, schemas, eval behavior, scoring, reports, examples, or agent behavior, Codex should run ToolSmith and summarize:
 
 - score and score change if there is a previous baseline
+- CI threshold result when `eval --fail-under` is used
 - failure categories and counts
 - regressions or newly fixed failures
 - changed tools and tasks
@@ -87,6 +88,7 @@ When editing AI tools, tasks, schemas, eval behavior, scoring, reports, provider
 
 Summarize the ToolSmith result with:
 - score
+- CI threshold result or compare result, when used
 - failure categories and counts
 - regressions
 - changed tools and tasks

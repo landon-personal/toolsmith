@@ -8,6 +8,8 @@ As of v0.4.1, eval results include roadmap-aligned failure categories, score bre
 
 As of v0.5.0, ToolSmith can generate local Markdown and static HTML reports from saved eval runs. These reports are local files only; no GitHub Pages deployment, analytics, external assets, or network calls are added.
 
+As of v0.6.0, ToolSmith includes CI-friendly local eval thresholds and saved-run regression comparison. GitHub Actions documentation is example-only; no workflow automation, GitHub push, npm publishing, model/API integration, or real tool side effects are added.
+
 ## Distribution Targets
 
 - Public GitHub repository: source code, issues, pull requests, release tags, and project history.

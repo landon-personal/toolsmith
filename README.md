@@ -6,8 +6,9 @@ The project is intentionally small. The current runtime provides a TypeScript No
 
 - `init` creates a local `toolsmith.config.json` file.
 - `lint` loads local `tools.json`, validates it, and reports static issues that could confuse AI agents.
-- `eval` loads local `tools.json` and `tasks.json`, runs tasks through a keyword mock agent, scores results, categorizes failures, and writes `.toolsmith/runs/latest.json`.
+- `eval` loads local `tools.json` and `tasks.json`, runs tasks through a keyword mock agent, scores results, categorizes failures, and writes `.toolsmith/runs/latest.json`. It can fail CI with `--fail-under <score>`.
 - `report` reads `.toolsmith/runs/latest.json` and prints score, failure breakdown, passed tasks, failed tasks, reasons, and recommendations. It can also generate local JSON, Markdown, and static HTML reports.
+- `compare` compares two saved eval run JSON files and can fail CI with `--fail-on-regression`.
 
 ToolSmith does not call models, send email, edit calendars, connect to databases, deploy, publish, use API keys, or print environment variables.
 
@@ -33,9 +34,11 @@ npm run dev -- init
 npm run dev -- lint examples/calendar-email
 npm run dev -- lint examples/confusing-tools
 npm run dev -- eval examples/calendar-email
+npm run dev -- eval examples/calendar-email --fail-under 80
 npm run dev -- report
 npm run dev -- report --format markdown
 npm run dev -- report --format html
+npm run dev -- compare baseline.json .toolsmith/runs/latest.json --fail-on-regression
 ```
 
 ## Using ToolSmith with Coding Agents
@@ -66,4 +69,4 @@ npm run package:check
 
 ## Current Scope
 
-v0.5.0 adds locally generated JSON, Markdown, and static HTML reports while preserving the package-ready CLI behavior from v0.3.0. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.
+v0.6.0 adds CI-friendly eval thresholds and saved-run regression comparison while preserving shareable reports and package-ready CLI behavior. ToolSmith remains unpublished, local-first, mock-agent-based, and free of real model/API integration or real tool side effects.

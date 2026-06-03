@@ -2,6 +2,7 @@ import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promise
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
+import { runCompare } from "../src/commands/compare.js";
 import { runEval } from "../src/commands/eval.js";
 import { runInit } from "../src/commands/init.js";
 import { runLint } from "../src/commands/lint.js";
@@ -14,7 +15,7 @@ import { buildConfusionMatrix } from "../src/reports/confusionMatrix.js";
 import { renderHtmlReport } from "../src/reports/htmlReport.js";
 import { renderMarkdownReport } from "../src/reports/markdownReport.js";
 import { LATEST_RUN_PATH } from "../src/results.js";
-import type { ToolDefinition, ToolFile, ToolLintIssue } from "../src/types.js";
+import type { EvalRun, FailureCategory, ToolDefinition, ToolFile, ToolLintIssue } from "../src/types.js";
 import { loadTasksFile, loadToolsFile } from "../src/validation.js";
 import { VERSION } from "../src/version.js";
 
@@ -83,6 +84,47 @@ async function writeCustomExample(
   );
 }
 
+async function writeRun(directory: string, fileName: string, run: EvalRun): Promise<void> {
+  await writeFile(join(directory, fileName), `${JSON.stringify(run, null, 2)}\n`, "utf8");
+}
+
+function buildRunFixture(
+  id: string,
+  total: number,
+  passed: number,
+  failed: number,
+  failureCategories: Partial<Record<FailureCategory, number>>
+): EvalRun {
+  return {
+    id,
+    version: "0.6.0",
+    createdAt: "2026-06-03T00:00:00.000Z",
+    examplePath: ".",
+    toolsPath: "tools.json",
+    tasksPath: "tasks.json",
+    agent: {
+      name: "keyword-mock-agent",
+      version: "0.6.0"
+    },
+    summary: {
+      total,
+      passed,
+      failed,
+      score: total === 0 ? 0 : Math.round((passed / total) * 10000) / 100,
+      scoreBreakdown: {
+        correct_tool_selection: 100,
+        valid_arguments: 100,
+        no_unnecessary_tool_calls: 100,
+        safe_behavior: 100,
+        clarification_behavior: 100,
+        error_recovery: 100
+      },
+      failureCategories
+    },
+    results: []
+  };
+}
+
 describe("ToolSmith commands", () => {
   beforeEach(async () => {
     await rm(join(process.cwd(), ".toolsmith"), { recursive: true, force: true });
@@ -94,14 +136,14 @@ describe("ToolSmith commands", () => {
 
     expect(program.name()).toBe("toolsmith");
     expect(program.version()).toBe(VERSION);
-    expect(commandNames).toEqual(expect.arrayContaining(["init", "lint", "eval", "report"]));
+    expect(commandNames).toEqual(expect.arrayContaining(["init", "lint", "eval", "report", "compare"]));
   });
 
   it("has package-ready CLI metadata", async () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("0.5.0");
+    expect(packageJson.version).toBe("0.6.0");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
     expect(packageJson.files).toEqual(
@@ -119,7 +161,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.5.0");
+      expect(config.version).toBe("0.6.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -434,6 +476,35 @@ describe("ToolSmith commands", () => {
     expect(output.lines).toContain("Next: npm run dev -- report");
   });
 
+  it("eval fail-under passes when score meets the threshold", async () => {
+    const output = captureOutput();
+
+    const run = await runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE, failUnder: 60 }, output.io);
+
+    expect(run.summary.score).toBe(60);
+    expect(output.lines).toContain("Fail-under threshold: 60%");
+    expect(output.lines).toContain("CI result: passed");
+  });
+
+  it("eval fail-under fails when score is below the threshold", async () => {
+    const output = captureOutput();
+
+    await expect(runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE, failUnder: 80 }, output.io)).rejects.toThrow(
+      "CI threshold failed"
+    );
+    expect(output.lines).toContain("Fail-under threshold: 80%");
+    expect(output.lines).toContain("CI result: failed");
+    await expect(access(join(process.cwd(), LATEST_RUN_PATH))).resolves.toBeUndefined();
+  });
+
+  it("eval fail-under rejects invalid thresholds with a friendly error", async () => {
+    const program = buildCli(captureOutput().io);
+
+    await expect(
+      program.parseAsync(["eval", CALENDAR_EMAIL_EXAMPLE, "--fail-under", "not-a-number"], { from: "user" })
+    ).rejects.toThrow('Invalid --fail-under value "not-a-number". Use a number from 0 to 100.');
+  });
+
   it("report reads latest results", async () => {
     const evalOutput = captureOutput();
     const reportOutput = captureOutput();
@@ -551,6 +622,85 @@ describe("ToolSmith commands", () => {
       expect(output.lines).toContain("Report written to custom-report.md");
       expect(output.lines).toContain("Report written to report.html");
       expect(output.lines).toContain("Report written to report.json");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("compare command reports score regressions and failure category changes", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-compare-"));
+    const output = captureOutput();
+
+    try {
+      await writeRun(directory, "baseline.json", buildRunFixture("baseline", 2, 2, 0, {}));
+      await writeRun(directory, "current.json", buildRunFixture("current", 2, 1, 1, { wrong_tool: 1 }));
+
+      const report = await runCompare("baseline.json", "current.json", { cwd: directory }, output.io);
+
+      expect(report.scoreDelta).toBe(-50);
+      expect(report.hasRegression).toBe(true);
+      expect(report.newFailureCategories).toEqual(["wrong_tool"]);
+      expect(output.lines).toContain("Baseline score: 100%");
+      expect(output.lines).toContain("Current score: 50%");
+      expect(output.lines).toContain("Delta: -50%");
+      expect(output.lines).toContain("- wrong_tool increased from 0 to 1");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("compare command reports score improvements and resolved failures", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-compare-improvement-"));
+    const output = captureOutput();
+
+    try {
+      await writeRun(directory, "baseline.json", buildRunFixture("baseline", 2, 1, 1, { missing_tool_call: 1 }));
+      await writeRun(directory, "current.json", buildRunFixture("current", 2, 2, 0, {}));
+
+      const report = await runCompare("baseline.json", "current.json", { cwd: directory }, output.io);
+
+      expect(report.scoreDelta).toBe(50);
+      expect(report.hasImprovement).toBe(true);
+      expect(report.resolvedFailureCategories).toEqual(["missing_tool_call"]);
+      expect(output.lines).toContain("Current score: 100%");
+      expect(output.lines).toContain("- missing_tool_call decreased from 1 to 0");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("compare fail-on-regression exits non-zero on score regression", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-compare-fail-"));
+
+    try {
+      await writeRun(directory, "baseline.json", buildRunFixture("baseline", 2, 2, 0, {}));
+      await writeRun(directory, "current.json", buildRunFixture("current", 2, 1, 1, { wrong_tool: 1 }));
+
+      await expect(
+        runCompare("baseline.json", "current.json", { cwd: directory, failOnRegression: true }, captureOutput().io)
+      ).rejects.toThrow("Regression detected");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("compare handles missing and malformed run files", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-compare-invalid-"));
+
+    try {
+      await writeRun(directory, "baseline.json", buildRunFixture("baseline", 1, 1, 0, {}));
+      await writeFile(join(directory, "malformed.json"), "{", "utf8");
+      await writeFile(join(directory, "not-run.json"), JSON.stringify({ summary: { score: 100 } }), "utf8");
+
+      await expect(runCompare("missing.json", "baseline.json", { cwd: directory }, captureOutput().io)).rejects.toThrow(
+        "No run file found"
+      );
+      await expect(
+        runCompare("baseline.json", "malformed.json", { cwd: directory }, captureOutput().io)
+      ).rejects.toThrow("malformed JSON");
+      await expect(
+        runCompare("baseline.json", "not-run.json", { cwd: directory }, captureOutput().io)
+      ).rejects.toThrow("not a valid ToolSmith eval run");
     } finally {
       await rm(directory, { recursive: true, force: true });
     }

@@ -78,6 +78,14 @@ toolsmith agents setup --codex --claude
 
 - This is future work and is not implemented in v0.5.1.
 
+## v0.6.0
+
+- Add CI-friendly eval threshold checks with `eval --fail-under <score>`.
+- Add saved-run regression comparison with `compare <baseline-run> <current-run>`.
+- Support `compare --fail-on-regression` for builds that should fail when the current score drops below the baseline.
+- Document GitHub Actions examples without creating workflow files or enabling automation in this repo.
+- Keep ToolSmith mock-agent-based with no real model/API calls, no real tool side effects, no npm publishing, and no GitHub push.
+
 ## Public Release Track
 
 - Package-ready CLI: make the existing TypeScript CLI ready for public installation without changing the local-first safety model.

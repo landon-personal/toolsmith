@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0
+
+- Added `eval --fail-under <score>` for CI-friendly score thresholds.
+- Added `compare <baseline-run> <current-run>` for saved eval run regression checks.
+- Added `compare --fail-on-regression` to exit non-zero when the current score is lower than the baseline.
+- Added docs-only GitHub Actions examples for future users.
+- Kept ToolSmith mock-agent-based with no real model/API calls, no real tool side effects, no npm publishing, and no GitHub push.
+
 ## 0.5.1
 
 - Added coding-agent usage docs for ToolSmith.

@@ -1,5 +1,6 @@
 import type { CommandIO } from "../io.js";
 import { defaultIO } from "../io.js";
+import { ToolSmithError } from "../errors.js";
 import { evaluate } from "../evaluator.js";
 import { LATEST_RUN_PATH, writeLatestRun } from "../results.js";
 import type { EvalRun } from "../types.js";
@@ -9,6 +10,7 @@ export interface EvalOptions {
   tools?: string;
   tasks?: string;
   cwd?: string;
+  failUnder?: number;
 }
 
 export async function runEval(
@@ -24,9 +26,14 @@ export async function runEval(
   await writeLatestRun(run, options.cwd);
 
   printEvalSummary(run, io);
+  printFailUnderResult(run, options.failUnder, io);
   io.stdout(`Results written to ${LATEST_RUN_PATH}`);
   io.stdout("Next: npm run dev -- report");
   io.stdout("Safety: used keyword mock agent only; no model/API calls or real tool side effects.");
+
+  if (options.failUnder !== undefined && run.summary.score < options.failUnder) {
+    throw new ToolSmithError(`CI threshold failed: score ${run.summary.score}% is below ${options.failUnder}%.`);
+  }
 
   return run;
 }
@@ -79,4 +86,14 @@ function printFailureBreakdown(run: EvalRun, io: CommandIO): void {
   for (const [category, count] of entries) {
     io.stdout(`- ${category}: ${count}`);
   }
+}
+
+function printFailUnderResult(run: EvalRun, threshold: number | undefined, io: CommandIO): void {
+  if (threshold === undefined) {
+    return;
+  }
+
+  io.stdout("");
+  io.stdout(`Fail-under threshold: ${threshold}%`);
+  io.stdout(`CI result: ${run.summary.score >= threshold ? "passed" : "failed"}`);
 }
