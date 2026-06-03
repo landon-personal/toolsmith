@@ -12,7 +12,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current version
 
-Current checkpoint: v0.8.0 GitHub Pages-ready docs content.
+Current checkpoint: v0.9.0 public beta readiness.
 
 v0.1.0 includes:
 - TypeScript Node CLI
@@ -112,6 +112,18 @@ v0.8.0 adds:
 - no GitHub Actions workflow files
 - no npm publishing
 - no GitHub push or release automation
+- no real model/API calls
+- no real tool side effects
+
+v0.9.0 adds:
+- README polish for outside testers and fresh clone setup
+- troubleshooting, release checklist, and cross-platform docs
+- example README files for starter, confusing, and OpenAPI examples
+- public beta readiness documentation without publishing
+- no npm publishing
+- no GitHub push, release tags, or release automation
+- no GitHub Pages deployment
+- no GitHub Actions workflow files
 - no real model/API calls
 - no real tool side effects
 

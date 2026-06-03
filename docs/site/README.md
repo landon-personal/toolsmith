@@ -4,6 +4,8 @@ This folder contains plain Markdown documentation prepared for future GitHub Pag
 
 No GitHub Pages deployment is enabled. No GitHub Actions workflow is created here. The files are content-only and can be adapted later after explicit approval.
 
+For public beta testers, pair these pages with `docs/TROUBLESHOOTING.md`, `docs/RELEASE_CHECKLIST.md`, and `docs/CROSS_PLATFORM.md`.
+
 Start with:
 
 - `index.md`

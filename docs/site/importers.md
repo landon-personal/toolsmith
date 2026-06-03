@@ -35,3 +35,5 @@ npm run dev -- lint . --tools examples/openapi/tools.generated.json
 ToolSmith does not execute imported APIs, send network requests, or perform imported endpoint side effects.
 
 MCP-style import is future work.
+
+If import paths fail, see `docs/TROUBLESHOOTING.md`.

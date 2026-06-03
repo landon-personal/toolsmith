@@ -18,6 +18,7 @@ After changing tools, tasks, schemas, eval behavior, scoring, reports, examples,
 - imported OpenAPI operations, when import output changed
 - recommendations for clearer tool names, descriptions, parameters, examples, or task wording
 - generated report paths, if Markdown or HTML reports were requested
+- docs or example README changes, when public beta guidance changed
 
 ## Claude Code
 

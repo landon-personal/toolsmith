@@ -1,5 +1,14 @@
 # Quickstart
 
+Fresh clone flow:
+
+```sh
+git clone <repo-url>
+cd toolsmith
+```
+
+Use the real repository URL after the repository is public.
+
 Install local development dependencies:
 
 ```sh
@@ -50,3 +59,9 @@ npm run dev -- report --format html
 ```
 
 The Markdown report writes `report.md` by default. The HTML report writes `report.html` by default. These files are local generated artifacts.
+
+Test local package installation:
+
+```sh
+npm run package:check
+```

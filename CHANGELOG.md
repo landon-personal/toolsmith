@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.0
+
+- Polished README for outside testers and fresh clone usage.
+- Added `docs/TROUBLESHOOTING.md`.
+- Added `docs/RELEASE_CHECKLIST.md`.
+- Added `docs/CROSS_PLATFORM.md`.
+- Added README files for calendar/email and confusing-tools examples, and expanded OpenAPI example docs.
+- Updated docs-site pages for public beta readiness.
+- Reviewed package metadata expectations and kept npm publishing, GitHub push, release tags, GitHub Pages deployment, real model/API integration, and real tool side effects out of scope.
+
 ## 0.8.0
 
 - Added plain Markdown documentation content under `docs/site/` for future GitHub Pages hosting.

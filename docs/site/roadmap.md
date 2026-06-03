@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v0.8.0.
+Current version: v0.9.0.
 
 Completed:
 
@@ -16,10 +16,10 @@ Completed:
 - v0.6.0: CI mode and saved-run regression comparison
 - v0.7.0: basic OpenAPI JSON importer
 - v0.8.0: GitHub Pages-ready documentation content
+- v0.9.0: public beta readiness docs, troubleshooting, release checklist, and example polish
 
 Near-term path:
 
-- v0.9.0: public beta readiness
 - v1.0.0: stable public local CLI
 - v1.1.0: optional real model provider
 

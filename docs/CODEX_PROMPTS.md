@@ -97,3 +97,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Prepare plain Markdown documentation under docs/site for future GitHub Pages hosting. Cover quickstart, installation, tools, tasks, evals, reports, CI mode, importers, coding agents, safety, and roadmap. Do not enable GitHub Pages deployment, create GitHub Actions workflows, publish to npm, push to GitHub, add real model/API integration, or add real tool side effects.
 ```
+
+## Prepare Public Beta
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Prepare ToolSmith for outside testers without publishing. Polish README and docs for fresh clone setup, examples, reports, CI checks, OpenAPI import, local package smoke checks, troubleshooting, release checklist, cross-platform expectations, and safety. Do not publish to npm, push to GitHub, create release tags, enable GitHub Pages, create GitHub Actions workflows, add real model/API integration, or add real tool side effects.
+```

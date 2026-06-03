@@ -2,7 +2,7 @@
 
 `docs/site/` is preparation for a future GitHub Pages documentation site.
 
-No deployment is enabled yet. This repository does not include a GitHub Pages workflow, Pages configuration, or release automation as part of v0.8.0.
+No deployment is enabled yet. This repository does not include a GitHub Pages workflow, Pages configuration, or release automation as part of v0.9.0.
 
 The site content is plain Markdown so it can be adapted later to GitHub Pages, a static site generator, or a documentation template after explicit approval.
 

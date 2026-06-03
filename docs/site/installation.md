@@ -5,9 +5,13 @@ ToolSmith is not published to npm yet.
 Current local usage:
 
 ```sh
+git clone <repo-url>
+cd toolsmith
 npm install
 npm run dev -- <command>
 ```
+
+Use the real repository URL after the repository is public.
 
 Future public install goal:
 

@@ -1,3 +1,4 @@
+import { ToolSmithError } from "../errors.js";
 import type { JsonValue, ToolDefinition, ToolFile } from "../types.js";
 import { VERSION } from "../version.js";
 
@@ -20,7 +21,7 @@ export function importOpenApiDocument(document: unknown): OpenApiImportResult {
   const warnings: string[] = [];
 
   if (!isRecord(document)) {
-    throw new Error("OpenAPI file must contain a JSON object.");
+    throw new ToolSmithError("OpenAPI file must contain a JSON object.");
   }
 
   if (typeof document.openapi !== "string" || document.openapi.trim().length === 0) {
@@ -29,7 +30,7 @@ export function importOpenApiDocument(document: unknown): OpenApiImportResult {
 
   const paths = document.paths;
   if (!isRecord(paths)) {
-    throw new Error('OpenAPI file must include a "paths" object.');
+    throw new ToolSmithError('OpenAPI file must include a "paths" object.');
   }
 
   const title = isRecord(document.info) && typeof document.info.title === "string" ? document.info.title : "OpenAPI";

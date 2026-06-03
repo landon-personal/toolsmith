@@ -32,3 +32,5 @@ docs/examples/github-actions.md
 ```
 
 No GitHub Actions workflow is enabled in this repo. No GitHub Pages deployment is enabled.
+
+Before using CI checks publicly, review `docs/RELEASE_CHECKLIST.md` and verify macOS/Windows expectations in `docs/CROSS_PLATFORM.md`.

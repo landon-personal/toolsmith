@@ -17,3 +17,5 @@ Current safety properties:
 OpenAPI importers generate tool definitions only. They do not execute endpoints or make network requests.
 
 Do not publish to npm, push to GitHub, enable GitHub Pages, or add GitHub Actions deployment unless explicitly approved.
+
+Public beta readiness does not change this safety model.

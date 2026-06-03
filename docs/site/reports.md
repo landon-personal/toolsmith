@@ -40,3 +40,5 @@ Reports include:
 - raw JSON details
 
 HTML reports are static, local files with no external CDN dependencies, analytics, or network calls.
+
+Generated report files are ignored by default. Do not commit `report.md` or `report.html` unless a future task explicitly asks for intentional fixtures.

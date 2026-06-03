@@ -14,6 +14,8 @@ As of v0.7.0, ToolSmith can import a basic OpenAPI JSON file into ToolSmith tool
 
 As of v0.8.0, ToolSmith has plain Markdown documentation content under `docs/site/` for future GitHub Pages hosting. This is documentation preparation only; no Pages deployment, GitHub Actions workflow, npm publishing, or GitHub push is enabled.
 
+As of v0.9.0, ToolSmith has public beta readiness documentation, troubleshooting, release checklist, cross-platform notes, and example READMEs. This prepares outside testers to clone and run ToolSmith locally, but it is not a public release and does not publish anything.
+
 ## Distribution Targets
 
 - Public GitHub repository: source code, issues, pull requests, release tags, and project history.
@@ -32,6 +34,8 @@ The `toolsmith` package name may need to be checked before publishing. If the na
 ## Platform Support
 
 ToolSmith should support macOS and Windows. Source code and tests should use Node path and filesystem APIs instead of hardcoded path separators or Unix-only shell assumptions.
+
+See `docs/CROSS_PLATFORM.md` for detailed expectations.
 
 Use this local package smoke check before any future publishing work:
 

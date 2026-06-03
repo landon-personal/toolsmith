@@ -4,6 +4,14 @@
 
 `tools.generated.json` is committed as intentional example output from the import command. Regenerate it when importer behavior changes.
 
+This example demonstrates:
+
+- `operationId` to snake_case tool names
+- fallback names from method and path
+- path and query parameters
+- JSON request body properties
+- warning-friendly side-effect metadata for non-GET operations
+
 Generate ToolSmith tool definitions locally:
 
 ```sh
@@ -17,3 +25,5 @@ Lint the generated tools:
 ```sh
 npm run dev -- lint . --tools examples/openapi/tools.generated.json
 ```
+
+Expected behavior: generated tools should pass validation and lint successfully, while lint may still warn about missing examples or risky side-effect wording.

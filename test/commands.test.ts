@@ -101,14 +101,14 @@ function buildRunFixture(
 ): EvalRun {
   return {
     id,
-    version: "0.8.0",
+    version: "0.9.0",
     createdAt: "2026-06-03T00:00:00.000Z",
     examplePath: ".",
     toolsPath: "tools.json",
     tasksPath: "tasks.json",
     agent: {
       name: "keyword-mock-agent",
-      version: "0.8.0"
+      version: "0.9.0"
     },
     summary: {
       total,
@@ -147,7 +147,7 @@ describe("ToolSmith commands", () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("0.8.0");
+    expect(packageJson.version).toBe("0.9.0");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
     expect(packageJson.files).toEqual(
@@ -155,6 +155,22 @@ describe("ToolSmith commands", () => {
     );
     expect(packageJson.files).not.toEqual(expect.arrayContaining(disallowedPackageFiles));
     expect(packageJson.scripts["package:check"]).toContain("scripts/package-check.mjs");
+  });
+
+  it("keeps public beta documentation files in place", async () => {
+    const docs = [
+      "docs/TROUBLESHOOTING.md",
+      "docs/RELEASE_CHECKLIST.md",
+      "docs/CROSS_PLATFORM.md",
+      "docs/site/index.md",
+      "docs/site/quickstart.md",
+      "docs/site/installation.md",
+      "examples/calendar-email/README.md",
+      "examples/confusing-tools/README.md",
+      "examples/openapi/README.md"
+    ];
+
+    await Promise.all(docs.map((path) => expect(access(path)).resolves.toBeUndefined()));
   });
 
   it("initializes a local config file", async () => {
@@ -165,7 +181,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("0.8.0");
+      expect(config.version).toBe("0.9.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -340,7 +356,7 @@ describe("ToolSmith commands", () => {
 
       expect(result.pathsScanned).toBe(4);
       expect(result.operationsImported).toBe(5);
-      expect(generated.version).toBe("0.8.0");
+      expect(generated.version).toBe("0.9.0");
       expect(generated.tools.map((tool) => tool.name)).toEqual([
         "get_user_by_id",
         "delete_user",
@@ -439,9 +455,17 @@ describe("ToolSmith commands", () => {
       await expect(
         runImportOpenApi(OPENAPI_TINY_API_PATH, {}, captureOutput().io)
       ).rejects.toThrow("Missing required --out");
+      await expect(
+        runImportOpenApi(join(directory, "not-openapi.json"), { out: join(directory, "tools.json") }, captureOutput().io)
+      ).rejects.toThrow("Missing OpenAPI file");
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
+  });
+
+  it("OpenAPI import reports invalid document shape with a friendly error", () => {
+    expect(() => importOpenApiDocument([])).toThrow("OpenAPI file must contain a JSON object.");
+    expect(() => importOpenApiDocument({ openapi: "3.0.3" })).toThrow('OpenAPI file must include a "paths" object.');
   });
 
   it("mock agent chooses expected tools by keyword", () => {

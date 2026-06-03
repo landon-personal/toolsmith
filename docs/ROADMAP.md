@@ -100,9 +100,16 @@ toolsmith agents setup --codex --claude
 - Add `docs/site/` pages for quickstart, installation, tools, tasks, evals, reports, CI mode, importers, coding agents, safety, and roadmap.
 - Keep this as content-only preparation with no GitHub Pages deployment, no GitHub Actions workflow, no npm publishing, no GitHub push, no model/API integration, and no real tool side effects.
 
+## v0.9.0
+
+- Prepare ToolSmith for outside public beta testers.
+- Polish README for fresh clone setup, examples, reports, CI checks, OpenAPI import, package smoke testing, and safety.
+- Add troubleshooting, release checklist, cross-platform notes, and example READMEs.
+- Review package metadata and document that package name availability and npm publishing require explicit approval.
+- Keep this as public beta preparation with no npm publishing, no GitHub push, no release tags, no GitHub Pages deployment, no GitHub Actions workflow automation, no model/API integration, and no real tool side effects.
+
 ## Near-Term Public Release Path
 
-- v0.9.0: public beta readiness.
 - v1.0.0: stable public local CLI.
 - v1.1.0: optional real model provider.
 
