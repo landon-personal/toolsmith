@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v1.0.0.
+Current version: v1.0.1.
 
 Completed:
 
@@ -18,6 +18,7 @@ Completed:
 - v0.8.0: GitHub Pages-ready documentation content
 - v0.9.0: public beta readiness docs, troubleshooting, release checklist, and example polish
 - v1.0.0: stable public local CLI baseline
+- v1.0.1: public repository prep docs, security/privacy/contributing docs, and release audit
 
 Near-term path:
 

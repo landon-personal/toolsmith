@@ -4,6 +4,8 @@ Use this checklist before any future public beta, prerelease, or stable release.
 
 For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
 
+For v1.0.1 public repository prep, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, and approval blockers.
+
 ## Local Verification
 
 - Run `npm run compile`.
@@ -17,6 +19,7 @@ For v1.0.0 local release preparation, local verification items should pass befor
 - Run `npm run dev -- compare .toolsmith/runs/latest.json .toolsmith/runs/latest.json`.
 - Run `npm run dev -- import openapi examples/openapi/tiny-api.json --out examples/openapi/tools.generated.json`.
 - Run `npm run package:check`.
+- Run `npm run release:audit`.
 
 ## Package Review
 
@@ -26,9 +29,26 @@ For v1.0.0 local release preparation, local verification items should pass befor
 - Verify package name availability before publishing.
 - Verify npm publishing has explicit approval.
 
+## Public Repository Prep
+
+- Verify `docs/PUBLIC_REPOSITORY_PREP.md` is current.
+- Choose or confirm the final public repository name.
+- Confirm the public GitHub repository URL before adding `repository`, `bugs`, or `homepage` package fields.
+- Confirm package name availability before npm publishing.
+- Confirm the license decision and add a matching root `LICENSE` file if approved.
+- Configure a security contact before public release.
+- Decide whether to add a code of conduct before public release.
+- Run a package dry run before publishing.
+- Run macOS and Windows checks when CI is available.
+- Explicitly approve GitHub push before pushing.
+- Explicitly approve release tags before tagging.
+- Explicitly approve npm publish before publishing.
+- Explicitly approve GitHub Pages deployment before enabling Pages.
+
 ## Repository Review
 
 - Verify no secrets or API keys are present.
+- Run `npm run release:audit`.
 - Verify `.toolsmith/runs/` is not committed.
 - Verify npm tarballs are not committed.
 - Verify generated/private files are not staged unless they are intentional fixtures.

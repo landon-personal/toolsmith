@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.1
+
+- Added `docs/PUBLIC_REPOSITORY_PREP.md` for future public GitHub repository and npm publishing review.
+- Added `docs/SECURITY.md`, `docs/PRIVACY.md`, and `docs/CONTRIBUTING.md`.
+- Added `npm run release:audit` for local generated-file and obvious secret-shaped string checks.
+- Updated release checklist, public release docs, README, status, roadmap, and Codex prompts for v1.0.1.
+- Documented public release blockers/TODOs for repository URL, package name availability, security contact, license file confirmation, and code of conduct decision.
+- Kept runtime behavior unchanged, with no npm publish, no GitHub push, no release tags, and no GitHub Pages deployment.
+
 ## 1.0.0
 
 - Finalized ToolSmith as the stable local-first CLI baseline.

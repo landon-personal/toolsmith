@@ -19,7 +19,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.0 stable public local CLI preparation. It is not published to npm yet.
+ToolSmith is at v1.0.1 public repository preparation. It is stable locally, but it is not published to npm or pushed to a public GitHub repository yet unless a future explicit approval changes that.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
@@ -155,6 +155,24 @@ npm run package:check
 
 This compiles ToolSmith, creates a local npm tarball, installs it into a temporary directory, runs `toolsmith --help`, runs `toolsmith --version`, and cleans up on success. It does not publish to npm.
 
+## Public Release Status
+
+ToolSmith is stable locally at v1.0.x. Public repository and npm release work remains approval-gated.
+
+- npm publishing has not happened.
+- GitHub push and release tags have not happened.
+- GitHub Pages deployment is not enabled.
+- Current usage remains local development and local package smoke checks.
+
+Future public install goals remain:
+
+```sh
+npm install -g toolsmith
+npx toolsmith@latest --help
+```
+
+Before any public release, review `docs/PUBLIC_REPOSITORY_PREP.md`, run `npm run release:audit`, confirm the repository URL, confirm package name availability, configure a security contact, and explicitly approve publishing steps.
+
 ## Future Install Goal
 
 ToolSmith is not published to npm yet. Future public install commands are expected to be:
@@ -171,6 +189,8 @@ The package name must be checked before publishing. npm publishing requires expl
 - `docs/SCHEMA.md` documents the v1.0.0 local file shapes.
 - `docs/MIGRATIONS.md` summarizes migration notes.
 - `docs/RELEASE_NOTES_v1.0.0.md` contains v1.0.0 release notes.
+- `docs/PUBLIC_REPOSITORY_PREP.md` tracks public repository and npm publishing readiness TODOs.
+- `docs/SECURITY.md`, `docs/PRIVACY.md`, and `docs/CONTRIBUTING.md` cover public repo review basics.
 - `docs/TROUBLESHOOTING.md` covers common setup and command issues.
 - `docs/RELEASE_CHECKLIST.md` covers future public release checks.
 - `docs/CROSS_PLATFORM.md` documents macOS and Windows expectations.

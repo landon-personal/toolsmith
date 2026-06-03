@@ -2,7 +2,7 @@
 
 Date: 2026-06-03
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Done
 
@@ -33,6 +33,10 @@ Version: 1.0.0
 - Added public beta readiness documentation for fresh clones, troubleshooting, release checks, cross-platform expectations, and examples.
 - Added v1.0.0 schema documentation, migration notes, and release notes.
 - Confirmed the stable local CLI command surface.
+- Added v1.0.1 public repository prep documentation.
+- Added security, privacy, and contributing docs for future public review.
+- Added a local release audit script for generated files and obvious secret-shaped strings.
+- Updated release checklist and public release notes for approval-gated public repo/npm prep.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -49,8 +53,9 @@ Version: 1.0.0
 - MCP-style import.
 - npm prerelease publishing.
 - release tags.
+- Public repository setup review.
 - v1.1.0 optional real model provider.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.0 update finalizes ToolSmith as a stable local-first CLI baseline; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, no release tags were created, and no GitHub push happened.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.1 update is a public repository prep patch with no runtime features added; no GitHub Pages deployment was enabled, no GitHub Actions workflow was created, no npm publishing happened, no release tags were created, and no GitHub push happened.

@@ -5,6 +5,7 @@ coverage/
 .DS_Store
 *.log
 *.tgz
+toolsmith-package-check-*/
 report.md
 report.html
 .env

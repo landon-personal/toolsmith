@@ -147,7 +147,7 @@ describe("ToolSmith commands", () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
-    expect(packageJson.version).toBe("1.0.0");
+    expect(packageJson.version).toBe("1.0.1");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "./dist/cli.js" });
     expect(packageJson.files).toEqual(
@@ -155,6 +155,7 @@ describe("ToolSmith commands", () => {
     );
     expect(packageJson.files).not.toEqual(expect.arrayContaining(disallowedPackageFiles));
     expect(packageJson.scripts["package:check"]).toContain("scripts/package-check.mjs");
+    expect(packageJson.scripts["release:audit"]).toContain("scripts/release-audit.mjs");
   });
 
   it("keeps public beta documentation files in place", async () => {
@@ -165,6 +166,10 @@ describe("ToolSmith commands", () => {
       "docs/SCHEMA.md",
       "docs/MIGRATIONS.md",
       "docs/RELEASE_NOTES_v1.0.0.md",
+      "docs/PUBLIC_REPOSITORY_PREP.md",
+      "docs/SECURITY.md",
+      "docs/PRIVACY.md",
+      "docs/CONTRIBUTING.md",
       "docs/site/index.md",
       "docs/site/quickstart.md",
       "docs/site/installation.md",
@@ -184,7 +189,7 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("1.0.0");
+      expect(config.version).toBe("1.0.1");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(output.lines[0]).toContain("Created");
@@ -359,7 +364,7 @@ describe("ToolSmith commands", () => {
 
       expect(result.pathsScanned).toBe(4);
       expect(result.operationsImported).toBe(5);
-      expect(generated.version).toBe("1.0.0");
+      expect(generated.version).toBe("1.0.1");
       expect(generated.tools.map((tool) => tool.name)).toEqual([
         "get_user_by_id",
         "delete_user",

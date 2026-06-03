@@ -1,6 +1,6 @@
 # Safety
 
-ToolSmith v1.0.0 is a local-first CLI for testing and linting AI agent tool use. It must not perform real-world actions.
+ToolSmith v1.0.1 is a local-first CLI for testing and linting AI agent tool use. It must not perform real-world actions.
 
 ## Default Behavior
 
@@ -11,7 +11,7 @@ ToolSmith v1.0.0 is a local-first CLI for testing and linting AI agent tool use.
 
 ## No Real Tool Side Effects
 
-ToolSmith v1.0.0 does not:
+ToolSmith v1.0.1 does not:
 
 - send emails
 - create, update, or delete calendar events
@@ -35,6 +35,6 @@ OpenAPI import reads a local JSON file and writes local ToolSmith tool definitio
 
 ## Future Work
 
-Real model providers are future optional work planned after v1.0.0. They should be opt-in and documented.
+Real model providers are future optional work planned after the stable local CLI baseline. They should be opt-in and documented.
 
-Real side-effect integrations are not part of v1.0.0. If future versions ever support them, they should require explicit scope, dry-run defaults, confirmation rules, and tests that protect against accidental real-world actions.
+Real side-effect integrations are not part of v1.0.1. If future versions ever support them, they should require explicit scope, dry-run defaults, confirmation rules, and tests that protect against accidental real-world actions.

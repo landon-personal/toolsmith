@@ -113,3 +113,11 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 
 Prepare ToolSmith v1.0.0 as the stable local-first CLI baseline. Confirm the stable command surface, update README, schema docs, migration notes, safety docs, public release docs, and release notes. Do not publish to npm, push to GitHub, create release tags, enable GitHub Pages, create GitHub Actions workflows, add real model/API integration, or add real tool side effects.
 ```
+
+## Prepare Public Repository
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Prepare ToolSmith v1.0.1 for future public GitHub repository and npm publishing review. Keep changes focused on docs, metadata review, repo hygiene, and safety checks. Add public repository prep, security, privacy, and contributing docs, document package metadata blockers, optionally add a local release audit, and do not publish to npm, push to GitHub, create release tags, enable GitHub Pages, create GitHub Actions workflows, add real model/API integration, or add real tool side effects.
+```

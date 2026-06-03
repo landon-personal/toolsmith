@@ -115,6 +115,14 @@ toolsmith agents setup --codex --claude
 - Add v1.0.0 schema documentation, migration notes, release notes, and refreshed safety docs.
 - Keep this as release preparation with no npm publishing, no GitHub push, no release tags, no GitHub Pages deployment, no GitHub Actions workflow automation, no model/API integration, and no real tool side effects.
 
+## v1.0.1
+
+- Prepare public repository review materials without publishing.
+- Add public repository prep, security, privacy, and contributing docs.
+- Add a local release audit check for generated artifacts and obvious secret-shaped strings.
+- Document package metadata TODOs, including repository URL, package name availability, security contact, and license file confirmation.
+- Keep this as release preparation with no npm publishing, no GitHub push, no release tags, no GitHub Pages deployment, no GitHub Actions workflow automation, no model/API integration, and no real tool side effects.
+
 ## Near-Term Public Release Path
 
 - v1.1.0: optional real model provider.

@@ -1,6 +1,6 @@
 {
   "name": "toolsmith",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Local-first CLI for testing whether AI agents use tool definitions correctly.",
   "type": "module",
   "bin": {
@@ -19,7 +19,8 @@
     "compile": "tsc -p tsconfig.json",
     "test": "vitest run",
     "package:pack": "npm run compile && npm pack --dry-run",
-    "package:check": "npm run compile && node scripts/package-check.mjs"
+    "package:check": "npm run compile && node scripts/package-check.mjs",
+    "release:audit": "node scripts/release-audit.mjs"
   },
   "keywords": [
     "ai",
