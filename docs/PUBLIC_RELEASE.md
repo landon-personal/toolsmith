@@ -18,7 +18,7 @@ As of v0.9.0, ToolSmith has public beta readiness documentation, troubleshooting
 
 As of v1.0.0, ToolSmith's stable local-first CLI preparation is complete. The project is ready for future public release approval steps, but v1.0.0 preparation does not publish to npm, push to GitHub, create release tags, or enable GitHub Pages.
 
-As of v1.0.1, ToolSmith has public repository preparation docs, basic security/privacy/contributing docs, and a local release audit script. This is review preparation only; no public GitHub repository push, release tags, npm publishing, GitHub Pages deployment, GitHub Actions workflow, model/API integration, or real tool side effects are added.
+As of v1.0.1, ToolSmith has public repository preparation docs, basic security/privacy/contributing docs, and a local release audit script. A private GitHub repository now exists at `https://github.com/landon-personal/toolsmith`, but public visibility, release tags, npm publishing, GitHub Pages deployment, GitHub Actions workflow, model/API integration, and real tool side effects remain out of scope until explicitly approved.
 
 ## Distribution Targets
 
@@ -55,7 +55,7 @@ Publishing should not happen until explicitly approved. Do not publish to npm, p
 
 Before any npm publish, verify package name availability and complete `docs/RELEASE_CHECKLIST.md`.
 
-Before any public repository push, complete `docs/PUBLIC_REPOSITORY_PREP.md`. Current blockers include confirming the public repository URL, configuring a security contact, checking npm package name availability, and confirming the license file decision.
+Before making the repository public, complete `docs/PUBLIC_REPOSITORY_PREP.md`. Current blockers include configuring a security contact, checking npm package name availability, confirming the license file decision, and approving public-facing package metadata.
 
 GitHub Pages deployment should not happen until explicitly approved. Do not create Pages workflows or change repository Pages settings as part of ordinary documentation work.
 

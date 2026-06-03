@@ -2,13 +2,20 @@
 
 ToolSmith v1.0.1 is a release-prep patch for a future public GitHub repository and future npm publishing review.
 
-This checklist does not publish, push, tag, deploy, or enable automation. Public release steps remain approval-gated.
+This checklist does not publish to npm, tag, deploy, enable automation, or make the repository public. Public release steps remain approval-gated.
+
+Private setup repository:
+
+```text
+https://github.com/landon-personal/toolsmith
+```
 
 ## Repository Name
 
-- TODO: Confirm the final public repository name.
+- Private repository name: `toolsmith`.
+- TODO: Confirm the final public repository name before changing visibility.
 - TODO: Confirm whether the npm package name should remain `toolsmith` after checking availability.
-- Do not create a GitHub remote until explicitly approved.
+- `origin` is configured for the private GitHub repository after explicit approval.
 
 ## Repository Description
 
@@ -18,12 +25,18 @@ Current package description:
 Local-first CLI for testing whether AI agents use tool definitions correctly.
 ```
 
-TODO: Confirm the public GitHub repository description before publishing the repository.
+Private repository description:
+
+```text
+Test, lint, and report on AI agent tool use before shipping.
+```
+
+TODO: Confirm the public GitHub repository description before making the repository public.
 
 ## README Readiness
 
 - README explains what ToolSmith is, who it is for, the local-first status, quickstart commands, stable commands, reports, CI mode, importers, coding-agent usage, safety, and package checks.
-- README still uses `<repo-url>` as a placeholder until a public repository URL exists.
+- README still uses `<repo-url>` as a placeholder until public visibility is explicitly approved.
 - README must not claim npm or GitHub publication before those steps are explicitly approved.
 
 ## Docs Readiness
@@ -58,7 +71,7 @@ Release blockers and TODOs:
 
 - TODO: Check npm package name availability before publishing.
 - TODO: Confirm the license decision and add a root `LICENSE` file if approved. The package metadata currently says `MIT`, but there is no root license file.
-- TODO: Add `repository`, `bugs`, and `homepage` package fields only after the public GitHub URL is known.
+- TODO: Add `repository`, `bugs`, and `homepage` package fields only after public-facing metadata is explicitly approved. The current private repository URL is `https://github.com/landon-personal/toolsmith`.
 - TODO: Run a final package dry run before any npm publish.
 
 ## License Decision
@@ -110,7 +123,7 @@ Intentional example fixtures should not be ignored accidentally.
 - Local package smoke checks are available through `npm run package:check`.
 - npm publishing has not happened.
 - TODO: Check package name availability.
-- TODO: Confirm package metadata after the public repository URL exists.
+- TODO: Confirm package metadata after public-facing repository metadata is approved.
 - TODO: Get explicit approval before any `npm publish`.
 
 ## Release Tagging Readiness
@@ -123,7 +136,8 @@ Intentional example fixtures should not be ignored accidentally.
 
 These actions must be explicitly approved before public release:
 
-- creating or pushing to a public GitHub repository
+- making the private GitHub repository public
+- pushing to a public GitHub repository
 - creating release tags
 - publishing to npm
 - enabling GitHub Pages deployment
@@ -133,7 +147,7 @@ These actions must be explicitly approved before public release:
 
 ## v1.0.1 Status
 
-- No GitHub push happened.
+- Private GitHub repository setup was approved and pushed to `https://github.com/landon-personal/toolsmith`.
 - No release tags were created.
 - No npm publish happened.
 - No GitHub Pages deployment was enabled.
