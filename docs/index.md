@@ -8,7 +8,7 @@ Repository: [github.com/landon-personal/toolsmith](https://github.com/landon-per
 
 ## Quickstart
 
-ToolSmith is published to npm as `@landon-personal/toolsmith`; npm currently has v1.0.6 published. The v1.0.7 patch fixes stale CLI `--version` output in this repository and is not published to npm in this step.
+ToolSmith is published to npm as `@landon-personal/toolsmith`, and the npm `latest` dist-tag points to v1.0.7. The GitHub repository is public, GitHub Pages is live at `https://landon-personal.github.io/toolsmith/`, and the CLI binary command remains `toolsmith`.
 
 Fresh user flow:
 

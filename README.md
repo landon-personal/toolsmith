@@ -19,7 +19,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.7 in this repository. It is stable locally, available on GitHub, documented through GitHub Pages, and published to npm as `@landon-personal/toolsmith`; the currently published npm package is v1.0.6. The v1.0.7 patch fixes stale CLI `--version` output and is not published to npm in this step.
+ToolSmith is at v1.0.7. It is stable locally, available in the public GitHub repository, documented through GitHub Pages, and published to npm as `@landon-personal/toolsmith`. The npm `latest` dist-tag points to v1.0.7, and the CLI binary command remains `toolsmith`.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
@@ -187,7 +187,7 @@ ToolSmith is stable locally at v1.0.x. The GitHub repository, GitHub Pages docum
 
 - npm package: `@landon-personal/toolsmith`
 - The GitHub repository is public at `https://github.com/landon-personal/toolsmith`.
-- Release tags have not been created.
+- Release tag `v1.0.7` has been created.
 - GitHub Pages documentation is live at `https://landon-personal.github.io/toolsmith/`.
 - The CLI binary command remains `toolsmith`.
 

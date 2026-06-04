@@ -1,12 +1,18 @@
 # Quickstart
 
-ToolSmith is published to npm as `@landon-personal/toolsmith`; npm currently has v1.0.6 published. The v1.0.7 patch fixes stale CLI `--version` output and is prepared in the repository but is not published to npm in this step. The first-user `toolsmith init` scaffold creates `toolsmith.config.json`, `tools.json`, and `tasks.json`.
+ToolSmith is published to npm as `@landon-personal/toolsmith`, and the npm `latest` dist-tag points to v1.0.7. The first-user `toolsmith init` scaffold creates `toolsmith.config.json`, `tools.json`, and `tasks.json`.
 
 Install globally:
 
 ```sh
 npm install -g @landon-personal/toolsmith
 toolsmith --help
+```
+
+Run without a global install:
+
+```sh
+npx @landon-personal/toolsmith@latest --help
 ```
 
 Create a starter project:

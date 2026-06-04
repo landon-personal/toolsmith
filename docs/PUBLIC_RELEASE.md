@@ -30,7 +30,7 @@ As of v1.0.5, ToolSmith is published to npm as `@landon-personal/toolsmith`.
 
 As of v1.0.6, ToolSmith fixes first-user init scaffolding so `toolsmith init` creates `toolsmith.config.json`, `tools.json`, and `tasks.json` for the fresh `toolsmith lint .`, `toolsmith eval .`, `toolsmith report` flow. The v1.0.6 package is published to npm.
 
-As of v1.0.7, ToolSmith fixes stale CLI `--version` output so the runtime CLI version follows package metadata. This patch is not published to npm in this step, and no release tag is created.
+As of v1.0.7, ToolSmith fixes stale CLI `--version` output so the runtime CLI version follows package metadata. The v1.0.7 package is published to npm, the npm `latest` dist-tag points to v1.0.7, and the annotated `v1.0.7` Git tag has been pushed.
 
 ## Distribution Targets
 

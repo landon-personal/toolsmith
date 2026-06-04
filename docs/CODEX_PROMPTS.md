@@ -58,6 +58,14 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 Fix ToolSmith CLI version output so `toolsmith --version` matches `package.json`. Avoid duplicated version strings where practical, verify the built/package CLI version path, keep npm publishing dry-run only unless explicitly approved, do not create release tags, do not start v1.1.0, and do not add real model/API integration or real tool side effects.
 ```
 
+## Post-Publish Cleanup
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+After an approved ToolSmith npm publish, verify npm version and dist-tags, verify the published CLI and fresh init/lint/eval/report flow, create and push the matching annotated Git tag if missing, update docs to record the publish, and keep the repo clean. Do not publish to npm again, create GitHub Actions workflows, start v1.1.0, or add real model/API integration or real tool side effects.
+```
+
 ## Improve Eval Scoring
 
 ```text

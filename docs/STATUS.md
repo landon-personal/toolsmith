@@ -54,7 +54,10 @@ Version: 1.0.7
 - Updated user-facing runtime suggestions to use published `toolsmith` commands.
 - Fixed stale CLI `--version` output for v1.0.7 by deriving the runtime version from `package.json`.
 - Added npm `prepack` compilation to reduce stale `dist` packaging risk.
-- Confirmed the npm package is already published at v1.0.6; v1.0.7 is not published in this step.
+- Published `@landon-personal/toolsmith@1.0.7` to npm and confirmed the `latest` dist-tag points to v1.0.7.
+- Confirmed the published v1.0.7 CLI reports `toolsmith --version` as `1.0.7`.
+- Confirmed the GitHub repository is public and GitHub Pages is live at `https://landon-personal.github.io/toolsmith/`.
+- Created and pushed the annotated `v1.0.7` Git tag.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -62,15 +65,12 @@ Version: 1.0.7
 
 - JSON schema files.
 - Model or API integration.
-- Public GitHub release.
 - GitHub Actions or release automation.
 - GitHub Actions workflow files in this repo.
 - MCP-style import.
 - npm prerelease publishing.
-- release tags.
-- v1.0.7 npm patch publishing.
 - v1.1.0 optional real model provider.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.7 update fixes stale CLI version output only; the fresh init/lint/eval/report flow still works, no GitHub Actions workflow was created, no v1.0.7 npm publish happened, and no release tags were created.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.7 update fixes stale CLI version output and is published on npm; the fresh init/lint/eval/report flow still works. No GitHub Actions workflow was created, and v1.1.0 optional real model provider work remains future scope.

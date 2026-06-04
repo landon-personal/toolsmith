@@ -1,6 +1,6 @@
 # npm Publishing
 
-ToolSmith is published to npm as `@landon-personal/toolsmith`. The currently published npm package is v1.0.6. The v1.0.7 patch is prepared in this repository but is not published to npm in this step.
+ToolSmith is published to npm as `@landon-personal/toolsmith`. The currently published npm package is v1.0.7, and the npm `latest` dist-tag points to v1.0.7.
 
 The unscoped package name `toolsmith` is already taken on npm. ToolSmith uses the scoped package name:
 
@@ -47,9 +47,9 @@ toolsmith report
 
 Future patch publishing still requires the checks below and explicit approval.
 
-## v1.0.7 Patch Gate
+## v1.0.7 Published Patch
 
-The v1.0.7 patch fixes stale CLI `--version` output by deriving the runtime version from `package.json` and compiling before npm pack/publish packaging. Before a real v1.0.7 publish, rerun the checks below and get explicit approval. This documentation update does not publish the patch and does not create release tags.
+The v1.0.7 package is already published. It fixes stale CLI `--version` output by deriving the runtime version from `package.json` and compiling before npm pack/publish packaging. The published CLI reports `toolsmith --version` as `1.0.7`.
 
 ## Install Commands
 
@@ -58,6 +58,7 @@ Current npm install commands are:
 ```sh
 npm install -g @landon-personal/toolsmith
 npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
 ## Before Publishing

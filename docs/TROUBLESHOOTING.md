@@ -124,4 +124,4 @@ npx @landon-personal/toolsmith@latest --help
 toolsmith --help
 ```
 
-The currently published npm package is v1.0.6. The v1.0.7 patch is not published to npm in this step. Publishing future patches requires explicit approval.
+The currently published npm package is v1.0.7. Publishing future patches requires explicit approval.
