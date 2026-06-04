@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.7
+
+- Fixed stale CLI `--version` output by deriving the runtime version from `package.json` instead of a duplicated hardcoded source string.
+- Added `prepack` compilation so npm pack/publish dry-runs rebuild `dist` before packaging.
+- Added test coverage for the actual Commander `--version` output path.
+- Confirmed the v1.0.6 npm package is already published, while this v1.0.7 patch is not published in this step.
+- Kept the fresh init/lint/eval/report flow working with no release tags, GitHub Actions workflows, real model/API integration, or real tool side effects.
+
 ## 1.0.6
 
 - Fixed the first-user `toolsmith init` scaffold so it creates `toolsmith.config.json`, `tools.json`, and `tasks.json`.

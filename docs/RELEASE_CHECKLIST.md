@@ -4,7 +4,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 
 For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
 
-For v1.0.6 patch verification, this checklist also covers the first-user init scaffold, npm dry-runs, package contents, npm auth, and approval blockers. The patch should not be published without explicit approval.
+For v1.0.7 patch verification, this checklist also covers CLI version output, npm dry-runs, package contents, npm auth, and approval blockers. The patch should not be published without explicit approval.
 
 ## Local Verification
 

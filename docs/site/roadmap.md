@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v1.0.6.
+Current version: v1.0.7.
 
 Completed:
 
@@ -24,6 +24,7 @@ Completed:
 - v1.0.4: scoped npm package prep with `@landon-personal/toolsmith`
 - v1.0.5: final npm publish gate with dry-run verification
 - v1.0.6: first-user init scaffold fix for config, tools, tasks, lint, eval, and report
+- v1.0.7: CLI version output fix so `toolsmith --version` follows package metadata
 
 Near-term path:
 

@@ -1,6 +1,6 @@
 # Installation
 
-ToolSmith is published to npm as `@landon-personal/toolsmith`. The v1.0.6 patch is prepared in this repository but is not published to npm in this step.
+ToolSmith is published to npm as `@landon-personal/toolsmith`; npm currently has v1.0.6 published. The v1.0.7 patch fixes stale CLI `--version` output and is prepared in this repository but is not published to npm in this step.
 
 Install globally:
 

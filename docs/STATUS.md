@@ -2,7 +2,7 @@
 
 Date: 2026-06-04
 
-Version: 1.0.6
+Version: 1.0.7
 
 ## Done
 
@@ -52,6 +52,9 @@ Version: 1.0.6
 - Fixed the v1.0.6 first-user init scaffold so `toolsmith init` creates `toolsmith.config.json`, `tools.json`, and `tasks.json`.
 - Added a fresh starter flow: `toolsmith init`, `toolsmith lint .`, `toolsmith eval .`, `toolsmith report`.
 - Updated user-facing runtime suggestions to use published `toolsmith` commands.
+- Fixed stale CLI `--version` output for v1.0.7 by deriving the runtime version from `package.json`.
+- Added npm `prepack` compilation to reduce stale `dist` packaging risk.
+- Confirmed the npm package is already published at v1.0.6; v1.0.7 is not published in this step.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -65,9 +68,9 @@ Version: 1.0.6
 - MCP-style import.
 - npm prerelease publishing.
 - release tags.
-- v1.0.6 npm patch publishing.
+- v1.0.7 npm patch publishing.
 - v1.1.0 optional real model provider.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.6 update fixes first-user scaffolding and runtime guidance only; no GitHub Actions workflow was created, no v1.0.6 npm publish happened, and no release tags were created.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.7 update fixes stale CLI version output only; the fresh init/lint/eval/report flow still works, no GitHub Actions workflow was created, no v1.0.7 npm publish happened, and no release tags were created.

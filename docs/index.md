@@ -8,7 +8,7 @@ Repository: [github.com/landon-personal/toolsmith](https://github.com/landon-per
 
 ## Quickstart
 
-ToolSmith is published to npm as `@landon-personal/toolsmith`. The v1.0.6 patch fixes first-user init scaffolding in this repository; this step does not publish the patch to npm.
+ToolSmith is published to npm as `@landon-personal/toolsmith`; npm currently has v1.0.6 published. The v1.0.7 patch fixes stale CLI `--version` output in this repository and is not published to npm in this step.
 
 Fresh user flow:
 

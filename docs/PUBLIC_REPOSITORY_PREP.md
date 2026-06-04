@@ -59,7 +59,7 @@ The repository description is configured on GitHub.
 Reviewed fields:
 
 - `name`: `@landon-personal/toolsmith`
-- `version`: `1.0.6`
+- `version`: `1.0.7`
 - `description`: present
 - `bin`: maps `toolsmith` to `./dist/cli.js`
 - `files`: allows `dist`, README, changelog, docs, and examples

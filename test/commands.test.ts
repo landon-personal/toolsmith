@@ -143,12 +143,32 @@ describe("ToolSmith commands", () => {
     expect(commandNames).toEqual(expect.arrayContaining(["init", "lint", "eval", "report", "compare", "import"]));
   });
 
+  it("prints the package version through --version", async () => {
+    const program = buildCli(captureOutput().io);
+    const output: string[] = [];
+
+    program.exitOverride();
+    program.configureOutput({
+      writeOut(value: string): void {
+        output.push(value);
+      },
+      writeErr(value: string): void {
+        output.push(value);
+      }
+    });
+
+    await expect(program.parseAsync(["--version"], { from: "user" })).rejects.toMatchObject({
+      code: "commander.version"
+    });
+    expect(output.join("")).toBe(`${VERSION}\n`);
+  });
+
   it("has package-ready CLI metadata", async () => {
     const packageJson = JSON.parse(await readFile("package.json", "utf8"));
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
     expect(packageJson.name).toBe("@landon-personal/toolsmith");
-    expect(packageJson.version).toBe("1.0.6");
+    expect(packageJson.version).toBe("1.0.7");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "dist/cli.js" });
     expect(packageJson.repository).toEqual({
@@ -161,6 +181,7 @@ describe("ToolSmith commands", () => {
       expect.arrayContaining(["dist", "README.md", "LICENSE", "CHANGELOG.md", "docs", "examples"])
     );
     expect(packageJson.files).not.toEqual(expect.arrayContaining(disallowedPackageFiles));
+    expect(packageJson.scripts.prepack).toBe("npm run compile");
     expect(packageJson.scripts["package:check"]).toContain("scripts/package-check.mjs");
     expect(packageJson.scripts["release:audit"]).toContain("scripts/release-audit.mjs");
   });
@@ -203,7 +224,7 @@ describe("ToolSmith commands", () => {
       const tools = await loadToolsFile(join(directory, "tools.json"));
       const tasks = await loadTasksFile(join(directory, "tasks.json"));
 
-      expect(config.version).toBe("1.0.6");
+      expect(config.version).toBe("1.0.7");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(tools.tools.map((tool) => tool.name)).toEqual(["create_calendar_event", "send_email"]);
@@ -448,7 +469,7 @@ describe("ToolSmith commands", () => {
 
       expect(result.pathsScanned).toBe(4);
       expect(result.operationsImported).toBe(5);
-      expect(generated.version).toBe("1.0.6");
+      expect(generated.version).toBe("1.0.7");
       expect(generated.tools.map((tool) => tool.name)).toEqual([
         "get_user_by_id",
         "delete_user",

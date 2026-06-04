@@ -1,6 +1,6 @@
 # npm Publishing
 
-ToolSmith is published to npm as `@landon-personal/toolsmith`. The v1.0.6 patch is prepared in this repository but is not published to npm in this step.
+ToolSmith is published to npm as `@landon-personal/toolsmith`. The currently published npm package is v1.0.6. The v1.0.7 patch is prepared in this repository but is not published to npm in this step.
 
 The unscoped package name `toolsmith` is already taken on npm. ToolSmith uses the scoped package name:
 
@@ -28,9 +28,9 @@ The final npm publish gate verifies:
 
 This gate does not run a real npm publish and does not create release tags.
 
-## v1.0.6 Patch Gate
+## v1.0.6 Published Patch
 
-The v1.0.6 patch fixes first-user init scaffolding so `toolsmith init` creates:
+The v1.0.6 package is already published. It fixes first-user init scaffolding so `toolsmith init` creates:
 
 - `toolsmith.config.json`
 - `tools.json`
@@ -45,7 +45,11 @@ toolsmith eval .
 toolsmith report
 ```
 
-Before a real v1.0.6 publish, rerun the checks below and get explicit approval. This documentation update does not publish the patch and does not create release tags.
+Future patch publishing still requires the checks below and explicit approval.
+
+## v1.0.7 Patch Gate
+
+The v1.0.7 patch fixes stale CLI `--version` output by deriving the runtime version from `package.json` and compiling before npm pack/publish packaging. Before a real v1.0.7 publish, rerun the checks below and get explicit approval. This documentation update does not publish the patch and does not create release tags.
 
 ## Install Commands
 
