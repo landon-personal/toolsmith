@@ -4,7 +4,7 @@ Use this checklist before any future public beta, prerelease, or stable release.
 
 For v1.0.0 local release preparation, local verification items should pass before committing. Approval-gated publishing and deployment items remain blocked until explicitly approved.
 
-For v1.0.5 final npm publish gate, this checklist also covers repository metadata, security/privacy docs, generated-file cleanup, license checks, Pages docs checks, npm dry-runs, package contents, npm auth, and approval blockers.
+For v1.0.6 patch verification, this checklist also covers the first-user init scaffold, npm dry-runs, package contents, npm auth, and approval blockers. The patch should not be published without explicit approval.
 
 ## Local Verification
 
@@ -16,6 +16,7 @@ For v1.0.5 final npm publish gate, this checklist also covers repository metadat
 - Run `npm run dev -- lint examples/confusing-tools`.
 - Run `npm run dev -- eval examples/calendar-email`.
 - Run `npm run dev -- report`.
+- In a temporary folder outside the repo, run `toolsmith init`, `toolsmith lint .`, `toolsmith eval .`, and `toolsmith report` with the built/local CLI.
 - Run `npm run dev -- compare .toolsmith/runs/latest.json .toolsmith/runs/latest.json`.
 - Run `npm run dev -- import openapi examples/openapi/tiny-api.json --out examples/openapi/tools.generated.json`.
 - Run `npm run package:check`.
@@ -23,14 +24,14 @@ For v1.0.5 final npm publish gate, this checklist also covers repository metadat
 - Run `npm pack --dry-run`.
 - Run `npm publish --dry-run --access public`.
 - Confirm `npm whoami` returns `landon-personal`.
-- Confirm `npm view @landon-personal/toolsmith name version description` returns 404 before the first publish.
+- Confirm `npm view @landon-personal/toolsmith name version description` returns package metadata.
 
 ## Package Review
 
 - Verify `package.json` name, version, description, bin, files allowlist, scripts, keywords, license, and Node engine.
 - Verify `docs/SCHEMA.md`, `docs/MIGRATIONS.md`, and release notes are current.
 - Verify package files do not include `node_modules`, `dist` unless intentionally packed from build output, `coverage`, `.toolsmith/runs`, `.env`, npm tarballs, temp install folders, or generated reports.
-- Verify scoped package name availability before publishing.
+- Verify package metadata before publishing.
 - Verify npm publishing has explicit approval.
 
 ## Public Repository Prep
@@ -38,7 +39,7 @@ For v1.0.5 final npm publish gate, this checklist also covers repository metadat
 - Verify `docs/PUBLIC_REPOSITORY_PREP.md` is current.
 - Choose or confirm the final public repository name.
 - Confirm the public GitHub repository URL before adding `repository`, `bugs`, or `homepage` package fields.
-- Confirm scoped package name availability before npm publishing.
+- Confirm package metadata before npm publishing.
 - Confirm the license decision and add a matching root `LICENSE` file if approved.
 - Configure a security contact before public release.
 - Decide whether to add a code of conduct before public release.
@@ -60,7 +61,7 @@ For v1.0.5 final npm publish gate, this checklist also covers repository metadat
 - Verify `docs/site/` content is current.
 - Verify example READMEs are current.
 - Verify macOS and Windows compatibility expectations are documented.
-- Verify scoped package name availability before publishing.
+- Verify package metadata before publishing.
 
 ## Approval Gates
 

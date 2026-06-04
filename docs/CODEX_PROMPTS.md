@@ -42,6 +42,14 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 Improve ToolSmith npm CLI packaging readiness without publishing. Preserve macOS and Windows compatibility, use Node path/fs/os/child_process APIs for package checks, keep `npm run dev --` as the local development command, and do not add GitHub Actions, GitHub Pages publishing, npm publishing, real model/API integration, or real tool side effects.
 ```
 
+## Fix First-User Init Flow
+
+```text
+Work only in ~/toolsmith. Do not modify ~/devtrail.
+
+Fix the published ToolSmith CLI first-user flow so a fresh folder can run `toolsmith init`, `toolsmith lint .`, `toolsmith eval .`, and `toolsmith report`. Ensure init creates config, tools, and tasks starter files without overwriting existing files by default. Keep all examples mock-only, do not publish to npm, do not create release tags, do not start v1.1.0, and do not add real model/API integration or real tool side effects.
+```
+
 ## Improve Eval Scoring
 
 ```text

@@ -1,6 +1,6 @@
 # Roadmap
 
-Current version: v1.0.5.
+Current version: v1.0.6.
 
 Completed:
 
@@ -23,6 +23,7 @@ Completed:
 - v1.0.3: GitHub Pages documentation from `main` `/docs`
 - v1.0.4: scoped npm package prep with `@landon-personal/toolsmith`
 - v1.0.5: final npm publish gate with dry-run verification
+- v1.0.6: first-user init scaffold fix for config, tools, tasks, lint, eval, and report
 
 Near-term path:
 

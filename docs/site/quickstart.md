@@ -1,61 +1,46 @@
 # Quickstart
 
-Fresh clone flow:
+ToolSmith is published to npm as `@landon-personal/toolsmith`. The v1.0.6 patch fixes the first-user `toolsmith init` scaffold so a new folder gets `toolsmith.config.json`, `tools.json`, and `tasks.json`. This patch is prepared in the repository but is not published to npm in this step.
+
+Install globally:
 
 ```sh
-git clone <repo-url>
+npm install -g @landon-personal/toolsmith
+toolsmith --help
+```
+
+Create a starter project:
+
+```sh
+mkdir demo-agent-tools
+cd demo-agent-tools
+toolsmith init
+toolsmith lint .
+toolsmith eval .
+toolsmith report
+```
+
+`toolsmith init` creates a mock calendar/email starter. The tools and tasks are local fixtures only; ToolSmith does not call models, send email, edit calendars, or run real tool side effects.
+
+Local development from the repository:
+
+```sh
+git clone https://github.com/landon-personal/toolsmith.git
 cd toolsmith
-```
-
-Use the real repository URL after the repository is public.
-
-Install local development dependencies:
-
-```sh
 npm install
-```
-
-Compile TypeScript:
-
-```sh
 npm run compile
-```
-
-Run tests:
-
-```sh
 npm test
-```
-
-Show CLI help:
-
-```sh
 npm run dev -- --help
-```
-
-Lint the starter tools:
-
-```sh
 npm run dev -- lint examples/calendar-email
-```
-
-Run the starter eval:
-
-```sh
 npm run dev -- eval examples/calendar-email
-```
-
-Print the latest terminal report:
-
-```sh
 npm run dev -- report
 ```
 
 Generate shareable reports:
 
 ```sh
-npm run dev -- report --format markdown
-npm run dev -- report --format html
+toolsmith report --format markdown
+toolsmith report --format html
 ```
 
 The Markdown report writes `report.md` by default. The HTML report writes `report.html` by default. These files are local generated artifacts.

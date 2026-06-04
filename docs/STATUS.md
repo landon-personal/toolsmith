@@ -1,8 +1,8 @@
 # Status
 
-Date: 2026-06-03
+Date: 2026-06-04
 
-Version: 1.0.5
+Version: 1.0.6
 
 ## Done
 
@@ -48,6 +48,10 @@ Version: 1.0.5
 - Added npm publishing dry-run documentation.
 - Completed the final npm publish gate with scoped package availability, release audit, package contents, and dry-run publish checks.
 - Confirmed GitHub Pages documentation is built and live at `https://landon-personal.github.io/toolsmith/`.
+- Published the npm package as `@landon-personal/toolsmith` with CLI binary command `toolsmith`.
+- Fixed the v1.0.6 first-user init scaffold so `toolsmith init` creates `toolsmith.config.json`, `tools.json`, and `tasks.json`.
+- Added a fresh starter flow: `toolsmith init`, `toolsmith lint .`, `toolsmith eval .`, `toolsmith report`.
+- Updated user-facing runtime suggestions to use published `toolsmith` commands.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
@@ -56,15 +60,14 @@ Version: 1.0.5
 - JSON schema files.
 - Model or API integration.
 - Public GitHub release.
-- npm publishing.
 - GitHub Actions or release automation.
 - GitHub Actions workflow files in this repo.
 - MCP-style import.
 - npm prerelease publishing.
 - release tags.
-- npm publishing.
+- v1.0.6 npm patch publishing.
 - v1.1.0 optional real model provider.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.5 update records the final npm publish gate for `@landon-personal/toolsmith` with no runtime feature changes; no GitHub Actions workflow was created, no npm publishing happened, and no release tags were created.
+The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.6 update fixes first-user scaffolding and runtime guidance only; no GitHub Actions workflow was created, no v1.0.6 npm publish happened, and no release tags were created.

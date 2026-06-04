@@ -59,7 +59,7 @@ The repository description is configured on GitHub.
 Reviewed fields:
 
 - `name`: `@landon-personal/toolsmith`
-- `version`: `1.0.4`
+- `version`: `1.0.6`
 - `description`: present
 - `bin`: maps `toolsmith` to `./dist/cli.js`
 - `files`: allows `dist`, README, changelog, docs, and examples
@@ -74,11 +74,11 @@ Reviewed fields:
 Release blockers and TODOs:
 
 - Unscoped `toolsmith` is taken on npm.
-- Scoped `@landon-personal/toolsmith` appears available based on `npm view`.
+- Scoped `@landon-personal/toolsmith` is published on npm.
 - Root `LICENSE` file: added with approved MIT text.
 - `repository` and `bugs` package fields: added.
 - Homepage field: added for the verified GitHub Pages URL.
-- TODO: Run a final package dry run before any npm publish.
+- TODO: Run package dry-runs before any future patch publish.
 
 ## License Decision
 

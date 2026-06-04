@@ -1,8 +1,35 @@
 # Installation
 
-ToolSmith is not published to npm yet.
+ToolSmith is published to npm as `@landon-personal/toolsmith`. The v1.0.6 patch is prepared in this repository but is not published to npm in this step.
 
-Current local usage:
+Install globally:
+
+```sh
+npm install -g @landon-personal/toolsmith
+toolsmith --help
+toolsmith --version
+```
+
+Run without a global install:
+
+```sh
+npx @landon-personal/toolsmith@latest --help
+```
+
+Fresh starter flow:
+
+```sh
+mkdir demo-agent-tools
+cd demo-agent-tools
+toolsmith init
+toolsmith lint .
+toolsmith eval .
+toolsmith report
+```
+
+`toolsmith init` creates `toolsmith.config.json`, `tools.json`, and `tasks.json`.
+
+Local development from the repository:
 
 ```sh
 git clone https://github.com/landon-personal/toolsmith.git
@@ -11,17 +38,9 @@ npm install
 npm run dev -- <command>
 ```
 
-Future public install goal:
+The unscoped `toolsmith` package name is already taken on npm. ToolSmith uses the scoped package `@landon-personal/toolsmith`, while keeping the CLI binary command as `toolsmith`.
 
-```sh
-npm install -g @landon-personal/toolsmith
-npx @landon-personal/toolsmith@latest --help
-toolsmith --help
-```
-
-The unscoped `toolsmith` package name is already taken on npm. ToolSmith is preparing the scoped package `@landon-personal/toolsmith`, while keeping the CLI binary command as `toolsmith`.
-
-Publishing must not happen without explicit approval.
+Publishing future patches must not happen without explicit approval.
 
 Local package smoke check:
 

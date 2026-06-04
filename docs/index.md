@@ -8,7 +8,21 @@ Repository: [github.com/landon-personal/toolsmith](https://github.com/landon-per
 
 ## Quickstart
 
-ToolSmith is not published to npm yet. Use the public GitHub repository for local development:
+ToolSmith is published to npm as `@landon-personal/toolsmith`. The v1.0.6 patch fixes first-user init scaffolding in this repository; this step does not publish the patch to npm.
+
+Fresh user flow:
+
+```sh
+npm install -g @landon-personal/toolsmith
+mkdir demo-agent-tools
+cd demo-agent-tools
+toolsmith init
+toolsmith lint .
+toolsmith eval .
+toolsmith report
+```
+
+Local development:
 
 ```sh
 git clone https://github.com/landon-personal/toolsmith.git

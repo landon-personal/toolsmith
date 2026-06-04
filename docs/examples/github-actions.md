@@ -32,7 +32,7 @@ jobs:
 
 ## Future Package-Installed Example
 
-ToolSmith is not published yet. After publishing is explicitly approved, future projects may use a package-installed command like:
+ToolSmith is published to npm as `@landon-personal/toolsmith`. Projects may use a package-installed command like:
 
 ```yaml
 - run: npx @landon-personal/toolsmith@latest eval . --fail-under 90

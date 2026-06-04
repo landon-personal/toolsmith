@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.6
+
+- Fixed the first-user `toolsmith init` scaffold so it creates `toolsmith.config.json`, `tools.json`, and `tasks.json`.
+- Added a tiny mock calendar/email starter project that supports `toolsmith lint .`, `toolsmith eval .`, and `toolsmith report` in a fresh folder.
+- Kept init overwrite behavior safe by leaving existing starter files unchanged unless `--force` is used.
+- Updated user-facing runtime suggestions to use published `toolsmith` commands instead of local `npm run dev -- ...` commands.
+- Added tests for the fresh init/lint/eval/report flow and missing-report guidance.
+- Prepared the v1.0.6 patch without publishing to npm, creating release tags, adding real model/API integration, or adding real tool side effects.
+
 ## 1.0.5
 
 - Recorded the final npm publish gate for `@landon-personal/toolsmith`.

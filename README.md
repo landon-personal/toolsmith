@@ -19,7 +19,7 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.5. It is stable locally, available on GitHub, documented through GitHub Pages, and published to npm as `@landon-personal/toolsmith`.
+ToolSmith is at v1.0.6. It is stable locally, available on GitHub, documented through GitHub Pages, and published to npm as `@landon-personal/toolsmith`. The v1.0.6 patch fixes first-user init scaffolding in this repository; this change does not publish the patch to npm.
 
 ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
 
@@ -37,6 +37,19 @@ Or run without a global install:
 ```sh
 npx @landon-personal/toolsmith@latest --help
 ```
+
+Create a starter project:
+
+```sh
+mkdir demo-agent-tools
+cd demo-agent-tools
+toolsmith init
+toolsmith lint .
+toolsmith eval .
+toolsmith report
+```
+
+`toolsmith init` creates `toolsmith.config.json`, `tools.json`, and `tasks.json` with a mock calendar/email example. The files are local fixtures only; ToolSmith does not send email, edit calendars, call models, or execute real tools.
 
 Local development:
 

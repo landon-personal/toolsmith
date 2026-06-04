@@ -1,6 +1,6 @@
 # Public Release Plan
 
-ToolSmith is not published yet. This document describes the intended public distribution model and the guardrails that must stay in place before any release.
+ToolSmith is public on GitHub, documented through GitHub Pages, and published to npm as `@landon-personal/toolsmith`. This document describes the distribution model and the guardrails that must stay in place before any future patch publish or release tag.
 
 As of v0.3.0, ToolSmith can be built, packed into a local npm tarball, installed into a temporary directory, and run as the `toolsmith` command for local smoke testing. This is packaging readiness only, not a public release.
 
@@ -26,13 +26,17 @@ As of v1.0.3, ToolSmith enables GitHub Pages documentation from the `main` branc
 
 As of v1.0.4, ToolSmith prepares npm publishing under the scoped package `@landon-personal/toolsmith` because the unscoped `toolsmith` package name is already taken on npm. The CLI binary command remains `toolsmith`. This is dry-run preparation only; no real npm publish or release tag is created.
 
+As of v1.0.5, ToolSmith is published to npm as `@landon-personal/toolsmith`.
+
+As of v1.0.6, ToolSmith fixes first-user init scaffolding so `toolsmith init` creates `toolsmith.config.json`, `tools.json`, and `tasks.json` for the fresh `toolsmith lint .`, `toolsmith eval .`, `toolsmith report` flow. This patch is not published to npm in this step, and no release tag is created.
+
 ## Distribution Targets
 
 - Public GitHub repository: `https://github.com/landon-personal/toolsmith` for source code, issues, pull requests, releases, release tags, and project history.
 - GitHub Pages: documentation site with the quickstart, examples, safety notes, roadmap, and release instructions.
 - npm: CLI installation path for users who want to run ToolSmith without cloning the repository.
 
-## Planned Install Commands
+## Install Commands
 
 ```sh
 npm install -g @landon-personal/toolsmith
@@ -40,7 +44,7 @@ npx @landon-personal/toolsmith@latest --help
 toolsmith --help
 ```
 
-The unscoped `toolsmith` package name is taken. The scoped package `@landon-personal/toolsmith` appears available based on `npm view`, but real publishing still requires explicit approval.
+The unscoped `toolsmith` package name is taken. ToolSmith uses the scoped package `@landon-personal/toolsmith`, while the CLI binary command remains `toolsmith`.
 
 ## Platform Support
 
@@ -58,9 +62,9 @@ The package check builds the CLI, packs it locally, installs the tarball into an
 
 ## Publishing Rules
 
-Publishing should not happen until explicitly approved. Do not publish to npm, push release tags, or turn on public release automation as part of ordinary development.
+Patch publishing should not happen until explicitly approved. Do not publish to npm, push release tags, or turn on release automation as part of ordinary development.
 
-Before any npm publish, verify scoped package name availability and complete `docs/RELEASE_CHECKLIST.md`.
+Before any npm publish, verify package metadata and complete `docs/RELEASE_CHECKLIST.md`.
 
 Before any npm publish, complete `docs/PUBLIC_REPOSITORY_PREP.md` and `docs/NPM_PUBLISHING.md`. Current blockers include final approval for real publishing and any npm account or 2FA requirements.
 

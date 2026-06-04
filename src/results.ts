@@ -14,7 +14,7 @@ export async function writeLatestRun(run: EvalRun, cwd = process.cwd()): Promise
 
 export async function readLatestRun(cwd = process.cwd()): Promise<EvalRun> {
   const path = resolve(cwd, LATEST_RUN_PATH);
-  return readRunFile(path, `No latest run found at ${path}. Run "npm run dev -- eval examples/calendar-email" first.`);
+  return readRunFile(path, `No latest run found at ${path}. Run "toolsmith eval ." first.`);
 }
 
 export async function readRunFile(

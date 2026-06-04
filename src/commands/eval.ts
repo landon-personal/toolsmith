@@ -28,7 +28,7 @@ export async function runEval(
   printEvalSummary(run, io);
   printFailUnderResult(run, options.failUnder, io);
   io.stdout(`Results written to ${LATEST_RUN_PATH}`);
-  io.stdout("Next: npm run dev -- report");
+  io.stdout("Next: toolsmith report");
   io.stdout("Safety: used keyword mock agent only; no model/API calls or real tool side effects.");
 
   if (options.failUnder !== undefined && run.summary.score < options.failUnder) {

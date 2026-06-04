@@ -14,7 +14,7 @@ ToolSmith currently requires Node 20 or newer. If dependencies still fail to ins
 npm install
 ```
 
-Do not use `npm install -g @landon-personal/toolsmith` yet. ToolSmith is not published to npm.
+ToolSmith is published to npm as `@landon-personal/toolsmith`. If you are testing an unpublished patch from this repository, use the local development commands instead.
 
 ## Node Version Problems
 
@@ -28,13 +28,19 @@ If commands fail with syntax or module errors, use Node 20 or newer. The package
 
 ## Command Not Found
 
+Install the published CLI or run it with `npx`:
+
+```sh
+npm install -g @landon-personal/toolsmith
+toolsmith --help
+npx @landon-personal/toolsmith@latest --help
+```
+
 For the local checkout, run commands through npm:
 
 ```sh
 npm run dev -- --help
 ```
-
-The global `toolsmith` command is a future install goal. It is tested locally through `npm run package:check`, but it is not published yet.
 
 ## `package:check` Fails
 
@@ -53,9 +59,11 @@ If it fails:
 Run an eval before reporting:
 
 ```sh
-npm run dev -- eval examples/calendar-email
-npm run dev -- report
+toolsmith eval .
+toolsmith report
 ```
+
+If you do not have `tools.json` and `tasks.json` yet, run `toolsmith init` first.
 
 Markdown and HTML reports are generated only when requested:
 
@@ -106,13 +114,14 @@ The importer reads and writes local JSON only. It does not call imported APIs.
 
 Prefer npm scripts and Node paths instead of Unix-only shell assumptions. Commands in this repo use forward slashes in examples because npm and Node handle them well in typical shells, but source and tests should use Node `path` and `fs` APIs.
 
-## No npm Package Exists Yet
+## Published npm Package
 
-ToolSmith is not published. Do not rely on:
+ToolSmith is published to npm as `@landon-personal/toolsmith`:
 
 ```sh
 npm install -g @landon-personal/toolsmith
 npx @landon-personal/toolsmith@latest --help
+toolsmith --help
 ```
 
-Those are future public install goals and should be used only after explicit publishing approval.
+The v1.0.6 patch is not published to npm in this step. Publishing future patches requires explicit approval.

@@ -78,7 +78,7 @@ function printSummary(
   }
 
   io.stdout("");
-  io.stdout(`Next: npm run dev -- lint . --tools ${outputPath}`);
+  io.stdout(`Next: toolsmith lint . --tools ${outputPath}`);
   io.stdout("Safety: generated tool definitions only; no imported API operations were executed.");
 }
 

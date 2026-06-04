@@ -23,9 +23,9 @@ export function buildCli(io: CommandIO = defaultIO): Command {
 
   program
     .command("init")
-    .description("Create a local ToolSmith config file.")
+    .description("Create local ToolSmith starter config, tools, and tasks files.")
     .option("-d, --directory <path>", "Directory to initialize.")
-    .option("-f, --force", "Overwrite an existing ToolSmith config.")
+    .option("-f, --force", "Overwrite existing ToolSmith starter files.")
     .action(async (options: { directory?: string; force?: boolean }) => {
       await runInit(options, io);
     });

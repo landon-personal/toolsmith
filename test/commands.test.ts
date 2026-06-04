@@ -148,7 +148,7 @@ describe("ToolSmith commands", () => {
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
     expect(packageJson.name).toBe("@landon-personal/toolsmith");
-    expect(packageJson.version).toBe("1.0.5");
+    expect(packageJson.version).toBe("1.0.6");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "dist/cli.js" });
     expect(packageJson.repository).toEqual({
@@ -192,7 +192,7 @@ describe("ToolSmith commands", () => {
     await Promise.all(docs.map((path) => expect(access(path)).resolves.toBeUndefined()));
   });
 
-  it("initializes a local config file", async () => {
+  it("initializes local config, tools, and tasks files with next steps", async () => {
     const directory = await mkdtemp(join(tmpdir(), "toolsmith-"));
     const output = captureOutput();
 
@@ -200,10 +200,83 @@ describe("ToolSmith commands", () => {
       await runInit({ directory }, output.io);
 
       const config = JSON.parse(await readFile(join(directory, "toolsmith.config.json"), "utf8"));
-      expect(config.version).toBe("1.0.5");
+      const tools = await loadToolsFile(join(directory, "tools.json"));
+      const tasks = await loadTasksFile(join(directory, "tasks.json"));
+
+      expect(config.version).toBe("1.0.6");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
-      expect(output.lines[0]).toContain("Created");
+      expect(tools.tools.map((tool) => tool.name)).toEqual(["create_calendar_event", "send_email"]);
+      expect(tasks.tasks.map((task) => task.expectedTool)).toEqual([
+        "create_calendar_event",
+        "send_email",
+        "create_calendar_event"
+      ]);
+      expect(output.lines.some((line) => line.includes("toolsmith.config.json"))).toBe(true);
+      expect(output.lines.some((line) => line.includes("tools.json"))).toBe(true);
+      expect(output.lines.some((line) => line.includes("tasks.json"))).toBe(true);
+      expect(output.lines).toContain("Next steps:");
+      expect(output.lines).toContain("  toolsmith lint .");
+      expect(output.lines).toContain("  toolsmith eval .");
+      expect(output.lines).toContain("  toolsmith report");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("init does not overwrite existing starter files by default", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-existing-"));
+    const output = captureOutput();
+    const existingTools = `${JSON.stringify({
+      name: "existing-tools",
+      version: "0.1.0",
+      tools: [{ name: "keep_tool", description: "Use this tool when keeping existing content." }]
+    })}\n`;
+    const existingTasks = `${JSON.stringify({
+      name: "existing-tasks",
+      version: "0.1.0",
+      tasks: [{ id: "keep-task", prompt: "Keep this task.", expectedTool: "keep_tool" }]
+    })}\n`;
+
+    try {
+      await writeFile(join(directory, "tools.json"), existingTools, "utf8");
+      await writeFile(join(directory, "tasks.json"), existingTasks, "utf8");
+
+      await runInit({ directory }, output.io);
+
+      expect(await readFile(join(directory, "tools.json"), "utf8")).toBe(existingTools);
+      expect(await readFile(join(directory, "tasks.json"), "utf8")).toBe(existingTasks);
+      await expect(access(join(directory, "toolsmith.config.json"))).resolves.toBeUndefined();
+      expect(output.lines.some((line) => line.includes("tools.json already exists"))).toBe(true);
+      expect(output.lines.some((line) => line.includes("tasks.json already exists"))).toBe(true);
+      expect(output.lines).toContain("  toolsmith lint .");
+      expect(output.lines).toContain("  toolsmith eval .");
+      expect(output.lines).toContain("  toolsmith report");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  });
+
+  it("fresh init output lints, evaluates, and reports", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-fresh-flow-"));
+
+    try {
+      await runInit({ directory }, captureOutput().io);
+
+      const lintReport = await runLint({ examplePath: ".", cwd: directory }, captureOutput().io);
+      const evalOutput = captureOutput();
+      const run = await runEval({ examplePath: ".", cwd: directory }, evalOutput.io);
+      const reportOutput = captureOutput();
+      const report = await runReport({ cwd: directory }, reportOutput.io);
+
+      expect(lintReport.toolsChecked).toBe(2);
+      expect(run.summary.total).toBe(3);
+      expect(run.summary.passed).toBe(2);
+      expect(run.summary.failed).toBe(1);
+      expect(evalOutput.lines).toContain("Next: toolsmith report");
+      expect(report.id).toBe(run.id);
+      expect(reportOutput.lines).toContain("ToolSmith latest report");
+      expect(reportOutput.lines).toContain("Score: 2/3 (66.67%)");
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
@@ -375,7 +448,7 @@ describe("ToolSmith commands", () => {
 
       expect(result.pathsScanned).toBe(4);
       expect(result.operationsImported).toBe(5);
-      expect(generated.version).toBe("1.0.5");
+      expect(generated.version).toBe("1.0.6");
       expect(generated.tools.map((tool) => tool.name)).toEqual([
         "get_user_by_id",
         "delete_user",
@@ -386,6 +459,7 @@ describe("ToolSmith commands", () => {
       expect(lintReport.toolsChecked).toBe(5);
       expect(output.lines).toContain("ToolSmith OpenAPI Import");
       expect(output.lines).toContain("Operations imported: 5");
+      expect(output.lines).toContain(`Next: toolsmith lint . --tools ${out}`);
       expect(output.lines).toContain("Safety: generated tool definitions only; no imported API operations were executed.");
     } finally {
       await rm(directory, { recursive: true, force: true });
@@ -636,7 +710,7 @@ describe("ToolSmith commands", () => {
     expect(output.lines).toContain("Failure breakdown:");
     expect(output.lines).toContain("- wrong_tool: 1");
     expect(output.lines).toContain("- should_have_asked_clarifying_question: 1");
-    expect(output.lines).toContain("Next: npm run dev -- report");
+    expect(output.lines).toContain("Next: toolsmith report");
   });
 
   it("eval fail-under passes when score meets the threshold", async () => {
@@ -687,6 +761,25 @@ describe("ToolSmith commands", () => {
     expect(reportOutput.lines.some((line) => line.includes("Actual: send_email"))).toBe(true);
     expect(reportOutput.lines.some((line) => line.includes("Recommendation:"))).toBe(true);
     await expect(access(join(process.cwd(), LATEST_RUN_PATH))).resolves.toBeUndefined();
+  });
+
+  it("report missing-run error suggests the published eval command", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-missing-report-"));
+
+    try {
+      let message = "";
+
+      try {
+        await runReport({ cwd: directory }, captureOutput().io);
+      } catch (error: unknown) {
+        message = error instanceof Error ? error.message : String(error);
+      }
+
+      expect(message).toContain('Run "toolsmith eval ." first');
+      expect(message).not.toContain("npm run dev");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   it("generates markdown reports with score, failures, tasks, recommendations, and raw JSON", async () => {
