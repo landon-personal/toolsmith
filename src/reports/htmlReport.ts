@@ -1,5 +1,6 @@
 import type { EvalRun } from "../types.js";
 import { buildConfusionMatrix } from "./confusionMatrix.js";
+import { formatProviderMetadata } from "./provider.js";
 
 export function renderHtmlReport(run: EvalRun, generatedAt = new Date()): string {
   return `<!doctype html>
@@ -25,7 +26,7 @@ export function renderHtmlReport(run: EvalRun, generatedAt = new Date()): string
 <main>
   <h1>ToolSmith Eval Report</h1>
   <p>Generated: ${escapeHtml(generatedAt.toISOString())}</p>
-  <p>Provider: ${escapeHtml(run.agent.name)} ${escapeHtml(run.agent.version)}</p>
+  <p>Provider: ${escapeHtml(formatProviderMetadata(run))}</p>
   <p class="score">Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)</p>
 
   <h2>Score Breakdown</h2>

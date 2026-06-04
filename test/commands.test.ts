@@ -13,6 +13,8 @@ import { importOpenApiDocument } from "../src/importers/openapi.js";
 import { buildCli } from "../src/index.js";
 import { lintToolFile } from "../src/linter.js";
 import { chooseMockTool } from "../src/mockAgent.js";
+import { createOpenAIProvider, parseOpenAIResponse, type OpenAIChatClient } from "../src/providers/openai.js";
+import type { ToolSelectionProvider } from "../src/providers/types.js";
 import { buildConfusionMatrix } from "../src/reports/confusionMatrix.js";
 import { renderHtmlReport } from "../src/reports/htmlReport.js";
 import { renderMarkdownReport } from "../src/reports/markdownReport.js";
@@ -110,6 +112,9 @@ function buildRunFixture(
       name: "keyword-mock-agent",
       version: "1.0.0"
     },
+    provider: {
+      name: "mock"
+    },
     summary: {
       total,
       passed,
@@ -168,7 +173,7 @@ describe("ToolSmith commands", () => {
     const disallowedPackageFiles = ["node_modules", "coverage", ".toolsmith/runs", ".env", ".env.*", "test", "src"];
 
     expect(packageJson.name).toBe("@landon-personal/toolsmith");
-    expect(packageJson.version).toBe("1.0.7");
+    expect(packageJson.version).toBe("1.1.0");
     expect(VERSION).toBe(packageJson.version);
     expect(packageJson.bin).toEqual({ toolsmith: "dist/cli.js" });
     expect(packageJson.repository).toEqual({
@@ -224,7 +229,7 @@ describe("ToolSmith commands", () => {
       const tools = await loadToolsFile(join(directory, "tools.json"));
       const tasks = await loadTasksFile(join(directory, "tasks.json"));
 
-      expect(config.version).toBe("1.0.7");
+      expect(config.version).toBe("1.1.0");
       expect(config.safety.network).toBe(false);
       expect(config.safety.realEmail).toBe(false);
       expect(tools.tools.map((tool) => tool.name)).toEqual(["create_calendar_event", "send_email"]);
@@ -469,7 +474,7 @@ describe("ToolSmith commands", () => {
 
       expect(result.pathsScanned).toBe(4);
       expect(result.operationsImported).toBe(5);
-      expect(generated.version).toBe("1.0.7");
+      expect(generated.version).toBe("1.1.0");
       expect(generated.tools.map((tool) => tool.name)).toEqual([
         "get_user_by_id",
         "delete_user",
@@ -592,6 +597,207 @@ describe("ToolSmith commands", () => {
     expect(chooseMockTool("Email the release notes.", tools).toolCall?.toolName).toBe("send_email");
     expect(chooseMockTool("Message Alex about the meeting.", tools).toolCall?.toolName).toBe("send_email");
     expect(chooseMockTool("Think about the plan.", tools).toolCall).toBeNull();
+  });
+
+  it("mock remains the default eval provider", async () => {
+    const run = await evaluate({ examplePath: CALENDAR_EMAIL_EXAMPLE });
+
+    expect(run.provider).toEqual({ name: "mock" });
+    expect(run.agent.name).toBe("keyword-mock-agent");
+    expect(run.results.some((result) => result.toolCall?.toolName === "send_email")).toBe(true);
+  });
+
+  it("--provider mock still evaluates with the local mock provider", async () => {
+    const output = captureOutput();
+    const run = await runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE, provider: "mock" }, output.io);
+
+    expect(run.provider.name).toBe("mock");
+    expect(run.summary.score).toBe(60);
+    expect(output.lines).toContain("Provider: mock");
+    expect(output.lines).toContain("Safety: used keyword mock agent only; no model/API calls or real tool side effects.");
+  });
+
+  it("OpenAI provider fails with a friendly missing-key error", async () => {
+    const originalApiKey = process.env.OPENAI_API_KEY;
+    const output = captureOutput();
+
+    try {
+      delete process.env.OPENAI_API_KEY;
+
+      await expect(runEval({ examplePath: CALENDAR_EMAIL_EXAMPLE, provider: "openai" }, output.io)).rejects.toThrow(
+        "OpenAI provider requires OPENAI_API_KEY"
+      );
+    } finally {
+      if (originalApiKey === undefined) {
+        delete process.env.OPENAI_API_KEY;
+      } else {
+        process.env.OPENAI_API_KEY = originalApiKey;
+      }
+    }
+
+    const combinedOutput = output.lines.join("\n");
+    expect(combinedOutput).not.toContain("OPENAI_API_KEY=");
+    expect(combinedOutput).not.toContain("sk-");
+  });
+
+  it("OpenAI provider parses selected tools and arguments from mocked API responses", async () => {
+    const requests: unknown[] = [];
+    const client: OpenAIChatClient = {
+      chat: {
+        completions: {
+          async create(params) {
+            requests.push(params);
+            return {
+              model: "test-model",
+              choices: [
+                {
+                  message: {
+                    content: "I would use send_email.",
+                    refusal: null,
+                    tool_calls: [
+                      {
+                        type: "function",
+                        function: {
+                          name: "send_email",
+                          arguments: JSON.stringify({
+                            to: "jordan@example.test",
+                            subject: "Release notes",
+                            body: "The release notes are ready."
+                          })
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            };
+          }
+        }
+      }
+    };
+    const provider = createOpenAIProvider({
+      apiKey: "test-openai-api-key",
+      model: "test-model",
+      client
+    });
+    const result = await provider.selectTool({
+      task: {
+        id: "email",
+        prompt: "Email Jordan the release notes.",
+        expectedTool: "send_email"
+      },
+      tools: [
+        {
+          name: "send_email",
+          description: "Use this tool when sending email.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              to: { type: "string" },
+              subject: { type: "string" },
+              body: { type: "string" }
+            },
+            required: ["to", "subject", "body"]
+          }
+        }
+      ]
+    });
+
+    expect(result.toolCall?.toolName).toBe("send_email");
+    expect(result.toolCall?.arguments).toMatchObject({
+      to: "jordan@example.test",
+      subject: "Release notes",
+      body: "The release notes are ready."
+    });
+    expect(result.textResponse).toBe("I would use send_email.");
+    expect(result.model).toBe("test-model");
+    expect(JSON.stringify(requests[0])).toContain("send_email");
+    expect(JSON.stringify(requests)).not.toContain("test-openai-api-key");
+    expect(JSON.stringify(result)).not.toContain("test-openai-api-key");
+  });
+
+  it("OpenAI response parsing handles no-tool and refusal responses", () => {
+    const noTool = parseOpenAIResponse({
+      model: "test-model",
+      choices: [
+        {
+          message: {
+            content: "I need more detail before choosing a tool.",
+            refusal: null
+          }
+        }
+      ]
+    });
+    const refusal = parseOpenAIResponse({
+      model: "test-model",
+      choices: [
+        {
+          message: {
+            content: null,
+            refusal: "I cannot help with that request."
+          }
+        }
+      ]
+    });
+
+    expect(noTool.toolCall).toBeNull();
+    expect(noTool.textResponse).toBe("I need more detail before choosing a tool.");
+    expect(refusal.toolCall).toBeNull();
+    expect(refusal.textResponse).toBe("I cannot help with that request.");
+  });
+
+  it("eval captures OpenAI provider selections, arguments, and text responses", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-openai-provider-"));
+    const provider: ToolSelectionProvider = {
+      name: "openai",
+      model: "test-model",
+      async selectTool() {
+        return {
+          toolCall: {
+            toolName: "send_email",
+            arguments: {
+              to: "jordan@example.test",
+              subject: "Mocked model choice",
+              body: "This was selected by a mocked provider."
+            },
+            reason: "Mocked OpenAI provider selected send_email."
+          },
+          textResponse: "I would call send_email."
+        };
+      }
+    };
+
+    try {
+      await writeCustomExample(
+        directory,
+        [
+          {
+            name: "send_email",
+            description: "Use this tool when sending email messages.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                to: { type: "string" },
+                subject: { type: "string" },
+                body: { type: "string" }
+              },
+              required: ["to", "subject", "body"]
+            }
+          }
+        ],
+        [{ id: "email", prompt: "Email Jordan the release notes.", expectedTool: "send_email" }]
+      );
+
+      const run = await evaluate({ examplePath: ".", cwd: directory, toolSelectionProvider: provider });
+
+      expect(run.provider).toEqual({ name: "openai", model: "test-model" });
+      expect(run.agent).toMatchObject({ name: "openai-provider", model: "test-model" });
+      expect(run.results[0]?.actualTool).toBe("send_email");
+      expect(run.results[0]?.toolCall?.arguments).toMatchObject({ to: "jordan@example.test" });
+      expect(run.results[0]?.textResponse).toBe("I would call send_email.");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   it("eval categorizes passed, wrong-tool, and clarification results", async () => {
@@ -772,6 +978,7 @@ describe("ToolSmith commands", () => {
 
     expect(run.summary.score).toBe(60);
     expect(reportOutput.lines).toContain("ToolSmith latest report");
+    expect(reportOutput.lines).toContain("Provider: mock");
     expect(reportOutput.lines).toContain("Score: 3/5 (60%)");
     expect(reportOutput.lines).toContain("Score breakdown:");
     expect(reportOutput.lines).toContain("- correct_tool_selection: 80%");
@@ -782,6 +989,35 @@ describe("ToolSmith commands", () => {
     expect(reportOutput.lines.some((line) => line.includes("Actual: send_email"))).toBe(true);
     expect(reportOutput.lines.some((line) => line.includes("Recommendation:"))).toBe(true);
     await expect(access(join(process.cwd(), LATEST_RUN_PATH))).resolves.toBeUndefined();
+  });
+
+  it("reports include provider and model metadata when available", async () => {
+    const run = buildRunFixture("openai-run", 1, 1, 0, {});
+    const directory = await mkdtemp(join(tmpdir(), "toolsmith-provider-report-"));
+    const output = captureOutput();
+    run.agent = {
+      name: "openai-provider",
+      version: VERSION,
+      model: "test-model"
+    };
+    run.provider = {
+      name: "openai",
+      model: "test-model"
+    };
+
+    try {
+      await writeRun(directory, "run.json", run);
+      await runReport({ cwd: directory, runPath: "run.json" }, output.io);
+
+      const markdown = renderMarkdownReport(run, new Date("2026-06-03T00:00:00.000Z"));
+      const html = renderHtmlReport(run, new Date("2026-06-03T00:00:00.000Z"));
+
+      expect(output.lines).toContain("Provider: openai (test-model)");
+      expect(markdown).toContain("Provider: openai (test-model)");
+      expect(html).toContain("Provider: openai (test-model)");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   it("report missing-run error suggests the published eval command", async () => {

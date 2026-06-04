@@ -19,9 +19,9 @@ tools + tasks -> eval run -> score/report -> suggestions
 
 ## Current Status
 
-ToolSmith is at v1.0.7. It is stable locally, available in the public GitHub repository, documented through GitHub Pages, and published to npm as `@landon-personal/toolsmith`. The npm `latest` dist-tag points to v1.0.7, and the CLI binary command remains `toolsmith`.
+ToolSmith is at v1.1.0 in source. The public npm package is currently published at `@landon-personal/toolsmith@1.0.7`; this step prepares v1.1.0 and does not publish it. The public GitHub repository and GitHub Pages docs are live, and the CLI binary command remains `toolsmith`.
 
-ToolSmith currently uses a deterministic keyword mock agent. It does not call models, send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, use API keys, or print environment variables.
+ToolSmith uses a deterministic keyword mock agent by default. v1.1.0 adds an optional OpenAI provider for tool-selection evals only. It does not send email, edit calendars, connect to databases, deploy, publish, execute imported APIs, execute selected tools, or print API keys.
 
 ## Quickstart
 
@@ -50,6 +50,23 @@ toolsmith report
 ```
 
 `toolsmith init` creates `toolsmith.config.json`, `tools.json`, and `tasks.json` with a mock calendar/email example. The files are local fixtures only; ToolSmith does not send email, edit calendars, call models, or execute real tools.
+
+Optional real model tool-selection provider:
+
+```sh
+export OPENAI_API_KEY=...
+export OPENAI_MODEL=gpt-4.1-mini
+toolsmith eval examples/calendar-email --provider openai
+toolsmith report
+```
+
+The default provider is still `mock`, which requires no API key:
+
+```sh
+toolsmith eval examples/calendar-email --provider mock
+```
+
+The OpenAI provider may incur API costs. It asks a model which tool it would call and records the selected tool, arguments, and optional text response, but ToolSmith still does not execute any selected tool.
 
 Local development:
 
@@ -86,6 +103,8 @@ Stable CLI commands:
 - `toolsmith init`
 - `toolsmith lint <path>`
 - `toolsmith eval <path>`
+- `toolsmith eval <path> --provider mock`
+- `toolsmith eval <path> --provider openai`
 - `toolsmith report`
 - `toolsmith compare <baseline-run> <current-run>`
 - `toolsmith import openapi <path> --out <path>`
@@ -183,9 +202,11 @@ This compiles ToolSmith, creates a local npm tarball, installs it into a tempora
 
 ## Public Release Status
 
-ToolSmith is stable locally at v1.0.x. The GitHub repository, GitHub Pages documentation, and npm package are public.
+ToolSmith is stable locally at v1.1.0 in source. The GitHub repository, GitHub Pages documentation, and npm package are public.
 
 - npm package: `@landon-personal/toolsmith`
+- published npm version: `1.0.7`
+- v1.1.0 is not published in this step
 - The GitHub repository is public at `https://github.com/landon-personal/toolsmith`.
 - Release tag `v1.0.7` has been created.
 - GitHub Pages documentation is live at `https://landon-personal.github.io/toolsmith/`.

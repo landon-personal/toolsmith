@@ -2,7 +2,7 @@
 
 Date: 2026-06-04
 
-Version: 1.0.7
+Version: 1.1.0
 
 ## Done
 
@@ -58,19 +58,23 @@ Version: 1.0.7
 - Confirmed the published v1.0.7 CLI reports `toolsmith --version` as `1.0.7`.
 - Confirmed the GitHub repository is public and GitHub Pages is live at `https://landon-personal.github.io/toolsmith/`.
 - Created and pushed the annotated `v1.0.7` Git tag.
+- Added v1.1.0 optional OpenAI tool-selection provider support.
+- Kept the deterministic mock provider as the default with no API key requirement.
+- Added `toolsmith eval <path> --provider mock` and `toolsmith eval <path> --provider openai`.
+- Added saved run/report provider metadata, including model name when available.
 - Added Vitest tests.
 - Added project docs and safety notes.
 
 ## Not Started
 
 - JSON schema files.
-- Model or API integration.
+- Required model/API integration.
 - GitHub Actions or release automation.
 - GitHub Actions workflow files in this repo.
 - MCP-style import.
 - npm prerelease publishing.
-- v1.1.0 optional real model provider.
+- Real side-effect tool execution.
 
 ## Safety Status
 
-The project currently has no real email, calendar, database, network, model, or API integration. The v1.0.7 update fixes stale CLI version output and is published on npm; the fresh init/lint/eval/report flow still works. No GitHub Actions workflow was created, and v1.1.0 optional real model provider work remains future scope.
+The project currently has no real email, calendar, database, deploy, payment, imported API execution, or real side-effect tool execution. v1.1.0 adds an optional OpenAI provider for tool-selection behavior only; the mock provider remains default and requires no API key. `OPENAI_API_KEY` is required only for `--provider openai`, API keys are not logged, and selected tools are never executed. The published npm package remains v1.0.7 until a later explicit publish step. No GitHub Actions workflow, npm publish, or release tag was created for v1.1.0 in this step.

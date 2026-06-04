@@ -28,7 +28,7 @@ Completed:
 
 Near-term path:
 
-- v1.1.0: optional real model provider
+- v1.1.0: optional OpenAI tool-selection provider, with mock provider still default
 
 Post-1.0 ideas:
 
@@ -37,4 +37,4 @@ Post-1.0 ideas:
 - stricter JSON schema files
 - richer eval cases and argument validation
 
-Real model providers and real side-effect adapters should remain optional and explicit.
+Additional model providers and real side-effect adapters should remain optional and explicit. v1.1.0 does not execute selected tools.

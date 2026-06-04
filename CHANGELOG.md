@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.0
+
+- Added an optional OpenAI tool-selection provider behind `toolsmith eval <path> --provider openai`.
+- Kept the deterministic mock provider as the default with no API key requirement.
+- Added `--provider mock` for explicit mock evals.
+- Added friendly missing-key guidance for OpenAI provider usage without printing secrets.
+- Saved provider/model metadata, selected tool, arguments, and optional model text responses in eval runs and reports.
+- Added mocked OpenAI provider tests without requiring a real `OPENAI_API_KEY`.
+- Documented manual OpenAI smoke testing, cost/privacy cautions, and the no-real-tool-execution safety boundary.
+- Prepared v1.1.0 without publishing to npm, creating release tags, adding GitHub Actions workflows, or adding real side-effect tool execution.
+
 ## 1.0.7
 
 - Fixed stale CLI `--version` output by deriving the runtime version from `package.json` instead of a duplicated hardcoded source string.

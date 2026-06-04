@@ -40,6 +40,13 @@ export interface ToolCall {
   reason: string;
 }
 
+export type ProviderName = "mock" | "openai";
+
+export interface EvalProviderMetadata {
+  name: ProviderName | string;
+  model?: string;
+}
+
 export type FailureCategory =
   | "wrong_tool"
   | "missing_tool_call"
@@ -78,6 +85,7 @@ export interface EvalResult {
   recommendation: string;
   suggestion?: string;
   toolCall: ToolCall | null;
+  textResponse?: string;
 }
 
 export interface EvalRun {
@@ -88,9 +96,11 @@ export interface EvalRun {
   toolsPath: string;
   tasksPath: string;
   agent: {
-    name: "keyword-mock-agent";
+    name: string;
     version: string;
+    model?: string;
   };
+  provider: EvalProviderMetadata;
   summary: {
     total: number;
     passed: number;

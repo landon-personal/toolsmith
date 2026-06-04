@@ -1,5 +1,6 @@
 import type { EvalRun } from "../types.js";
 import { buildConfusionMatrix } from "./confusionMatrix.js";
+import { formatProviderMetadata } from "./provider.js";
 
 export function renderMarkdownReport(run: EvalRun, generatedAt = new Date()): string {
   const lines: string[] = [
@@ -7,7 +8,7 @@ export function renderMarkdownReport(run: EvalRun, generatedAt = new Date()): st
     "",
     `Generated: ${generatedAt.toISOString()}`,
     "",
-    `Provider: ${run.agent.name} ${run.agent.version}`,
+    `Provider: ${formatProviderMetadata(run)}`,
     "",
     `Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)`,
     "",

@@ -5,6 +5,7 @@ import { defaultIO } from "../io.js";
 import { readLatestRun, readRunFile } from "../results.js";
 import { renderHtmlReport } from "../reports/htmlReport.js";
 import { renderMarkdownReport } from "../reports/markdownReport.js";
+import { formatProviderMetadata } from "../reports/provider.js";
 import type { EvalRun } from "../types.js";
 
 export type ReportFormat = "terminal" | "json" | "markdown" | "html";
@@ -70,6 +71,7 @@ function printReport(run: EvalRun, io: CommandIO): void {
   io.stdout(`ToolSmith latest report`);
   io.stdout(`Run: ${run.id}`);
   io.stdout(`Created: ${run.createdAt}`);
+  io.stdout(`Provider: ${formatProviderMetadata(run)}`);
   io.stdout(`Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)`);
   io.stdout("");
   printScoreBreakdown(run, io);

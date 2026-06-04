@@ -82,7 +82,7 @@ Stable CLI commands:
 
 ## Safety
 
-ToolSmith uses a deterministic local mock agent by default. It does not call real model providers, execute imported APIs, send emails, edit calendars, charge money, delete data, deploy code, publish packages, print secrets, or perform real tool side effects.
+ToolSmith uses a deterministic local mock agent by default. v1.1.0 adds an optional OpenAI provider for tool-selection evals only. It does not execute imported APIs, send emails, edit calendars, charge money, delete data, deploy code, publish packages, print secrets, or perform real tool side effects.
 
 ## Future Install Goal
 

@@ -142,6 +142,9 @@ High-level shape:
     "name": "keyword-mock-agent",
     "version": "1.0.0"
   },
+  "provider": {
+    "name": "mock"
+  },
   "summary": {
     "total": 5,
     "passed": 3,
@@ -154,7 +157,9 @@ High-level shape:
 }
 ```
 
-Each result includes task id, prompt, expected tool, actual tool, pass/fail, failure category, reason, recommendation, and tool call details when available.
+v1.1.0 saved runs include `provider.name` and may include `provider.model` when a real model provider is used. `agent.model` may also be present for compatibility with earlier run metadata.
+
+Each result includes task id, prompt, expected tool, actual tool, pass/fail, failure category, reason, recommendation, and tool call details when available. v1.1.0 results may include `textResponse` when a provider returns model text without or alongside a tool call.
 
 ## Failure Categories
 

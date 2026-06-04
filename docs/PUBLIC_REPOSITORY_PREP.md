@@ -90,7 +90,8 @@ The current `package.json` declares `MIT`, and v1.0.2 adds the matching root `LI
 - `docs/SAFETY.md` documents the local mock-provider safety model.
 - ToolSmith should not print API keys, secrets, or environment variables.
 - ToolSmith does not execute real side-effect tools by default.
-- Real model providers are future optional work and are not part of v1.0.4.
+- v1.1.0 adds an optional OpenAI provider for tool-selection behavior only.
+- Real side-effect tool execution remains out of scope.
 
 ## Secret Scan
 

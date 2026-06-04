@@ -11,7 +11,9 @@ ToolSmith v1.0.1 is local-first and mock-agent-based by default.
 - ToolSmith should not print API keys, secrets, or environment variables.
 - ToolSmith does not execute real side-effect tools by default.
 - ToolSmith does not send email, edit calendars, charge money, delete data, deploy code, publish packages, or modify production systems.
-- Real model providers are future optional work and are not part of v1.0.1.
+- The OpenAI provider is optional in v1.1.0 and tests tool-selection behavior only.
+- API keys must never be printed, committed, or included in reports.
+- Real side-effect tool execution remains out of scope.
 - Imported OpenAPI specs are converted into local tool definitions only. Imported APIs are not executed.
 
 ## Before Public Release

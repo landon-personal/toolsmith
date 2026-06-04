@@ -3,7 +3,8 @@ import { defaultIO } from "../io.js";
 import { ToolSmithError } from "../errors.js";
 import { evaluate } from "../evaluator.js";
 import { LATEST_RUN_PATH, writeLatestRun } from "../results.js";
-import type { EvalRun } from "../types.js";
+import { formatProviderMetadata } from "../reports/provider.js";
+import type { EvalRun, ProviderName } from "../types.js";
 
 export interface EvalOptions {
   examplePath?: string;
@@ -11,6 +12,7 @@ export interface EvalOptions {
   tasks?: string;
   cwd?: string;
   failUnder?: number;
+  provider?: ProviderName;
 }
 
 export async function runEval(
@@ -21,7 +23,8 @@ export async function runEval(
     examplePath: options.examplePath,
     toolsPath: options.tools,
     tasksPath: options.tasks,
-    cwd: options.cwd
+    cwd: options.cwd,
+    provider: options.provider
   });
   await writeLatestRun(run, options.cwd);
 
@@ -29,7 +32,7 @@ export async function runEval(
   printFailUnderResult(run, options.failUnder, io);
   io.stdout(`Results written to ${LATEST_RUN_PATH}`);
   io.stdout("Next: toolsmith report");
-  io.stdout("Safety: used keyword mock agent only; no model/API calls or real tool side effects.");
+  printSafetyLine(run, io);
 
   if (options.failUnder !== undefined && run.summary.score < options.failUnder) {
     throw new ToolSmithError(`CI threshold failed: score ${run.summary.score}% is below ${options.failUnder}%.`);
@@ -41,6 +44,7 @@ export async function runEval(
 function printEvalSummary(run: EvalRun, io: CommandIO): void {
   io.stdout(`ToolSmith eval ${run.version}`);
   io.stdout(`Example: ${run.examplePath}`);
+  io.stdout(`Provider: ${formatProviderMetadata(run)}`);
   io.stdout(`Score: ${run.summary.passed}/${run.summary.total} (${run.summary.score}%)`);
   io.stdout("");
   printScoreBreakdown(run, io);
@@ -66,6 +70,16 @@ function printEvalSummary(run: EvalRun, io: CommandIO): void {
     io.stdout(`  recommendation: ${result.recommendation}`);
   }
 }
+
+function printSafetyLine(run: EvalRun, io: CommandIO): void {
+  if (run.provider.name === "openai") {
+    io.stdout("Safety: used OpenAI for tool selection only; no selected tools were executed.");
+    return;
+  }
+
+  io.stdout("Safety: used keyword mock agent only; no model/API calls or real tool side effects.");
+}
+
 
 function printScoreBreakdown(run: EvalRun, io: CommandIO): void {
   io.stdout("Score breakdown:");

@@ -66,6 +66,14 @@ Work only in ~/toolsmith. Do not modify ~/devtrail.
 After an approved ToolSmith npm publish, verify npm version and dist-tags, verify the published CLI and fresh init/lint/eval/report flow, create and push the matching annotated Git tag if missing, update docs to record the publish, and keep the repo clean. Do not publish to npm again, create GitHub Actions workflows, start v1.1.0, or add real model/API integration or real tool side effects.
 ```
 
+## Add Optional OpenAI Provider
+
+```text
+Work only in ~/toolsmith. Do not modify DevTrail or GradeGuard.
+
+Add an optional OpenAI tool-selection provider for `toolsmith eval --provider openai` while keeping the deterministic mock provider as the default. Require `OPENAI_API_KEY` only for the OpenAI provider, optionally read `OPENAI_MODEL`, never print API keys or environment variables, and never execute selected tools. Update saved runs, reports, tests, docs, and manual smoke-test notes. Do not publish to npm, create release tags, add GitHub Actions workflows, or add real side-effect tool execution.
+```
+
 ## Improve Eval Scoring
 
 ```text

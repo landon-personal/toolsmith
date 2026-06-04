@@ -1,16 +1,19 @@
 import { join, relative, resolve } from "node:path";
-import { chooseMockTool } from "./mockAgent.js";
+import { createToolSelectionProvider } from "./providers/index.js";
 import { loadTasksFile, loadToolsFile } from "./validation.js";
 import type {
+  EvalProviderMetadata,
   EvalResult,
   EvalRun,
   FailureCategory,
   JsonValue,
+  ProviderName,
   ResultCategory,
   TaskDefinition,
   ToolCall,
   ToolDefinition
 } from "./types.js";
+import type { ToolSelectionProvider } from "./providers/types.js";
 import { VERSION } from "./version.js";
 
 const DEFAULT_EXAMPLE_PATH = join("examples", "calendar-email");
@@ -21,6 +24,8 @@ export interface EvaluateOptions {
   toolsPath?: string;
   tasksPath?: string;
   cwd?: string;
+  provider?: ProviderName;
+  toolSelectionProvider?: ToolSelectionProvider;
 }
 
 export async function evaluate(options: EvaluateOptions = {}): Promise<EvalRun> {
@@ -33,10 +38,17 @@ export async function evaluate(options: EvaluateOptions = {}): Promise<EvalRun> 
   const taskFile = await loadTasksFile(resolvedTasksPath);
   const toolNames = new Set(toolFile.tools.map((tool) => tool.name));
   const toolsByName = new Map(toolFile.tools.map((tool) => [tool.name, tool]));
-  const results = taskFile.tasks.map((task) => evaluateTask(task, toolFile.tools, toolNames, toolsByName));
+  const provider = options.toolSelectionProvider ?? createToolSelectionProvider(options.provider ?? "mock");
+  const results: EvalResult[] = [];
+
+  for (const task of taskFile.tasks) {
+    results.push(await evaluateTask(task, toolFile.tools, toolNames, toolsByName, provider));
+  }
+
   const passed = results.filter((result) => result.passed).length;
   const failed = results.length - passed;
   const createdAt = new Date().toISOString();
+  const providerMetadata = buildProviderMetadata(provider);
 
   return {
     id: `run-${createdAt.replace(/[:.]/g, "-")}`,
@@ -45,10 +57,8 @@ export async function evaluate(options: EvaluateOptions = {}): Promise<EvalRun> 
     examplePath: toDisplayPath(cwd, resolvedExamplePath),
     toolsPath: toDisplayPath(cwd, resolvedToolsPath),
     tasksPath: toDisplayPath(cwd, resolvedTasksPath),
-    agent: {
-      name: "keyword-mock-agent",
-      version: VERSION
-    },
+    agent: buildAgentMetadata(provider),
+    provider: providerMetadata,
     summary: {
       total: results.length,
       passed,
@@ -61,14 +71,15 @@ export async function evaluate(options: EvaluateOptions = {}): Promise<EvalRun> 
   };
 }
 
-function evaluateTask(
+async function evaluateTask(
   task: TaskDefinition,
   tools: ToolDefinition[],
   toolNames: Set<string>,
-  toolsByName: Map<string, ToolDefinition>
-): EvalResult {
+  toolsByName: Map<string, ToolDefinition>,
+  provider: ToolSelectionProvider
+): Promise<EvalResult> {
   try {
-    const decision = chooseMockTool(task.prompt, tools);
+    const decision = await provider.selectTool({ task, tools });
     const actualTool = decision.toolCall?.toolName ?? null;
     const expectedTool = task.expectedTool;
     const expectsNoTool = expectedTool.toLowerCase() === NO_TOOL_EXPECTED;
@@ -89,8 +100,9 @@ function evaluateTask(
       prompt: task.prompt,
       argumentCategory
     });
-    const reason = buildReason(task, resultCategory, actualTool);
-    const recommendation = buildRecommendation(task, resultCategory, actualTool);
+    const providerLabel = getProviderLabel(provider.name);
+    const reason = buildReason(task, resultCategory, actualTool, providerLabel);
+    const recommendation = buildRecommendation(task, resultCategory, actualTool, providerLabel);
 
     return {
       taskId: task.id,
@@ -103,7 +115,8 @@ function evaluateTask(
       reason,
       recommendation,
       suggestion: recommendation,
-      toolCall: decision.toolCall
+      toolCall: decision.toolCall,
+      ...(decision.textResponse ? { textResponse: decision.textResponse } : {})
     };
   } catch (error: unknown) {
     const reason = error instanceof Error ? error.message : "An unknown evaluation error occurred.";
@@ -121,6 +134,21 @@ function evaluateTask(
       toolCall: null
     };
   }
+}
+
+function buildProviderMetadata(provider: ToolSelectionProvider): EvalProviderMetadata {
+  return {
+    name: provider.name,
+    ...(provider.model ? { model: provider.model } : {})
+  };
+}
+
+function buildAgentMetadata(provider: ToolSelectionProvider): EvalRun["agent"] {
+  return {
+    name: provider.name === "mock" ? "keyword-mock-agent" : `${provider.name}-provider`,
+    version: VERSION,
+    ...(provider.model ? { model: provider.model } : {})
+  };
 }
 
 function getResultCategory(input: {
@@ -161,29 +189,34 @@ function getResultCategory(input: {
   return "wrong_tool";
 }
 
-function buildReason(task: TaskDefinition, resultCategory: ResultCategory, actualTool: string | null): string {
+function buildReason(
+  task: TaskDefinition,
+  resultCategory: ResultCategory,
+  actualTool: string | null,
+  providerLabel: string
+): string {
   switch (resultCategory) {
     case "passed":
-      return "The mock agent selected the expected tool.";
+      return `The ${providerLabel} selected the expected tool.`;
     case "wrong_tool":
-      return `The mock agent selected "${actualTool}" when the task expected "${task.expectedTool}".`;
+      return `The ${providerLabel} selected "${actualTool}" when the task expected "${task.expectedTool}".`;
     case "missing_tool_call":
       if (actualTool) {
-        return `The task expected "${task.expectedTool}", but the mock agent could not make that expected tool call and selected "${actualTool}" instead.`;
+        return `The task expected "${task.expectedTool}", but the ${providerLabel} could not make that expected tool call and selected "${actualTool}" instead.`;
       }
-      return `The mock agent did not select a tool for a task that expected "${task.expectedTool}".`;
+      return `The ${providerLabel} did not select a tool for a task that expected "${task.expectedTool}".`;
     case "hallucinated_tool":
-      return `The task expected no tool, but the mock agent selected "${actualTool}".`;
+      return `The task expected no tool, but the ${providerLabel} selected "${actualTool}".`;
     case "invalid_arguments":
-      return `The mock agent selected "${actualTool}", but the call is not valid for the defined tools.`;
+      return `The ${providerLabel} selected "${actualTool}", but the call is not valid for the defined tools.`;
     case "missing_required_argument":
-      return `The mock agent did not include a required argument for "${actualTool ?? task.expectedTool}".`;
+      return `The ${providerLabel} did not include a required argument for "${actualTool ?? task.expectedTool}".`;
     case "unnecessary_tool_call":
-      return `The mock agent selected "${actualTool}" even though the task did not need a tool call.`;
+      return `The ${providerLabel} selected "${actualTool}" even though the task did not need a tool call.`;
     case "unsafe_tool_attempt":
-      return `The mock agent attempted a tool call that would be unsafe outside the local mock runner.`;
+      return `The ${providerLabel} attempted a tool call that would be unsafe outside the local runner.`;
     case "should_have_asked_clarifying_question":
-      return `The prompt did not contain enough deterministic calendar or email signal for the mock agent.`;
+      return `The prompt did not contain enough deterministic calendar or email signal for the ${providerLabel}.`;
     case "should_not_have_asked_clarifying_question":
       return `The task expected no clarifying behavior, but the mock evaluation treated it as unclear.`;
     case "unknown_error":
@@ -194,7 +227,8 @@ function buildReason(task: TaskDefinition, resultCategory: ResultCategory, actua
 function buildRecommendation(
   task: TaskDefinition,
   resultCategory: ResultCategory,
-  actualTool: string | null
+  actualTool: string | null,
+  providerLabel: string
 ): string {
   switch (resultCategory) {
     case "passed":
@@ -202,11 +236,11 @@ function buildRecommendation(
     case "wrong_tool":
       return `Clarify tool descriptions or task wording so this prompt points to "${task.expectedTool}" instead of "${actualTool}".`;
     case "missing_tool_call":
-      return `Add clearer keywords to the task prompt or improve tool descriptions so the mock agent can choose "${task.expectedTool}".`;
+      return `Add clearer task wording or improve tool descriptions so the ${providerLabel} can choose "${task.expectedTool}".`;
     case "hallucinated_tool":
       return "Clarify the task so it does not contain tool-triggering language, or set expectedTool to the intended tool.";
     case "invalid_arguments":
-      return "Update the mock agent to choose only defined tools with valid mock arguments, or fix the tool schema.";
+      return `Update the ${providerLabel} behavior or fix the tool schema so selected calls use valid arguments.`;
     case "missing_required_argument":
       return "Add the required argument to the mock tool call or relax the tool schema if the argument is not needed.";
     case "unnecessary_tool_call":
@@ -220,6 +254,10 @@ function buildRecommendation(
     case "unknown_error":
       return "Inspect this task and tool definition for malformed local test data.";
   }
+}
+
+function getProviderLabel(providerName: ProviderName): string {
+  return providerName === "mock" ? "mock agent" : "OpenAI provider";
 }
 
 function countFailureCategories(results: EvalResult[]): Partial<Record<FailureCategory, number>> {

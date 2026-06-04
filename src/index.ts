@@ -9,6 +9,8 @@ import { runLint } from "./commands/lint.js";
 import { runReport } from "./commands/report.js";
 import type { CommandIO } from "./io.js";
 import { defaultIO } from "./io.js";
+import { parseProviderName } from "./providers/index.js";
+import type { ProviderName } from "./types.js";
 import { VERSION } from "./version.js";
 
 const DEFAULT_EXAMPLE_PATH = join("examples", "calendar-email");
@@ -42,12 +44,19 @@ export function buildCli(io: CommandIO = defaultIO): Command {
   program
     .command("eval")
     .argument("[examplePath]", "Example directory containing tools.json and tasks.json.", DEFAULT_EXAMPLE_PATH)
-    .description("Run a local mock evaluation against task and tool files.")
+    .description("Run a local tool-selection evaluation against task and tool files.")
     .option("--tools <path>", "Path to a tools.json file.")
     .option("--tasks <path>", "Path to a tasks.json file.")
+    .option("--provider <provider>", "Tool-selection provider: mock or openai.", "mock")
     .option("--fail-under <score>", "Fail with a non-zero exit code when score is below this percentage.")
-    .action(async (examplePath: string, options: { tools?: string; tasks?: string; failUnder?: string }) => {
-      await runEval({ examplePath, tools: options.tools, tasks: options.tasks, failUnder: parseFailUnder(options.failUnder) }, io);
+    .action(async (examplePath: string, options: { tools?: string; tasks?: string; provider?: string; failUnder?: string }) => {
+      await runEval({
+        examplePath,
+        tools: options.tools,
+        tasks: options.tasks,
+        provider: parseProvider(options.provider),
+        failUnder: parseFailUnder(options.failUnder)
+      }, io);
     });
 
   program
@@ -105,4 +114,8 @@ function parseFailUnder(value: string | undefined): number | undefined {
   }
 
   return threshold;
+}
+
+function parseProvider(value: string | undefined): ProviderName {
+  return parseProviderName(value);
 }

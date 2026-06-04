@@ -144,9 +144,20 @@ toolsmith agents setup --codex --claude
 - Add npm publishing dry-run documentation.
 - Keep real npm publishing, release tags, GitHub Actions workflow automation, model/API integration, and real tool side effects out of scope.
 
+## v1.1.0
+
+- Add an optional OpenAI provider for real model tool-selection evals.
+- Keep the deterministic mock provider as the default and require no API key for normal local use.
+- Support `toolsmith eval <path> --provider mock` and `toolsmith eval <path> --provider openai`.
+- Require `OPENAI_API_KEY` only when `--provider openai` is used.
+- Allow `OPENAI_MODEL` to override the safe default model.
+- Record provider/model metadata, selected tool, arguments, and optional text response in saved runs and reports.
+- Keep all selected tools simulated only; do not send email, edit calendars, modify databases, deploy code, charge money, or execute imported APIs.
+- Do not publish to npm, create release tags, add GitHub Actions workflows, or add real side-effect tool execution in this step.
+
 ## Near-Term Public Release Path
 
-- v1.1.0: optional real model provider.
+- Publish v1.1.0 only after explicit approval, fresh dry-run checks, and npm auth verification.
 
 ## Public Release Track
 
@@ -162,5 +173,5 @@ toolsmith agents setup --codex --claude
 - Add richer failure messages for missing tools, wrong arguments, and unsafe actions.
 - Consider MCP-style import after the basic OpenAPI importer is stable.
 - Consider an agent setup command after the public local CLI stabilizes.
-- Consider model/provider integration only after the local runner, schemas, and safety model are stable.
+- Consider more provider integrations only after the OpenAI tool-selection provider remains safe and useful.
 - Keep all real-world side effects behind explicit mock adapters unless a future design proves otherwise.
